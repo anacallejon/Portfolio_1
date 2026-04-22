@@ -36,13 +36,24 @@
 .nav-links a {
   font-family: "Unbounded", sans-serif;
   font-weight: 600;
-  color: #e34a6f;
+  color: #416844;
   text-decoration: none;
-  transition: opacity 0.25s ease;
+  position: relative;
 }
 
-.nav-links a:hover {
-  opacity: 0.7;
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background-color: #416844;
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
 }
 
 /* LOGO GENERAL */
@@ -142,7 +153,7 @@
   display: block;
   width: 24px;
   height: 2px;
-  background-color: #e34a6f;
+  background-color: #416844;
   border-radius: 2px;
   transition: all 0.3s ease;
 }
@@ -209,7 +220,7 @@
     min-height: 35vh;
     width: 100%;
 
-    background-color: #1a1a1a; /* Cambiado de #e8eaf3 a morado */
+    background-color: #ede8e1; /* Cambiado de #e8eaf3 a morado */
 
     flex-direction: column;
     align-items: flex-start;
@@ -234,7 +245,7 @@
   .navbar .nav-links.nav-open a {
     font-size: 1.3rem;
     font-weight: 600;
-    color: #f5f5f5;
+    color: #416844;
     padding: 0.5rem 0;
   }
 
@@ -336,7 +347,7 @@
   font-weight: 700;
   font-size: 10rem;
   line-height: 0.9;
-  color: #e34a6f;
+  color: #416844;
 }
 
 .hero-job {
@@ -344,7 +355,7 @@
   font-family: "Unbounded", sans-serif;
   font-weight: 300;
   font-size: 2.3rem;
-  color: #e34a6f;
+  color: #416844;
   line-height: 0.7;
 }
 
@@ -352,7 +363,7 @@
   margin-top: 1.5rem;
   font-family: "Petit Formal Script", cursive;
   font-size: 2.3rem;
-  color: #e34a6f;
+  color: #416844;
 }
 
 .hero-title {
@@ -372,7 +383,7 @@
 .section-title {
   font-family: "Unbounded", sans-serif;
   font-weight: 600; /* semibold */
-  color: #e34a6f; /* tu rosa */
+  color: #416844; /* tu rosa */
   text-align: left;
   font-size: 2rem;
   margin-bottom: 1.5rem;
@@ -390,7 +401,7 @@
 }
 
 .color {
-  color: #e34a6f;
+  color: #416844;
   text-decoration: underline;
 }
 
@@ -438,12 +449,12 @@
   justify-content: center;
   text-align: center;
 
-  background-color: #1a1a1a;
+  background-color: #ede8e1;
   background-attachment: fixed;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  color: #f5f5f5;
+  color: #1a1a1a;
   overflow: visible; /* Permitir que el blob se vea */
 }
 
@@ -458,7 +469,7 @@
 }
 
 .about-title {
-  color: #e34a6f;
+  color: #416844;
   text-align: center;
   margin-bottom: 0.5rem;
 }
@@ -471,7 +482,7 @@
   font-weight: 300;
   font-size: 1rem;
   line-height: 1.6;
-  color: #f5f5f5;
+  color: #1a1a1a;
   margin-bottom: 2rem;
 }
 
@@ -516,23 +527,61 @@
   margin: 0;
 }
 
+.footer-lang {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-top: 0.8rem;
+}
+
+.lang-btn {
+  font-family: "Unbounded", sans-serif;
+  font-weight: 300;
+  font-size: 0.8rem;
+  color: #1a1a1a;
+  opacity: 0.85;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  text-decoration: none;
+}
+
+.lang-btn::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: #1a1a1a;
+  transition: width 0.3s ease;
+}
+
+.lang-btn:hover::after,
+.lang-btn.active::after {
+  width: 100%;
+}
+
+.lang-btn:hover {
+  opacity: 1;
+}
+
 /* ----------------------------TEXTO SOBRE EL PARALLAX — PROJECTS PAGE------------------------------ */
 
 .projects-hero-text {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -45%);
   text-align: center;
-
   width: min(90%, 700px);
-  color: #f4f4f4;
   z-index: 5;
   pointer-events: none;
 
   /* Estado inicial: invisible */
   opacity: 0;
-  transform: translate(-50%, calc(-45% + 30px));
+  transform: translate(-50%, calc(-50% + 20px));
   transition:
     opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
     transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
@@ -541,7 +590,7 @@
 /* Estado visible después de la animación */
 .projects-hero-text.hero-visible {
   opacity: 1;
-  transform: translate(-50%, -45%);
+  transform: translate(-50%, -50%);
 }
 
 .projects-hero-title {
@@ -549,7 +598,7 @@
   font-weight: 600;
   font-size: 4rem;
   line-height: 1;
-  color: #f4f4f4;
+  color: #416844;
   margin-bottom: 1rem;
 }
 
@@ -558,7 +607,7 @@
   font-weight: 300;
   font-size: 1.1rem;
   line-height: 1.5;
-  color: #f4f4f4;
+  color: #416844;
   max-width: 700px;
   margin: 0 auto;
   opacity: 0.9;
@@ -575,10 +624,12 @@ body.projects-page {
   margin-top: 0;
   position: relative;
   background-color: #ede8e1;
-  background-attachment: fixed;
   background-size: cover;
   background-position: center;
   z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Banda de fondo entre carrusel y want-to-know-more */
@@ -647,5 +698,119 @@ body.projects-page {
   .projects-hero-text.hero-visible {
     transform: translate(-50%, -45%);
     opacity: 1;
+  }
+}
+
+/* ==============================
+   LANG DROPDOWN EN NAVBAR
+   ============================== */
+
+.lang-dropdown {
+  position: relative;
+  margin-left: auto;
+}
+
+.navbar-home .lang-dropdown {
+  margin-left: 1.8rem;
+}
+
+.navbar-projects .lang-dropdown,
+.navbar-about .lang-dropdown {
+  margin-left: 1.8rem;
+}
+
+.lang-dropdown-btn {
+  font-family: "Unbounded", sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #416844;
+  background: none;
+  border: 1.5px solid #416844;
+  border-radius: 20px;
+  padding: 0.3rem 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  transition: border-radius 0.2s ease;
+  white-space: nowrap;
+  width: 72px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Cuando está abierto: esquinas inferiores rectas para fusionarse con el menú */
+.lang-dropdown-btn[aria-expanded="true"] {
+  border-radius: 20px 20px 0 0;
+  border-bottom: none;
+  padding-bottom: calc(0.3rem + 1.5px);
+}
+
+.lang-arrow {
+  font-size: 0.65rem;
+  transition: transform 0.25s ease;
+  display: inline-block;
+}
+
+.lang-dropdown-btn[aria-expanded="true"] .lang-arrow {
+  transform: rotate(180deg);
+}
+
+.lang-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: none;
+  border: 1.5px solid #416844;
+  border-top: none;
+  border-radius: 0 0 20px 20px;
+  list-style: none;
+  padding: 0.2rem 0 0.3rem;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.lang-dropdown-menu.is-open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.lang-option {
+  font-family: "Unbounded", sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #416844;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.3rem 0;
+  width: 100%;
+  text-align: center;
+  transition: color 0.2s ease;
+}
+
+.lang-option:hover {
+  color: #2e4a30;
+}
+
+/* Móvil */
+@media (max-width: 768px) {
+  .lang-dropdown {
+    display: none;
+  }
+
+  .navbar .nav-links.nav-open .lang-dropdown-mobile {
+    display: flex;
+    gap: 1rem;
+    padding: 0.5rem 0;
   }
 }

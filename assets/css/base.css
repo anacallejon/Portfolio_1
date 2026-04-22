@@ -68,11 +68,11 @@ ul {
   --color-bg: #f5f5f5;
   --color-text: #1a1a1a;
   --color-accent: #000000;
-  --color-nav-bg: #ffffff;
+  --color-nav-bg: #ede8e1;
   --color-hero-text: #1a1a1a;
 
   /* Overlays / efectos */
-  --color-hero-overlay: rgba(0, 0, 0, 0.2);
+  --color-hero-overlay: rgba(0, 0, 0, 0);
 
   /* Espaciados */
   --spacing-section: 4rem;
@@ -100,4 +100,9 @@ ul {
 
 html {
   scroll-behavior: smooth;
+}
+
+/* About section en projects-page → fondo blanco */
+.projects-page .about-section {
+  background-color: #f5f5f5 !important;
 }

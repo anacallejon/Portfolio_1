@@ -26,8 +26,8 @@
   /* Stop 404 color change */
   .error-number {
     animation: fadeInUp 0.01ms forwards !important;
-    background: #e34a6f !important;
-    -webkit-text-fill-color: #e34a6f !important;
+    background: #416844 !important;
+    -webkit-text-fill-color: #416844 !important;
   }
 
   /* Stop floating blobs */
