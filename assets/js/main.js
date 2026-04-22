@@ -193,6 +193,46 @@ document.addEventListener("DOMContentLoaded", () => {
   const langBtn = document.querySelector(".lang-dropdown-btn");
   const langMenu = document.querySelector(".lang-dropdown-menu");
 
+  // Estado inicial: español
+  let currentLang = localStorage.getItem("lang") || "es";
+
+  const applyLang = (lang) => {
+    currentLang = lang;
+    localStorage.setItem("lang", lang);
+
+    // Traducir todos los elementos con data-es / data-en
+    document.querySelectorAll("[data-es], [data-en]").forEach((el) => {
+      const text = el.getAttribute(`data-${lang}`);
+      if (text !== null) {
+        // Usar innerHTML para respetar <br> y otras etiquetas
+        el.innerHTML = text;
+      }
+    });
+
+    // Traducir cards hover overlay (data-title-es / data-title-en)
+    document.querySelectorAll(".card[data-title-es]").forEach((card) => {
+      const title = card.getAttribute(`data-title-${lang}`);
+      const desc = card.getAttribute(`data-desc-${lang}`);
+      const overlayTitle = card.querySelector(".card-hover-title");
+      const overlayDesc = card.querySelector(".card-hover-desc");
+      if (overlayTitle && title) overlayTitle.textContent = title;
+      if (overlayDesc && desc) overlayDesc.textContent = desc;
+    });
+
+    // Actualizar botón del dropdown
+    const otherLang = lang === "es" ? "en" : "es";
+    if (langBtn)
+      langBtn.innerHTML = `${lang.toUpperCase()} <span class="lang-arrow">▾</span>`;
+    const langOption = langMenu ? langMenu.querySelector(".lang-option") : null;
+    if (langOption) {
+      langOption.textContent = otherLang.toUpperCase();
+      langOption.setAttribute("data-lang", otherLang);
+    }
+  };
+
+  // Aplicar idioma guardado al cargar
+  applyLang(currentLang);
+
   if (langBtn && langMenu) {
     langBtn.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -200,26 +240,15 @@ document.addEventListener("DOMContentLoaded", () => {
       langBtn.setAttribute("aria-expanded", isOpen);
     });
 
-    // Cerrar al hacer click fuera
     document.addEventListener("click", () => {
       langMenu.classList.remove("is-open");
       langBtn.setAttribute("aria-expanded", "false");
     });
 
-    // Al elegir idioma: actualizar botón y cerrar
     langMenu.querySelectorAll(".lang-option").forEach((opt) => {
       opt.addEventListener("click", (e) => {
         e.stopPropagation();
-        const selectedLang = opt.getAttribute("data-lang");
-        const currentLang = selectedLang === "en" ? "es" : "en";
-
-        // Actualizar texto del botón
-        langBtn.innerHTML = `${selectedLang.toUpperCase()} <span class="lang-arrow">▾</span>`;
-
-        // Actualizar la opción en el menú
-        opt.setAttribute("data-lang", currentLang);
-        opt.textContent = currentLang.toUpperCase();
-
+        applyLang(opt.getAttribute("data-lang"));
         langMenu.classList.remove("is-open");
         langBtn.setAttribute("aria-expanded", "false");
       });
