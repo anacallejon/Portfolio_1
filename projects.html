@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects</title>
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="Ana Callejón - Browse my design projects in editorial, branding, 3D, and digital design"
+    />
+    <meta
+      name="keywords"
+      content="graphic design, portfolio, multimedia design, editorial design, branding, Ana Callejón"
+    />
+    <meta name="author" content="Ana Callejón Alén" />
+    <meta name="theme-color" content="#8b93bc" />
+
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://anacallejon.github.io/creative-portfolio-web/projects.html"
+    />
+    <meta property="og:title" content="Projects - Ana Callejón" />
+    <meta
+      property="og:description"
+      content="Browse my design projects across editorial, branding, 3D, and digital design"
+    />
+    <meta
+      property="og:image"
+      content="https://anacallejon.github.io/creative-portfolio-web/assets/img/og-image.png"
+    />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:url"
+      content="https://anacallejon.github.io/creative-portfolio-web/projects.html"
+    />
+    <meta name="twitter:title" content="Projects - Ana Callejón" />
+    <meta name="twitter:description" content="Design projects gallery" />
+    <meta
+      name="twitter:image"
+      content="https://anacallejon.github.io/creative-portfolio-web/assets/img/twitter-card.png"
+    />
+
+    <!--------------------------- Favicons ------------------------------>
+    <!-- Favicons - Modo claro (por defecto) -->
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://ik.imagekit.io/anacallejon/img/favicon.ico"
+      media="(prefers-color-scheme: light)"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="https://ik.imagekit.io/anacallejon/img/favicon-96x96.png"
+      media="(prefers-color-scheme: light)"
+    />
+
+    <!-- Favicon - Modo oscuro -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="https://ik.imagekit.io/anacallejon/img/favicon.svg"
+      media="(prefers-color-scheme: dark)"
+    />
+
+    <!-- Fallback sin preferencia de color -->
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://ik.imagekit.io/anacallejon/img/favicon.ico"
+    />
+
+    <!-- Apple Touch Icon y Manifest -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="https://ik.imagekit.io/anacallejon/img/apple-touch-icon.png"
+    />
+    <link
+      rel="manifest"
+      href="https://ik.imagekit.io/anacallejon/img/site.webmanifest"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Petit+Formal+Script&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200;300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS general -->
+    <link rel="stylesheet" href="assets/css/index.css" />
+  </head>
+  <body class="projects-page">
+    <div class="custom-cursor"></div>
+
+    <!-- NAVBAR SIEMPRE ARRIBA -->
+    <nav class="navbar navbar-projects">
+      <!-- Logo a la izquierda en escritorio - clickeable -->
+      <a href="./index.html" class="nav-logo-link">
+        <img
+          src="https://ik.imagekit.io/anacallejon/img/page_name1.png"
+          alt="Logo Ana"
+          class="nav-logo-image"
+        />
+      </a>
+
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-links">
+        <li><a href="./index.html">Home</a></li>
+        <li><a href="./projects.html">Portfolio</a></li>
+        <li><a href="./about.html">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-overlay"></div>
+
+    <!-- HERO / PARALLAX -->
+    <header class="top-parallax">
+      <div class="projects-hero-text">
+        <h1 class="projects-hero-title">My work</h1>
+        <p class="projects-hero-description">
+          A curated selection of my personal explorations, client collaborations
+          and experimental creative projects — all in one place.
+        </p>
+      </div>
+    </header>
+
+    <!-- FILTROS DE PROYECTOS -->
+    <section class="filters-section">
+      <div class="filters-container">
+        <button class="filter-btn active" data-filter="all">Show All</button>
+        <button class="filter-btn" data-filter="ux-ui">UX/UI</button>
+        <button class="filter-btn" data-filter="branding">Branding</button>
+        <button class="filter-btn" data-filter="editorial">Editorial</button>
+        <button class="filter-btn" data-filter="3d">3D</button>
+      </div>
+    </section>
+
+    <section class="cards-section">
+      <div class="cards-grid">
+        <!-- COLUMNA IZQUIERDA -->
+        <div class="cards-column left-column">
+          <!-- Project A 3D Diorama -->
+          <article
+            class="card fade-in-scroll"
+            data-project="project-3d-diorama"
+            data-category="3d"
+            data-images="https://ik.imagekit.io/anacallejon/img/habitacion5.png, https://ik.imagekit.io/anacallejon/img/habitacion3.png, https://ik.imagekit.io/anacallejon/img/habitacion4.png, https://ik.imagekit.io/anacallejon/img/habitacion2.png, https://ik.imagekit.io/anacallejon/img/habitacion7.png"
+          >
+            <img
+              src="https://ik.imagekit.io/anacallejon/img/habitacion4.png"
+              alt="3D Room"
+              class="card-img"
+            />
+
+            <div class="card-content">
+              <h3 class="card-title">3D Diorama</h3>
+              <p class="card-text">
+                A 3D built space representing a phisical composition.
+              </p>
+            </div>
+          </article>
+
+          <!-- Project B VINILO -->
+          <article
+            class="card fade-in-scroll"
+            data-project="project-b"
+            data-category="editorial"
+            data-images="https://ik.imagekit.io/anacallejon/img/vinilo1.png, https://ik.imagekit.io/anacallejon/img/vinilo2.png, https://ik.imagekit.io/anacallejon/img/vinilo3.png"
+          >
+            <img
+              src="https://ik.imagekit.io/anacallejon/img/vinilo1.png"
+              alt="Vinyl"
+              class="card-img"
+            />
+
+            <div class="card-content">
+              <h3 class="card-title">Visual Exploration</h3>
+              <p class="card-text">Small research on form and color.</p>
+            </div>
+          </article>
+
+          <!-- Project C POSTALES -->
+          <article
+            class="card fade-in-scroll"
+            data-project="project-c"
+            data-category="editorial"
+            data-images="https://ik.imagekit.io/anacallejon/img/postal1.png, https://ik.imagekit.io/anacallejon/img/postal2.png, https://ik.imagekit.io/anacallejon/img/postal3.png, https://ik.imagekit.io/anacallejon/img/postal4.png, https://ik.imagekit.io/anacallejon/img/postal5.png"
+          >
+            <img
+              src="https://ik.imagekit.io/anacallejon/img/postal3.1.png"
+              alt="Postcards from the past"
+              class="card-img"
+            />
+
+            <div class="card-content">
+              <h3 class="card-title">Postcards from the past</h3>
+              <p class="card-text">
+                Digitally manipulated postcards exploring perception.
+              </p>
+            </div>
+          </article>
+
+          <!-- NUEVA: Project G HUERTOPIA -->
+          <article
+            class="card fade-in-scroll"
+            data-project="project-huertopia"
+            data-category="branding"
+            data-images="assets/img/huertopia11.png, assets/img/huertopia21.png, https://ik.imagekit.io/anacallejon/img/huertopia3.png"
+          >
+            <img
+              src="assets/img/huertopia11.png"
+              alt="Huertopia"
+              class="card-img"
+            />
+
+            <div class="card-content">
+              <h3 class="card-title">Huertopia</h3>
+              <p class="card-text">
+                Visual identity for university gardening club.
+              </p>
+            </div>
+          </article>
+        </div>
+
+        <!-- COLUMNA DERECHA -->
+        <div class="cards-column right-column">
+          <!-- Project D BOOK -->
+          <article
+            class="card fade-in-scroll"
+            data-project="project-d"
+            data-category="editorial"
+            data-images="https://ik.imagekit.io/anacallejon/img/Final_mockup1.png, https://ik.imagekit.io/anacallejon/img/Final_mockup2.png, https://ik.imagekit.io/anacallejon/img/Final_mockup3.png, https://ik.imagekit.io/anacallejon/img/Final_mockup5.png"
+          >
+            <img
+              src="https://ik.imagekit.io/anacallejon/img/Final_mockup1.png"
+              alt="Special Edition Book"
+              class="card-img"
+            />
+
+            <div class="card-content">
+              <h3 class="card-title">Special Edition Book Collection</h3>
+              <p class="card-text">Special-edition book design.</p>
+            </div>
+          </article>
+
+          <!-- Project E MUESTRARIO -->
+          <article
+            class="card fade-in-scroll"
+            data-project="project-e"
+            data-category="branding"
+            data-images="https://ik.imagekit.io/anacallejon/img/muestrario1.png, https://ik.imagekit.io/anacallejon/img/muestrario_verde.jpg, https://ik.imagekit.io/anacallejon/img/muestrario_rosa2.jpg"
+          >
+            <img
+              src="https://ik.imagekit.io/anacallejon/img/muestrario1.png"
+              alt="Fabric Sample Book"
+              class="card-img"
+            />
+
+            <div class="card-content">
+              <h3 class="card-title">Fabric Sample Book</h3>
+              <p class="card-text">Natural-dyed textile swatches.</p>
+            </div>
+          </article>
+
+          <!-- Project F JUGUETES -->
+          <article
+            class="card fade-in-scroll"
+            data-project="project-f"
+            data-category="3d"
+            data-images="https://ik.imagekit.io/anacallejon/img/juguetes2.png, https://ik.imagekit.io/anacallejon/img/juguetes1.png, https://ik.imagekit.io/anacallejon/img/juguetes3.png"
+          >
+            <img
+              src="https://ik.imagekit.io/anacallejon/img/juguetes1.png"
+              alt="Window Display"
+              class="card-img"
+            />
+
+            <div class="card-content">
+              <h3 class="card-title">Window Display</h3>
+              <p class="card-text">3D toy storefront exploring nostalgia</p>
+            </div>
+          </article>
+
+          <!-- NUEVA: Project H SEASONAL CALENDAR -->
+          <article
+            class="card fade-in-scroll"
+            data-project="project-seasonal-calendar"
+            data-category="editorial branding"
+            data-images="https://ik.imagekit.io/anacallejon/img/lamina1.jpg, https://ik.imagekit.io/anacallejon/img/lamina2.jpg, https://ik.imagekit.io/anacallejon/img/lamina3.jpg, https://ik.imagekit.io/anacallejon/img/lamina4.jpg"
+          >
+            <img
+              src="https://ik.imagekit.io/anacallejon/img/lamina4.jpg"
+              alt="Seasonal Calendar"
+              class="card-img"
+            />
+
+            <div class="card-content">
+              <h3 class="card-title">Seasonal Calendar</h3>
+              <p class="card-text">Seasonal fruit calendar in watercolor.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- DETALLES COMPLETOS DE PROYECTOS — OCULTOS -->
+    <div class="project-details" hidden>
+      <!-- Project A 3D DIORAMA -->
+      <div id="project-3d-diorama">
+        <h3>3D Diorama – full project</h3>
+        <p>
+          This 3D diorama is a stylised reconstruction of my own room,
+          transformed into a personal space designed to explore light,
+          atmosphere, and emotional storytelling through composition. Rather
+          than aiming for realism, the project prioritises mood and
+          interpretation, using simplification and stylisation as expressive
+          tools. <br />
+          <br />The work focuses on color psychology, spatial rhythm, and
+          low-light ambience to evoke a calm, late-evening atmosphere. Lighting
+          is used as a narrative element, guiding the viewer's attention and
+          reinforcing a sense of intimacy and quietness. Subtle contrasts and
+          controlled shadows contribute to a contemplative mood, suggesting
+          moments of stillness and introspection. <br />
+          <br />Through careful arrangement of objects and intentional use of
+          color and light, the diorama translates a familiar environment into an
+          emotional landscape, highlighting how personal spaces can convey
+          memory, mood, and narrative beyond their physical form.
+        </p>
+      </div>
+
+      <!-- Project B VINILO -->
+      <div id="project-b">
+        <h3>Visual Exploration</h3>
+        <p>
+          This project explores vinyl cover design through color, form, and
+          transparency, using interpolation and layered compositions to create a
+          sense of movement and visual progression. The graphic system is built
+          around overlapping shapes and transitional elements that suggest
+          transformation rather than static form. <br />
+          <br />The design investigates the tension between order and disorder,
+          balancing structured layouts with more organic and unpredictable
+          visual interactions. Transparency and color blending play a key role
+          in this process, allowing elements to intersect and evolve,
+          reinforcing the idea of gradual change. <br />
+          <br />Conceptually, the piece translates emotional growth and personal
+          development into a dynamic visual language, where movement becomes a
+          metaphor for personal evolution. The final outcome is a vinyl cover
+          design for the single Kids by Current Joys, aligning the visual
+          identity with the themes of growth, transition, and introspection
+          present in the music.
+        </p>
+      </div>
+
+      <!-- Project C POSTALES-->
+      <div id="project-c">
+        <h3>Postcards from the past</h3>
+        <p>
+          This project consists of a series of postcards created through digital
+          image manipulation as part of an editorial design campaign. Each piece
+          explores the relationship between color, light, and composition, using
+          visual alterations to challenge the viewer's perception.
+          <br /><br />Grain was intentionally added to introduce texture and
+          depth, softening the digital finish and reinforcing a tactile, almost
+          printed quality. Color plays a central role in shaping mood and
+          meaning, while controlled lighting and compositional decisions guide
+          the eye and suggest multiple readings of the same image. <br />
+          <br />Rather than aiming for a fixed narrative, the postcards embrace
+          ambiguity and subjectivity, encouraging personal interpretation and
+          highlighting how perception can shift depending on visual context and
+          individual experience.
+        </p>
+      </div>
+
+      <!-- Project D LIBRO-->
+      <div id="project-d">
+        <h3>Special Edition Book Collection</h3>
+        <p>
+          This project explores the design and layout of a book conceived as
+          part of a special-edition collection. The publication follows a shared
+          grid system to create visual continuity across the series, reinforcing
+          a unified editorial identity. In this case, the book presents a
+          curated selection of short stories by Edgar Allan Poe, where
+          structure, rhythm and typography support a cohesive and atmospheric
+          reading experience.
+        </p>
+      </div>
+
+      <!-- Project E MUESTRARIO -->
+      <div id="project-e">
+        <h3>Fabric Sample Book</h3>
+        <p>
+          This project consists of a textile swatch book made from natural
+          fibres dyed with natural pigments, designed to present clients with a
+          broad and realistic colour range achievable through these dyeing
+          processes. The sample collection is structured around nine natural
+          dyes, each applied across three fabric types: cotton, linen and gauze-
+          and three original fabric colours: white, beige and grey. For each
+          fabric and base colour, six dye intensities are displayed, allowing
+          for a systematic exploration of tone, material and chromatic
+          variation.
+        </p>
+      </div>
+
+      <!-- Project F JUGUETES-->
+      <div id="project-f">
+        <h3>Window Display</h3>
+        <p>
+          This project consists of a 3D toy storefront designed to evoke a sense
+          of nostalgia through composition, color, and lighting. The scene is
+          built around real childhood toys, using familiar forms and visual
+          references to trigger emotional memory. <br />
+          <br />The work focuses on 3D modeling and scene composition in Cinema
+          4D, carefully arranging each element within a fixed structural frame:
+          the storefront window. The original structure of the display was
+          provided and could not be modified, establishing clear spatial
+          constraints that guided all compositional decisions. <br />
+          <br />Within these limitations, the project explores balance, rhythm,
+          and visual hierarchy, using color relationships and controlled
+          lighting to enhance depth and atmosphere. The final result emphasizes
+          how composition within a defined frame can shape mood, narrative, and
+          viewer engagement.
+        </p>
+      </div>
+
+      <!-- NUEVA: Project G HUERTOPIA -->
+      <div id="project-huertopia">
+        <h3>Huertopia</h3>
+        <p>
+          Huertopia is a visual identity project developed for a university club
+          focused on collective cultivation and connection with nature. The club
+          brings together students who participate in gardening activities as a
+          way to promote sustainability, collaboration, and well-being within an
+          academic environment. <br />
+          <br />The identity is built around a logo that integrates the visual
+          language of Universidad Europea de Madrid, reinforcing the club's
+          institutional affiliation while maintaining its own character. Color
+          selection plays a key role in referencing the club's main activity,
+          drawing directly from natural and organic tones associated with
+          cultivation and growth. <br />
+          <br />Subtle formal decisions and small visual cues embedded in the
+          logo reflect the club's core values, using shape and structure to
+          suggest community, care, and balance. The result is a flexible visual
+          system that communicates both its educational context and its strong
+          connection to nature.
+        </p>
+      </div>
+
+      <!-- NUEVA: Project H SEASONAL CALENDAR -->
+      <div id="project-seasonal-calendar">
+        <h3>Seasonal Calendar</h3>
+        <p>
+          This project consists of a series of hand-drawn illustrations that
+          represent the year through fruits and vegetables, using seasonality as
+          a natural way to structure time. The calendar is organised by seasons,
+          months, and categories, allowing the presence of specific produce to
+          indicate the time of year. <br />
+          <br />Watercolor is used as the main medium, reinforcing an organic
+          and intuitive visual language connected to nature and growth. The
+          softness of the technique supports a calm and approachable reading of
+          the information, while subtle variations in color and texture reflect
+          the changing rhythms of the year. <br />
+          <br />Rather than relying on conventional numerical markers, the
+          calendar uses fruits and vegetables as visual indicators of time,
+          encouraging an alternative and more sensory understanding of seasonal
+          cycles.
+        </p>
+      </div>
+    </div>
+
+    <section class="about-section about--parallax" id="about">
+      <div class="about-content">
+        <h2 class="section-title about-title">About Me</h2>
+        <p class="about-text">
+          I am Ana Callejón, a creative designer working across graphic, digital
+          and multimedia projects. This portfolio is a curated selection of
+          experiments, client work and personal explorations.
+          <br />
+          <br />
+          I'm a Graphic and Multimedia Design student currently based in Madrid,
+          after three formative years studying in Barcelona. My work is rooted
+          in visual communication — from brand identities to editorial design —
+          with a strong interest in typography, colour theory and the
+          intersection between digital and handcrafted processes.
+          <br />
+          <br />
+          My experience includes an internship at a design studio where I later
+          joined the team, freelance collaborations with clients, and volunteer
+          work supporting visual communication in different institutions.
+          Outside the digital space, I enjoy analog illustration, bookbinding
+          and craft-related projects that keep me connected to materials and
+          slower creative methods. Music and visual culture are ongoing
+          influences in my process. This portfolio brings together the projects
+          that have shaped my growth and direction as a designer.
+        </p>
+        <a href="./about.html" class="about-btn">
+          Experience
+          <img
+            src="https://ik.imagekit.io/anacallejon/img/flecha_blanco.png"
+            alt="Go to"
+            class="about-btn-icon"
+          />
+        </a>
+      </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+      <div class="contact-box">
+        <h2 class="contact-title">Let's Connect!</h2>
+
+        <div class="contact-content">
+          <!-- COLUMNA IZQUIERDA: REDES SOCIALES -->
+          <div class="contact-socials">
+            <!-- Instagram -->
+            <a
+              href="https://instagram.com/calen.between"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-item"
+            >
+              <div class="social-icon">
+                <img
+                  src="https://ik.imagekit.io/anacallejon/img/insta1.png"
+                  alt="Instagram"
+                />
+              </div>
+              <div class="social-info">
+                <div class="social-name">Instagram</div>
+                <div class="social-handle">@calen.between</div>
+              </div>
+            </a>
+
+            <!-- LinkedIn -->
+            <a
+              href="https://www.linkedin.com/in/ana-callej%C3%B3n-al%C3%A9n-6879a02a6/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-item"
+            >
+              <div class="social-icon">
+                <img
+                  src="https://ik.imagekit.io/anacallejon/img/linkedin1.png"
+                  alt="LinkedIn"
+                />
+              </div>
+              <div class="social-info">
+                <div class="social-name">LinkedIn</div>
+                <div class="social-handle">Ana Callejón Alén</div>
+              </div>
+            </a>
+          </div>
+
+          <!-- COLUMNA DERECHA: FORMULARIO -->
+          <div class="contact-form-wrapper">
+            <p class="contact-text">
+              If you want to collaborate, ask something, or just say hi, feel
+              free to reach out at
+              <span class="color">ana.callejonalen@gmail.com</span>. Otherwise,
+              leave your info here and I'll get back to you :)
+            </p>
+
+            <form class="contact-form">
+              <label for="email" class="contact-label">Your email</label>
+
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="contact-input"
+                placeholder="name@example.com"
+                required
+              />
+
+              <button type="submit" class="contact-btn">Send</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <p>© 2025 Ana Callejón Alén</p>
+    </footer>
+
+    <!-- MODAL PROYECTO -->
+    <div class="project-modal-backdrop">
+      <div class="project-modal">
+        <button class="project-modal-close" aria-label="Close modal"></button>
+        <div class="project-modal-content">
+          <div class="project-modal-text">
+            <!-- Aquí se inyectan título y texto de la card -->
+          </div>
+          <div class="project-modal-images">
+            <!-- Aquí se inyectan las imágenes de la card -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,103 @@
+/* -------- RESET -------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* -------- VARIABLES GENERALES -------- */
+:root {
+  --spacing-section: 4rem;
+  --spacing-container: 90%;
+  --spacing-max-width: 1200px;
+
+  /* Puedes añadir más más tarde */
+}
+
+/* -------- ESTILO BASE DEL BODY -------- */
+body {
+  font-family: system-ui, sans-serif; /* neutral */
+  line-height: 1.6;
+}
+
+/* ------------ESTILOS EXCLUSIVOS PÁGINA PROJECTS---------------- */
+
+/* Fondo azul SOLO para esta página */
+body.projects-page {
+  background-color: #b2c1ed !important;
+  min-height: 100vh;
+}
+
+/* html permite que se vea el fondo del body */
+html {
+  min-height: 100%;
+}
+
+/* Cualquier sección blanca aquí */
+.projects-page .cards-section,
+.projects-page .site-footer,
+.projects-page .main-content {
+  background-color: transparent !important;
+}
+
+/* Links sin estilos decorativos */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Listas sin bullets */
+ul {
+  list-style: none;
+}
+
+/* -------- RESET -------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* -------- VARIABLES GLOBALES -------- */
+:root {
+  /* Tipografías */
+  --font-base: system-ui, sans-serif;
+  --font-heading: system-ui, sans-serif;
+
+  /* Colores principales (luego rellenamos) */
+  --color-bg: #f5f5f5;
+  --color-text: #111111;
+  --color-accent: #000000;
+  --color-nav-bg: #ffffff;
+  --color-hero-text: #111111;
+
+  /* Overlays / efectos */
+  --color-hero-overlay: rgba(0, 0, 0, 0.2);
+
+  /* Espaciados */
+  --spacing-section: 4rem;
+  --spacing-container: 90%;
+  --spacing-max-width: 1200px;
+}
+
+/* -------- ESTILO BASE DEL BODY -------- */
+body {
+  font-family: "Unbounded", sans-serif;
+  font-weight: 400; /* Regular */
+  color: #222222; /* Negro suave */
+  line-height: 1.6;
+}
+
+/* Links y listas generales */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+html {
+  scroll-behavior: smooth;
+}

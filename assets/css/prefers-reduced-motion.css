@@ -1,0 +1,45 @@
+/* ======================================
+   ACCESSIBILITY: REDUCED MOTION
+   ====================================== */
+
+/* Disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Stop carousel animations */
+  .carousel-track {
+    animation: none !important;
+  }
+
+  /* Stop blob morphing */
+  .about-btn::before {
+    animation: none !important;
+  }
+
+  /* Stop 404 color change */
+  .error-number {
+    animation: fadeInUp 0.01ms forwards !important;
+    background: #cc1753 !important;
+    -webkit-text-fill-color: #cc1753 !important;
+  }
+
+  /* Stop floating blobs */
+  .blob {
+    animation: none !important;
+  }
+
+  /* Keep scroll effects but instant */
+  .fade-in-scroll,
+  .slide-in-left,
+  .scale-in,
+  .float-in-bottom {
+    transition-duration: 0.01ms !important;
+  }
+}

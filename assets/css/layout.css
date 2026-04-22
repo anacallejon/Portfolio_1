@@ -1,0 +1,650 @@
+.container {
+  width: var(--spacing-container);
+  max-width: var(--spacing-max-width);
+  margin: 0 auto;
+}
+
+.container {
+  width: var(--spacing-container);
+  max-width: var(--spacing-max-width);
+  margin: 0 auto;
+}
+
+/* --------------------------NAVBAR — BASE PARA TODAS LAS PÁGINAS-------------------------- */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  z-index: 9999;
+  background-color: #8b93bc;
+  padding: 0 40px;
+}
+
+/* ENLACES (desktop/tablet por defecto) */
+.nav-links {
+  display: flex;
+  gap: 1.8rem;
+  align-items: center;
+}
+
+.nav-links a {
+  font-family: "Unbounded", sans-serif;
+  font-weight: 600;
+  color: #cc1753;
+  text-decoration: none;
+  transition: opacity 0.25s ease;
+}
+
+.nav-links a:hover {
+  opacity: 0.7;
+}
+
+/* LOGO GENERAL */
+.nav-logo-image {
+  height: 1.5rem;
+  object-fit: contain;
+}
+
+/* ENLACE DEL LOGO */
+.nav-logo-link {
+  display: inline-block;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.nav-logo-link:hover {
+  opacity: 0.8;
+}
+
+/* -----------------------NAVBAR — HOME PAGE (index.html)--------------------------*/
+
+.navbar-home {
+  justify-content: flex-end;
+}
+
+.navbar-home .nav-links {
+  justify-content: flex-end;
+}
+
+/* --------------------------NAVBAR — PROJECTS PAGE (projects.html)-------------------------------- */
+
+.navbar-projects {
+  justify-content: space-between;
+}
+
+.navbar-projects .nav-links {
+  justify-content: flex-end;
+  margin-left: auto;
+}
+
+/* ------------------------------NAVBAR — ABOUT PAGE (about.html)--------------------------------- */
+
+.navbar-about {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 9999;
+  background-color: transparent;
+  padding: 0 40px;
+  box-sizing: border-box;
+  transition: background-color 0.35s ease;
+}
+
+.navbar-about .nav-logo-about {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.navbar-about .nav-links {
+  margin-left: auto;
+}
+
+.navbar-about.scrolled {
+  background-color: #8b93bc;
+}
+
+.navbar-about.scrolled .nav-logo-about {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ---------------------------BOTÓN HAMBURGUESA (base)---------------------------- */
+
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  position: relative;
+  z-index: 10001;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: #cc1753;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Estado abierto: X (cruz) */
+.nav-toggle.nav-open {
+  gap: 0;
+}
+
+.nav-toggle.nav-open span:first-child {
+  transform: rotate(45deg);
+  position: absolute;
+}
+
+.nav-toggle.nav-open span:last-child {
+  transform: rotate(-45deg);
+  position: absolute;
+}
+
+/* ---------------------------------OVERLAY DEL MENÚ (fondo oscuro)-------------------------------------- */
+
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 9000;
+}
+
+.nav-overlay.nav-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ---------------------------------NAVBAR — SOLO MÓVIL (≤768px)----------------------------------------- */
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 20px;
+  }
+
+  /* Mostrar botón hamburguesa en móvil */
+  .nav-toggle {
+    display: flex;
+    margin-left: auto;
+  }
+
+  /* Links ocultos por defecto */
+  .navbar .nav-links {
+    display: none;
+  }
+
+  /* Panel del menú cuando está abierto */
+  .navbar .nav-links.nav-open {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    /* Panel que ocupa aproximadamente 1/3 del alto */
+    min-height: 35vh;
+    width: 100%;
+
+    background-color: #8b93bc; /* Cambiado de #e8eaf3 a morado */
+
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 5rem 2rem 2rem 2rem;
+    gap: 1.5rem;
+
+    /* Animación deslizante desde arriba */
+    transform: translateY(-100%);
+    animation: slideDown 0.4s ease forwards;
+
+    z-index: 10000;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  @keyframes slideDown {
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  .navbar .nav-links.nav-open a {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #cc1753; /* Cambiado de #222 a blanco para contrastar con el morado */
+    padding: 0.5rem 0;
+  }
+
+  /* Bloquear scroll cuando el menú está abierto */
+  body.nav-open {
+    overflow: hidden;
+  }
+
+  /* Ajustes específicos por página */
+  .navbar-home {
+    justify-content: flex-end;
+  }
+
+  .navbar-projects,
+  .navbar-about {
+    justify-content: space-between;
+  }
+}
+
+/* -------------------------------------NAVBAR — ESCRITORIO + TABLET (≥769px)--------------------------------------- */
+
+@media (min-width: 769px) {
+  .nav-toggle {
+    display: none;
+  }
+
+  .navbar .nav-links {
+    position: static;
+    height: auto;
+    width: auto;
+    background: transparent;
+    transform: none;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.8rem;
+    padding: 0;
+    display: flex;
+  }
+}
+
+/* ---------------------------------------HERO--------------------------------------- */
+
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 95vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-hero-text);
+  overflow: hidden;
+  z-index: 1; /* capa base del hero */
+}
+
+/* Hero con fondo fijo (parallax) */
+.hero--fixed-parallax {
+  background-color: #abb8ef;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Overlay del hero por debajo del texto */
+.hero--fixed-parallax::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-hero-overlay);
+  z-index: -1; /* MUY IMPORTANTE: por debajo del hero-text */
+}
+
+/* Contenedor del texto sobre la imagen con animación de aparición */
+.hero-text {
+  position: fixed;
+  left: 90px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2; /* por encima del hero, por debajo del main */
+  text-align: left;
+  pointer-events: none;
+
+  /* Estado inicial: invisible */
+  opacity: 0;
+  transform: translateY(calc(-50% + 30px));
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Estado visible después de la animación */
+.hero-text.hero-visible {
+  opacity: 1;
+  transform: translateY(-50%);
+}
+
+.hero-name {
+  font-family: "Unbounded", sans-serif;
+  font-weight: 700;
+  font-size: 10rem;
+  line-height: 0.9;
+  color: #cc1753;
+}
+
+.hero-job {
+  margin-top: 0rem;
+  font-family: "Unbounded", sans-serif;
+  font-weight: 300;
+  font-size: 2.3rem;
+  color: #cc1753;
+  line-height: 0.7;
+}
+
+.hero-tagline {
+  margin-top: 1.5rem;
+  font-family: "Petit Formal Script", cursive;
+  font-size: 2.3rem;
+  color: #cc1753;
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  font-family: "Petit Formal Script", cursive;
+  margin-right: 80px;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+/* ------ TITLES (SECTION TITLES) ------ */
+
+.section-title {
+  font-family: "Unbounded", sans-serif;
+  font-weight: 600; /* semibold */
+  color: #cc1753; /* tu rosa */
+  text-align: left;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  margin-top: 1rem;
+}
+
+.intro-section .section-title {
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .hero--fixed-parallax {
+    background-attachment: scroll;
+  }
+}
+
+.color {
+  color: #cc1753;
+  text-decoration: underline;
+}
+
+/* ------ FEATURED PROJECTS / CARRUSEL DOBLE ------ */
+
+.intro-section {
+  padding-top: 2rem;
+  padding-bottom: var(--spacing-section);
+  background-color: #ffffff;
+}
+
+.carousel-double {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem; /* antes 2rem */
+  overflow: hidden;
+}
+
+.carousel-row {
+  overflow: hidden;
+}
+
+.main-content {
+  position: relative;
+  z-index: 3; /* por encima del texto fijo */
+  background-color: #ffffff;
+}
+
+/* Sección featured */
+.intro-section {
+  padding-top: 3.5rem;
+  padding-bottom: var(--spacing-section);
+  background-color: #ffffff;
+}
+
+/* -------------------------------ABOUT SECTION (PARALLAX)----------------------------------- */
+
+.about-section {
+  position: relative;
+  width: 100%;
+  min-height: 35vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  background-color: #8b93bc;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #f7f5f0;
+  overflow: visible; /* Permitir que el blob se vea */
+}
+
+/* CONTENEDOR GENERAL: MAX WIDTH MUCHO MAYOR */
+.about-content {
+  width: 100%;
+  max-width: 1400px;
+  padding: 4rem 3rem; /* Aumentado de 3rem a 4rem verticalmente */
+  margin: 0 auto;
+  box-sizing: border-box;
+  overflow: visible; /* Permitir que el blob se vea fuera del contenedor */
+}
+
+.about-title {
+  color: #cc1753;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+/* TEXTO PRINCIPAL: ANCHURA TOTAL DEL CONTENEDOR */
+.about-text {
+  margin: 1.2rem auto 0 auto;
+  max-width: 95%;
+  font-family: "Unbounded", sans-serif;
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #f7f5f0;
+  margin-bottom: 2rem;
+}
+
+/* BOTÓN */
+.about-btn {
+  margin-top: 0.7rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* MÓVIL */
+@media (max-width: 768px) {
+  .about-section {
+    background-attachment: scroll;
+  }
+
+  .about-content {
+    padding: 2rem 1.2rem;
+    max-width: 100%;
+  }
+
+  .about-text {
+    max-width: 100%;
+  }
+}
+
+/* --------------------------------FOOTER MINIMAL-------------------------------- */
+
+.site-footer {
+  padding: 4rem 0;
+  text-align: center;
+  background-color: #ffffff;
+}
+
+.site-footer p {
+  font-family: "Unbounded", sans-serif;
+  font-weight: 300;
+  color: #222;
+  font-size: 0.8rem;
+  opacity: 0.85;
+  margin: 0;
+}
+
+/* ----------------------------TEXTO SOBRE EL PARALLAX — PROJECTS PAGE------------------------------ */
+
+.projects-hero-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -45%);
+  text-align: center;
+
+  width: min(90%, 700px);
+  color: #f4f4f4;
+  z-index: 5;
+  pointer-events: none;
+
+  /* Estado inicial: invisible */
+  opacity: 0;
+  transform: translate(-50%, calc(-45% + 30px));
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Estado visible después de la animación */
+.projects-hero-text.hero-visible {
+  opacity: 1;
+  transform: translate(-50%, -45%);
+}
+
+.projects-hero-title {
+  font-family: "Unbounded", sans-serif;
+  font-weight: 600;
+  font-size: 4rem;
+  line-height: 1;
+  color: #f4f4f4;
+  margin-bottom: 1rem;
+}
+
+.projects-hero-description {
+  font-family: "Unbounded", sans-serif;
+  font-weight: 300;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: #f4f4f4;
+  max-width: 700px;
+  margin: 0 auto;
+  opacity: 0.9;
+  z-index: 50;
+}
+
+/* Empuja TODO el contenido de projects por debajo de la navbar */
+body.projects-page {
+  padding-top: 80px;
+}
+
+.top-parallax {
+  height: 40vh;
+  margin-top: 0;
+  position: relative;
+  background-color: #8b93bc;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+}
+
+/* Banda de fondo entre carrusel y want-to-know-more */
+.experience-area {
+  background-color: #e3e7f5;
+  padding-top: 3rem;
+  padding-bottom: 5rem;
+}
+
+/* -------------------------HERO RESPONSIVE - SOLO MÓVIL---------------------------- */
+
+/* MÓVIL (≤ 768px) */
+@media (max-width: 768px) {
+  .hero--fixed-parallax {
+    background-attachment: scroll;
+  }
+
+  .hero {
+    min-height: auto;
+    padding: 120px 20px 48px;
+    align-items: flex-start;
+    justify-content: left;
+  }
+
+  .hero-text {
+    position: static;
+    left: auto;
+    top: auto;
+    transform: none;
+    text-align: left;
+    pointer-events: auto;
+
+    /* Mantener la animación en móvil pero ajustar el transform */
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .hero-text.hero-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hero-name {
+    font-size: 3.2rem;
+    line-height: 1.05;
+  }
+
+  .hero-tagline {
+    font-size: 1.5rem;
+    margin-top: 1rem; /* Aumentado de 0.5rem a 1rem */
+  }
+
+  .hero-job {
+    font-size: 1.5rem;
+    margin-top: 0.2rem; /* Reducido de 0.5rem a 0.2rem para acercar */
+    line-height: 1.2; /* Aumentado de 0.4 a 1.2 */
+  }
+
+  /* Projects hero también en móvil */
+  .projects-hero-text {
+    position: absolute;
+    transform: translate(-50%, calc(-45% + 30px));
+    opacity: 0;
+  }
+
+  .projects-hero-text.hero-visible {
+    transform: translate(-50%, -45%);
+    opacity: 1;
+  }
+}
