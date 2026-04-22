@@ -136,8 +136,8 @@
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  border: 2px solid #b2c1ed;
-  background-color: #b2c1ed;
+  border: 2px solid #ede8e1;
+  background-color: #ede8e1;
   pointer-events: none;
   transform: translate(-50%, -50%);
   z-index: 99999;
@@ -164,7 +164,7 @@
   margin: 0 auto;
   padding: 3rem 3rem;
   border-radius: 24px;
-  background: #cbd1ea;
+  background: #ede8e1;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(255, 255, 255, 0.45);
@@ -177,7 +177,7 @@
   margin-bottom: 2rem;
   font-family: "Unbounded", sans-serif;
   font-weight: 600;
-  color: #cc1753;
+  color: #e34a6f;
   font-size: 2rem;
 }
 
@@ -214,7 +214,7 @@
 .social-icon {
   width: 50px;
   height: 50px;
-  background-color: #8b93bc;
+  background-color: #4a4a4a;
   border-radius: 10px;
   flex-shrink: 0;
   display: flex;
@@ -240,7 +240,7 @@
   font-family: "Unbounded", sans-serif;
   font-weight: 600;
   font-size: 0.95rem;
-  color: #222;
+  color: #1a1a1a;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -249,7 +249,7 @@
   font-family: "Unbounded", sans-serif;
   font-weight: 300;
   font-size: 0.85rem;
-  color: #444;
+  color: #4a4a4a;
 }
 
 /* -----------COLUMNA DERECHA: FORMULARIO--------- */
@@ -262,7 +262,7 @@
 .contact-text {
   font-family: "Unbounded", sans-serif;
   font-weight: 300;
-  color: #222;
+  color: #1a1a1a;
   margin-bottom: 1.4rem;
   line-height: 1.6;
   font-size: 0.9rem;
@@ -278,7 +278,7 @@
 .contact-label {
   font-family: "Unbounded", sans-serif;
   font-weight: 300;
-  color: #222;
+  color: #1a1a1a;
   margin-top: 0.5rem;
   margin-bottom: 0.05rem;
   font-size: 0.9rem;
@@ -291,9 +291,9 @@
   font-size: 1rem;
   font-family: "Unbounded", sans-serif;
   font-weight: 300;
-  color: #222;
+  color: #1a1a1a;
   transition: 0.2s ease;
-  background-color: white;
+  background-color: #f5f5f5;
 }
 
 .contact-input::placeholder {
@@ -305,13 +305,13 @@
 
 .contact-input:focus {
   outline: none;
-  border-color: #cc1753;
-  box-shadow: 0 0 0 3px rgba(204, 23, 83, 0.2);
+  border-color: #e34a6f;
+  box-shadow: 0 0 0 3px rgba(227, 74, 111, 0.15);
 }
 
 .contact-btn {
   padding: 0.9rem 1.5rem;
-  background-color: #cc1753;
+  background-color: #e34a6f;
   color: white;
   border: none;
   border-radius: 12px;
@@ -325,7 +325,7 @@
 }
 
 .contact-btn:hover {
-  background-color: #a41342;
+  background-color: #c13559;
 }
 
 /* ---------------------TWO-COLUMN OFFSET CARDS----------------------- */
@@ -349,8 +349,8 @@
 .filter-btn {
   padding: 0.7rem 1.8rem;
   background-color: transparent;
-  color: #222;
-  border: 2px solid #8b93bc;
+  color: #1a1a1a;
+  border: 2px solid #4a4a4a;
   border-radius: 25px;
   font-family: "Unbounded", sans-serif;
   font-weight: 400;
@@ -361,20 +361,20 @@
 }
 
 .filter-btn:hover {
-  background-color: #8b93bc;
+  background-color: #4a4a4a;
   color: white;
   transform: translateY(-2px);
 }
 
 .filter-btn.active {
-  background-color: #cc1753;
+  background-color: #e34a6f;
   color: white;
-  border-color: #cc1753;
+  border-color: #e34a6f;
 }
 
 .filter-btn.active:hover {
-  background-color: #a41342;
-  border-color: #a41342;
+  background-color: #c13559;
+  border-color: #c13559;
 }
 
 .card.hidden {
@@ -428,7 +428,7 @@
 
 .cards-section {
   padding: 3rem 0 6rem 0;
-  background-color: white;
+  background-color: #f5f5f5;
 }
 
 .cards-grid {
@@ -446,7 +446,7 @@
   border-radius: 20px;
   overflow: hidden;
   margin-bottom: 50px;
-  border: 12px solid #b2c1ed;
+  border: 12px solid #ede8e1;
   box-sizing: border-box;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
   display: flex;
@@ -496,7 +496,7 @@
   position: relative;
   z-index: 3;
   padding: 1.5rem;
-  color: #222;
+  color: #1a1a1a;
 }
 
 .left-column .card-title,
@@ -512,7 +512,7 @@
 .card-title {
   font-family: "Unbounded", sans-serif;
   font-weight: 600;
-  color: #cc1753;
+  color: #e34a6f;
   margin-bottom: 0.6rem;
   font-size: 1.3rem;
 }
@@ -520,7 +520,7 @@
 .card-text {
   font-family: "Unbounded", sans-serif;
   font-weight: 300;
-  color: #222;
+  color: #1a1a1a;
   line-height: 1.5;
   font-size: 0.8rem;
 }
@@ -585,7 +585,7 @@
   width: min(95vw, 1600px);
   height: auto;
   max-height: 90vh;
-  background: rgba(178, 193, 237, 0.95);
+  background: rgba(237, 232, 225, 0.97);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border-radius: 24px;
@@ -629,7 +629,7 @@
   position: absolute;
   width: 20px;
   height: 2px;
-  background-color: #cc1753;
+  background-color: #e34a6f;
   border-radius: 2px;
 }
 
@@ -643,7 +643,7 @@
 
 .project-modal-close:hover::before,
 .project-modal-close:hover::after {
-  background-color: #a41342;
+  background-color: #c13559;
 }
 
 .project-modal-content {
@@ -672,7 +672,7 @@
   font-family: "Unbounded", sans-serif;
   font-weight: 300;
   font-size: clamp(0.9rem, 1vw, 1.1rem);
-  color: #222;
+  color: #1a1a1a;
   line-height: 1.6;
   text-align: left;
 }
@@ -696,7 +696,7 @@ body.projects-page.modal-open {
 }
 
 body.projects-page.modal-open .navbar {
-  background-color: rgba(178, 193, 237, 0.75) !important;
+  background-color: rgba(237, 232, 225, 0.85) !important;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
@@ -730,7 +730,7 @@ body.projects-page.modal-open .navbar {
 
   .project-modal-text .card-title {
     font-size: 1.4rem;
-    color: #cc1753;
+    color: #e34a6f;
     margin-bottom: 0.8rem;
   }
 
@@ -773,7 +773,7 @@ body.projects-page.modal-open .navbar {
   content: "";
   position: absolute;
   inset: 0;
-  background: #cc1753;
+  background: #e34a6f;
   z-index: -1;
   border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
   animation: morphBlob 15s ease-in-out infinite;
@@ -781,7 +781,7 @@ body.projects-page.modal-open .navbar {
 }
 
 .about-btn:hover::before {
-  background: #a41342;
+  background: #c13559;
   animation-play-state: paused;
 }
 
@@ -832,7 +832,7 @@ body.projects-page.modal-open .navbar {
 .experience-header {
   padding: 5rem 0 3rem;
   text-align: center;
-  background-color: #e3e7f5;
+  background-color: #ede8e1;
 }
 
 .experience-title {
@@ -840,7 +840,7 @@ body.projects-page.modal-open .navbar {
   font-weight: 600;
   font-size: 2.4rem;
   margin-bottom: 0.8rem;
-  color: #111111;
+  color: #1a1a1a;
 }
 
 .experience-subtitle {
@@ -849,7 +849,7 @@ body.projects-page.modal-open .navbar {
   font-family: "Unbounded", sans-serif;
   font-weight: 300;
   font-size: 0.95rem;
-  color: #444444;
+  color: #4a4a4a;
 }
 
 .experience-grid {
@@ -875,7 +875,7 @@ body.projects-page.modal-open .navbar {
   margin: 70px auto;
   padding: 32px 40px 28px;
   border-radius: 12px;
-  background: #cbd1ea;
+  background: #ede8e1;
   border: 1px solid #f2f2f2;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
   backdrop-filter: blur(10px);
@@ -888,7 +888,7 @@ body.projects-page.modal-open .navbar {
   left: 24px;
   font-family: "Petit Formal Script", cursive;
   font-size: 32px;
-  color: #cc1753;
+  color: #e34a6f;
   padding: 0 14px;
   border-radius: 20px;
 }
@@ -899,7 +899,7 @@ body.projects-page.modal-open .navbar {
   font-weight: 300;
   font-size: 0.9rem;
   line-height: 1.6;
-  color: #333333;
+  color: #4a4a4a;
 }
 
 .box-columns {
@@ -918,7 +918,7 @@ body.projects-page.modal-open .navbar {
   margin-bottom: 0.4rem;
   margin-top: 1.2rem;
   font-size: 0.95rem;
-  color: #cc1753;
+  color: #e34a6f;
 }
 
 .content-box ul {
@@ -926,7 +926,7 @@ body.projects-page.modal-open .navbar {
   padding: 0;
   list-style: disc;
   font-size: 0.9rem;
-  color: #333333;
+  color: #4a4a4a;
 }
 
 @media (max-width: 768px) {
@@ -1044,7 +1044,7 @@ body.projects-page.modal-open .navbar {
   font-family: "Unbounded", sans-serif;
   font-weight: 300;
   font-size: 0.85rem;
-  color: #cc1753;
+  color: #e34a6f;
   z-index: 100;
   animation: bounce 2s infinite;
   transition: opacity 0.5s ease;
@@ -1229,7 +1229,7 @@ body.projects-page.modal-open .navbar {
 /* ---------------------------404 ERROR PAGE--------------------------------- */
 
 .error-page {
-  background-color: #8b93bc;
+  background-color: #4a4a4a;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -1264,11 +1264,11 @@ body.projects-page.modal-open .navbar {
     colorChange 12s ease-in-out infinite;
   background: linear-gradient(
     90deg,
-    #cc1753 0%,
-    #cc1753 35%,
+    #e34a6f 0%,
+    #e34a6f 35%,
     #df6595 50%,
-    #b2c1ed 65%,
-    #b2c1ed 100%
+    #ede8e1 65%,
+    #ede8e1 100%
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1311,7 +1311,7 @@ body.projects-page.modal-open .navbar {
   font-family: "Unbounded", sans-serif;
   font-weight: 300;
   font-size: clamp(0.9rem, 2vw, 1.1rem);
-  color: #f7f5f0;
+  color: #f5f5f5;
   line-height: 1.6;
   margin-bottom: 2.5rem;
   opacity: 0;
@@ -1343,14 +1343,14 @@ body.projects-page.modal-open .navbar {
 }
 
 .error-btn-primary {
-  background-color: #cc1753;
+  background-color: #e34a6f;
   color: #fff;
 }
 
 .error-btn-primary:hover {
-  background-color: #a41342;
+  background-color: #c13559;
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(204, 23, 83, 0.3);
+  box-shadow: 0 8px 20px rgba(227, 74, 111, 0.25);
 }
 
 .error-btn-secondary {
@@ -1379,7 +1379,7 @@ body.projects-page.modal-open .navbar {
 
 .blob {
   position: absolute;
-  background: rgba(178, 193, 237, 0.2);
+  background: rgba(227, 74, 111, 0.1);
   border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
   opacity: 0.4;
 }
@@ -1528,7 +1528,7 @@ body.projects-page.modal-open .navbar {
 
 /* Focus visible en links */
 a:focus-visible {
-  outline: 2px solid #cc1753;
+  outline: 2px solid #e34a6f;
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -1536,13 +1536,13 @@ a:focus-visible {
 /* Focus en botones */
 button:focus-visible,
 .btn:focus-visible {
-  outline: 2px solid #cc1753;
+  outline: 2px solid #e34a6f;
   outline-offset: 2px;
 }
 
 /* Focus en inputs del formulario */
 .contact-input:focus-visible {
-  outline: 2px solid #cc1753;
+  outline: 2px solid #e34a6f;
   outline-offset: 2px;
 }
 
@@ -1552,6 +1552,6 @@ button:focus-visible,
 }
 
 *:focus-visible {
-  outline: 2px solid #cc1753;
+  outline: 2px solid #e34a6f;
   outline-offset: 2px;
 }

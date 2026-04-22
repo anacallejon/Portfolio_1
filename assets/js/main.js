@@ -6,8 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const cursor = document.querySelector(".custom-cursor");
 
   if (cursor) {
-    const COLOR1 = "rgb(178, 193, 237)"; // #b2c1ed
-    const COLOR2 = "rgb(139, 147, 188)"; // #8b93bc
+    const COLOR1 = "rgb(227, 74, 111)"; // #E34A6F
+    const COLOR2 = "rgb(193, 53, 89)"; // #C13559
 
     // Mover el cursor y cambiar color según el fondo
     document.addEventListener("mousemove", (e) => {
@@ -74,6 +74,20 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ==============================
+  // CARRUSEL CLICABLE (index.html)
+  // Al hacer click en un carousel-item--link navega a projects.html?project=ID
+  // ==============================
+  const carouselLinks = document.querySelectorAll(".carousel-item--link");
+  carouselLinks.forEach((item) => {
+    item.addEventListener("click", () => {
+      const projectId = item.getAttribute("data-project");
+      if (projectId) {
+        window.location.href = `./projects.html?project=${projectId}`;
+      }
+    });
+  });
+
+  // ==============================
   // MODAL DE PROYECTOS (projects.html)
   // ==============================
   if (document.body.classList.contains("projects-page")) {
@@ -121,52 +135,62 @@ document.addEventListener("DOMContentLoaded", () => {
       document.body.classList.remove("modal-open");
     };
 
+    // Función reutilizable para abrir el modal de un proyecto por su ID
+    const openModalById = (projectId) => {
+      const card = document.querySelector(`[data-project="${projectId}"]`);
+      if (!card) return;
+
+      const detail = document.getElementById(projectId);
+
+      modalText.innerHTML = "";
+      if (detail) {
+        const detailTitle = detail.querySelector("h3");
+        const detailText = detail.querySelector("p");
+        if (detailTitle) modalText.appendChild(detailTitle.cloneNode(true));
+        if (detailText) modalText.appendChild(detailText.cloneNode(true));
+      } else {
+        const titleEl = card.querySelector(".card-title");
+        const textEl = card.querySelector(".card-text");
+        if (titleEl) modalText.appendChild(titleEl.cloneNode(true));
+        if (textEl) modalText.appendChild(textEl.cloneNode(true));
+      }
+
+      modalImages.innerHTML = "";
+      const dataImages = card.getAttribute("data-images");
+      const imgEl = card.querySelector(".card-img");
+      let sources = [];
+      if (dataImages && dataImages.trim() !== "") {
+        sources = dataImages.split(",").map((s) => s.trim());
+      } else if (imgEl && imgEl.src) {
+        sources = [imgEl.src];
+      }
+      sources.forEach((src) => {
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = "";
+        modalImages.appendChild(img);
+      });
+
+      backdrop.classList.add("is-open");
+      document.body.classList.add("modal-open");
+    };
+
+    // Comprobar si la URL tiene ?project=ID para abrir el modal al cargar
+    const urlParams = new URLSearchParams(window.location.search);
+    const projectParam = urlParams.get("project");
+    if (projectParam) {
+      // Pequeño delay para que las animaciones de entrada no bloqueen
+      setTimeout(() => openModalById(projectParam), 400);
+      // Limpiar el parámetro de la URL sin recargar la página
+      window.history.replaceState({}, "", window.location.pathname);
+    }
+
     // Solo si existen todos los elementos necesarios
     if (backdrop && cards.length > 0 && modalText && modalImages) {
       // Abrir modal al hacer click en cada card
       cards.forEach((card) => {
         card.addEventListener("click", () => {
-          const projectId = card.getAttribute("data-project");
-          const detail = projectId ? document.getElementById(projectId) : null;
-
-          // Reset contenido de texto
-          modalText.innerHTML = "";
-
-          // Texto largo desde bloque oculto o fallback desde la card
-          if (detail) {
-            const detailTitle = detail.querySelector("h3");
-            const detailText = detail.querySelector("p");
-            if (detailTitle) modalText.appendChild(detailTitle.cloneNode(true));
-            if (detailText) modalText.appendChild(detailText.cloneNode(true));
-          } else {
-            const titleEl = card.querySelector(".card-title");
-            const textEl = card.querySelector(".card-text");
-            if (titleEl) modalText.appendChild(titleEl.cloneNode(true));
-            if (textEl) modalText.appendChild(textEl.cloneNode(true));
-          }
-
-          // Imágenes del proyecto
-          modalImages.innerHTML = "";
-          const dataImages = card.getAttribute("data-images");
-          const imgEl = card.querySelector(".card-img");
-          let sources = [];
-
-          if (dataImages && dataImages.trim() !== "") {
-            sources = dataImages.split(",").map((s) => s.trim());
-          } else if (imgEl && imgEl.src) {
-            sources = [imgEl.src];
-          }
-
-          sources.forEach((src) => {
-            const img = document.createElement("img");
-            img.src = src;
-            img.alt = "";
-            modalImages.appendChild(img);
-          });
-
-          // Mostrar modal + bloquear scroll de fondo
-          backdrop.classList.add("is-open");
-          document.body.classList.add("modal-open");
+          openModalById(card.getAttribute("data-project"));
         });
       });
 
