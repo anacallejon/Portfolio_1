@@ -24,7 +24,7 @@ body {
 
 /* Fondo azul SOLO para esta página */
 body.projects-page {
-  background-color: #ede8e1 !important;
+  background-color: #416844 !important;
   min-height: 100vh;
 }
 
@@ -65,11 +65,11 @@ ul {
   --font-heading: system-ui, sans-serif;
 
   /* Colores principales (luego rellenamos) */
-  --color-bg: #f5f5f5;
-  --color-text: #1a1a1a;
+  --color-bg: #ede8e1;
+  --color-text: #f5f5f5;
   --color-accent: #000000;
-  --color-nav-bg: #ede8e1;
-  --color-hero-text: #1a1a1a;
+  --color-nav-bg: #416844;
+  --color-hero-text: #f5f5f5;
 
   /* Overlays / efectos */
   --color-hero-overlay: rgba(0, 0, 0, 0);
@@ -84,7 +84,7 @@ ul {
 body {
   font-family: "Unbounded", sans-serif;
   font-weight: 400; /* Regular */
-  color: #1a1a1a; /* Negro suave */
+  color: #f5f5f5; /* Negro suave */
   line-height: 1.6;
 }
 
@@ -102,7 +102,276 @@ html {
   scroll-behavior: smooth;
 }
 
-/* About section en projects-page → fondo blanco */
-.projects-page .about-section {
+/* About section → fondo verde oscuro */
+.about-section {
+  background-color: #1a3320 !important;
+}
+
+/* ==============================
+   LIGHT MODE — paleta original
+   ============================== */
+
+/* Fondos */
+html:not(.dark-mode) body,
+html:not(.dark-mode) body.projects-page {
   background-color: #f5f5f5 !important;
+}
+html:not(.dark-mode) .navbar {
+  background-color: #ede8e1 !important;
+}
+html:not(.dark-mode) .navbar-about.scrolled {
+  background-color: #ede8e1 !important;
+}
+html:not(.dark-mode) .hero--fixed-parallax,
+html:not(.dark-mode) .hero {
+  background-color: #ede8e1 !important;
+}
+html:not(.dark-mode) .top-parallax {
+  background-color: #ede8e1 !important;
+}
+html:not(.dark-mode) .cards-section {
+  background-color: #ede8e1 !important;
+}
+html:not(.dark-mode) .filters-section {
+  background-color: transparent !important;
+}
+html:not(.dark-mode) .site-footer {
+  background-color: #f5f5f5 !important;
+}
+html:not(.dark-mode) .about-page-content,
+html:not(.dark-mode) .intro-section,
+html:not(.dark-mode) .main-content {
+  background-color: #f5f5f5 !important;
+}
+html:not(.dark-mode) .about-section {
+  background-color: #ede8e1 !important;
+}
+html:not(.dark-mode) .contact-box {
+  background: #ede8e1 !important;
+}
+html:not(.dark-mode) .contact-input {
+  background-color: #f5f5f5 !important;
+  color: #1a1a1a !important;
+}
+
+/* Content boxes: fondo verde, texto crema, títulos verde oscuro */
+html:not(.dark-mode) .content-box {
+  background: rgba(65, 104, 68, 0.85) !important;
+  border-color: rgba(65, 104, 68, 0.3) !important;
+}
+html:not(.dark-mode) .box-title {
+  color: #1a3320 !important;
+}
+html:not(.dark-mode) .box-text {
+  color: #ede8e1 !important;
+}
+html:not(.dark-mode) .content-box ul {
+  color: #ede8e1 !important;
+}
+html:not(.dark-mode) .box-column h4 {
+  color: #1a3320 !important;
+}
+html:not(.dark-mode) .dot--full {
+  background-color: #ede8e1 !important;
+}
+html:not(.dark-mode) .dot--empty {
+  border-color: #ede8e1 !important;
+  background: transparent !important;
+}
+html:not(.dark-mode) .dot--half {
+  background: linear-gradient(90deg, #ede8e1 50%, transparent 50%) !important;
+  border-color: #ede8e1 !important;
+}
+
+/* Textos hero */
+html:not(.dark-mode) .hero-name {
+  color: #416844 !important;
+}
+html:not(.dark-mode) .hero-tagline {
+  color: #416844 !important;
+}
+html:not(.dark-mode) .hero-job {
+  color: #1a1a1a !important;
+}
+html:not(.dark-mode) .projects-hero-title {
+  color: #416844 !important;
+}
+html:not(.dark-mode) .projects-hero-description {
+  color: #416844 !important;
+}
+
+/* Navbar */
+html:not(.dark-mode) .nav-links a {
+  color: #416844 !important;
+}
+html:not(.dark-mode) .nav-links a::after {
+  background-color: #416844 !important;
+}
+html:not(.dark-mode) .nav-toggle span {
+  background-color: #416844 !important;
+}
+
+/* Textos generales */
+html:not(.dark-mode) .section-title {
+  color: #416844 !important;
+}
+html:not(.dark-mode) .about-title {
+  color: #416844 !important;
+}
+html:not(.dark-mode) .about-text {
+  color: #1a1a1a !important;
+}
+html:not(.dark-mode) .site-footer p {
+  color: #1a1a1a !important;
+}
+html:not(.dark-mode) .lang-btn {
+  color: #1a1a1a !important;
+}
+
+/* Contact */
+html:not(.dark-mode) .contact-title {
+  color: #416844 !important;
+}
+html:not(.dark-mode) .contact-text {
+  color: #1a1a1a !important;
+}
+html:not(.dark-mode) .contact-label {
+  color: #1a1a1a !important;
+}
+html:not(.dark-mode) .contact-text .color {
+  color: #416844 !important;
+}
+html:not(.dark-mode) .social-name {
+  color: #1a1a1a !important;
+}
+html:not(.dark-mode) .social-handle {
+  color: #4a4a4a !important;
+}
+html:not(.dark-mode) .social-icon {
+  background-color: #416844 !important;
+}
+html:not(.dark-mode) .contact-btn {
+  background-color: #416844 !important;
+  color: #f5f5f5 !important;
+  border-color: #416844 !important;
+}
+html:not(.dark-mode) .contact-btn:hover {
+  background-color: #2e4a30 !important;
+}
+
+/* Filtros */
+html:not(.dark-mode) .filter-btn {
+  color: #1a1a1a !important;
+  border-color: #4a4a4a !important;
+  background: transparent !important;
+}
+html:not(.dark-mode) .filter-btn:hover {
+  background-color: #1a3320 !important;
+  color: #ede8e1 !important;
+  border-color: #1a3320 !important;
+}
+html:not(.dark-mode) .filter-btn.active {
+  background-color: #416844 !important;
+  color: #f5f5f5 !important;
+  border-color: #416844 !important;
+}
+
+/* Dropdown idioma */
+html:not(.dark-mode) .lang-dropdown-btn {
+  color: #416844 !important;
+  border-color: #416844 !important;
+}
+html:not(.dark-mode) .lang-dropdown-menu {
+  border-color: #416844 !important;
+  background: #ede8e1 !important;
+}
+html:not(.dark-mode) .lang-option {
+  color: #416844 !important;
+}
+
+/* Theme toggle: sin borde, solo imagen */
+html:not(.dark-mode) .theme-toggle {
+  border: none !important;
+  background: none !important;
+}
+html.dark-mode .theme-toggle {
+  border: none !important;
+  background: none !important;
+}
+
+/* Cards */
+html:not(.dark-mode) .card {
+  border-color: #ede8e1 !important;
+}
+html:not(.dark-mode) .project-modal {
+  background: rgba(237, 232, 225, 0.97) !important;
+}
+html:not(.dark-mode) .project-modal-text .card-title {
+  color: #416844 !important;
+}
+html:not(.dark-mode) .project-modal-text .card-text {
+  color: #1a1a1a !important;
+}
+
+/* ==============================
+   DARK MODE — ajustes específicos
+   ============================== */
+
+/* About page: fondo secciones crema, cajas verde, titulo verde oscuro, texto crema */
+html.dark-mode .about-page-content,
+html.dark-mode .experience-header {
+  background-color: #ede8e1 !important;
+}
+
+html.dark-mode .content-box {
+  background: #416844 !important;
+  border-color: rgba(237, 232, 225, 0.2) !important;
+}
+
+html.dark-mode .box-title {
+  color: #1a3320 !important;
+}
+
+html.dark-mode .box-text,
+html.dark-mode .content-box ul,
+html.dark-mode .content-box p {
+  color: #ede8e1 !important;
+}
+
+html.dark-mode .box-column h4 {
+  color: #ede8e1 !important;
+}
+
+html.dark-mode .dot--full {
+  background-color: #ede8e1 !important;
+}
+
+html.dark-mode .dot--empty {
+  border-color: #ede8e1 !important;
+}
+
+html.dark-mode .dot--half {
+  background: linear-gradient(90deg, #ede8e1 50%, transparent 50%) !important;
+  border-color: #ede8e1 !important;
+}
+
+/* Fondo tarjetas proyectos: crema */
+html.dark-mode .cards-section {
+  background-color: #ede8e1 !important;
+}
+
+/* Hero job (Diseño Gráfico) en verde */
+html.dark-mode .hero-job,
+html.dark-mode .experience-subtitle-line2 {
+  color: #f5f5f5 !important;
+}
+
+/* Email en contacto: verde normal */
+html.dark-mode .color {
+  color: #f5f5f5 !important;
+}
+
+/* Correo en modo claro: verde */
+html:not(.dark-mode) .color {
+  color: #416844 !important;
 }

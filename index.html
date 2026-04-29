@@ -128,13 +128,31 @@
           <a href="#contact" data-es="Contacto" data-en="Contact">Contacto</a>
         </li>
       </ul>
-      <div class="lang-dropdown">
-        <button class="lang-dropdown-btn" aria-expanded="false">
-          ES <span class="lang-arrow">▾</span>
+      <div class="nav-controls">
+        <button
+          class="theme-toggle"
+          id="theme-toggle"
+          aria-label="Cambiar tema"
+        >
+          <img
+            class="theme-icon theme-icon--light"
+            src="https://ik.imagekit.io/anacallejon/img_portfolio/claro1.png"
+            alt="Modo claro"
+          />
+          <img
+            class="theme-icon theme-icon--dark"
+            src="https://ik.imagekit.io/anacallejon/img_portfolio/oscuro1.png"
+            alt="Modo oscuro"
+          />
         </button>
-        <ul class="lang-dropdown-menu">
-          <li><button class="lang-option" data-lang="en">EN</button></li>
-        </ul>
+        <div class="lang-dropdown">
+          <button class="lang-dropdown-btn" aria-expanded="false">
+            ES <span class="lang-arrow">▾</span>
+          </button>
+          <ul class="lang-dropdown-menu">
+            <li><button class="lang-option" data-lang="en">EN</button></li>
+          </ul>
+        </div>
       </div>
     </nav>
 
@@ -450,10 +468,10 @@
         <div class="contact-box">
           <h2
             class="contact-title"
-            data-es="¡Cuéntame que piensas!"
+            data-es="¡Contacta conmigo!"
             data-en="Let's Connect!"
           >
-            ¡Cuéntame que piensas!
+            ¡Contacta conmigo!
           </h2>
 
           <div class="contact-content">
@@ -468,7 +486,10 @@
               >
                 <div class="social-icon">
                   <img
-                    src="https://ik.imagekit.io/anacallejon/img_portfolio/insta1.png"
+                    src="https://ik.imagekit.io/anacallejon/img_portfolio/insta1.png?updatedAt=1776855141774"
+                    class="rrss-icon"
+                    data-dark="https://ik.imagekit.io/anacallejon/img_portfolio/insta1.png?updatedAt=1776855141774"
+                    data-light="https://ik.imagekit.io/anacallejon/img_portfolio/insta1.png?updatedAt=1776855141774"
                     alt="Instagram"
                   />
                 </div>
@@ -487,7 +508,10 @@
               >
                 <div class="social-icon">
                   <img
-                    src="https://ik.imagekit.io/anacallejon/img_portfolio/linkedin1.png"
+                    src="https://ik.imagekit.io/anacallejon/img_portfolio/linkedin1.png?updatedAt=1776855141774"
+                    class="rrss-icon"
+                    data-dark="https://ik.imagekit.io/anacallejon/img_portfolio/linkedin1.png?updatedAt=1776855141774"
+                    data-light="https://ik.imagekit.io/anacallejon/img_portfolio/linkedin1.png"
                     alt="LinkedIn"
                   />
                 </div>
@@ -555,5 +579,35 @@
     </footer>
 
     <script src="assets/js/main.js"></script>
+
+    <!-- LIGHTBOX -->
+    <div
+      class="lightbox-backdrop"
+      id="lightbox"
+      role="dialog"
+      aria-modal="true"
+    >
+      <button
+        class="lightbox-close"
+        id="lightbox-close"
+        aria-label="Cerrar"
+      ></button>
+      <button
+        class="lightbox-arrow lightbox-arrow--prev"
+        id="lightbox-prev"
+        aria-label="Anterior"
+      >
+        &#8592;
+      </button>
+      <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+      <button
+        class="lightbox-arrow lightbox-arrow--next"
+        id="lightbox-next"
+        aria-label="Siguiente"
+      >
+        &#8594;
+      </button>
+      <span class="lightbox-counter" id="lightbox-counter"></span>
+    </div>
   </body>
 </html>

@@ -148,6 +148,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
       backdrop.classList.add("is-open");
       document.body.classList.add("modal-open");
+
+      // Adjuntar lightbox a las imágenes recién inyectadas
+      setTimeout(() => {
+        const imgs = document.querySelectorAll(".project-modal-images img");
+        const sources = Array.from(imgs).map((img) => img.src);
+        imgs.forEach((img, i) => {
+          img.style.cursor = "zoom-in";
+          img.addEventListener("click", (e) => {
+            e.stopPropagation();
+            openLightbox(sources, i);
+          });
+        });
+      }, 50);
     };
 
     // Abrir modal desde URL ?project=ID
@@ -172,6 +185,63 @@ document.addEventListener("DOMContentLoaded", () => {
     if (modalCloseBtn) {
       modalCloseBtn.addEventListener("click", closeModal);
     }
+
+    // ===== LIGHTBOX =====
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
+    const lightboxClose = document.getElementById("lightbox-close");
+    const lightboxPrev = document.getElementById("lightbox-prev");
+    const lightboxNext = document.getElementById("lightbox-next");
+    const lightboxCounter = document.getElementById("lightbox-counter");
+
+    let lightboxImages = [];
+    let lightboxIndex = 0;
+
+    const showLightboxImage = (index, animate = true) => {
+      lightboxIndex = index;
+      if (animate) {
+        lightboxImg.classList.add("is-transitioning");
+        setTimeout(() => {
+          lightboxImg.src = lightboxImages[index];
+          lightboxImg.classList.remove("is-transitioning");
+        }, 200);
+      } else {
+        lightboxImg.src = lightboxImages[index];
+      }
+      lightboxCounter.textContent = `${index + 1} / ${lightboxImages.length}`;
+      lightboxPrev.disabled = index === 0;
+      lightboxNext.disabled = index === lightboxImages.length - 1;
+    };
+
+    const openLightbox = (images, startIndex) => {
+      lightboxImages = images;
+      showLightboxImage(startIndex, false);
+      lightbox.classList.add("is-open");
+    };
+
+    if (lightbox) {
+      lightboxClose.addEventListener("click", () =>
+        lightbox.classList.remove("is-open"),
+      );
+      lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) lightbox.classList.remove("is-open");
+      });
+      lightboxPrev.addEventListener("click", () => {
+        if (lightboxIndex > 0) showLightboxImage(lightboxIndex - 1);
+      });
+      lightboxNext.addEventListener("click", () => {
+        if (lightboxIndex < lightboxImages.length - 1)
+          showLightboxImage(lightboxIndex + 1);
+      });
+      document.addEventListener("keydown", (e) => {
+        if (!lightbox.classList.contains("is-open")) return;
+        if (e.key === "ArrowLeft" && lightboxIndex > 0)
+          showLightboxImage(lightboxIndex - 1);
+        if (e.key === "ArrowRight" && lightboxIndex < lightboxImages.length - 1)
+          showLightboxImage(lightboxIndex + 1);
+        if (e.key === "Escape") lightbox.classList.remove("is-open");
+      });
+    }
   }
 
   // ==============================
@@ -186,6 +256,22 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+
+  // ==============================
+  // THEME TOGGLE (claro / oscuro)
+  // ==============================
+  const themeToggle = document.getElementById("theme-toggle");
+
+  // Aplicar tema guardado (por defecto oscuro)
+  const savedTheme = localStorage.getItem("theme") || "dark";
+  document.documentElement.classList.toggle("dark-mode", savedTheme === "dark");
+
+  if (themeToggle) {
+    themeToggle.addEventListener("click", () => {
+      const isDark = document.documentElement.classList.toggle("dark-mode");
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    });
+  }
 
   // ==============================
   // LANG DROPDOWN EN NAVBAR

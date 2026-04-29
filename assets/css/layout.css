@@ -21,8 +21,7 @@
   display: flex;
   align-items: center;
   z-index: 9999;
-  background-color: #ede8e1;
-  border-bottom: 1px solid #e8e4dd;
+  background-color: #416844;
   padding: 0 40px;
 }
 
@@ -31,12 +30,13 @@
   display: flex;
   gap: 1.8rem;
   align-items: center;
+  margin-right: 1.5rem;
 }
 
 .nav-links a {
   font-family: "Unbounded", sans-serif;
   font-weight: 600;
-  color: #416844;
+  color: #f5f5f5;
   text-decoration: none;
   position: relative;
 }
@@ -48,7 +48,7 @@
   left: 0;
   width: 0;
   height: 1.5px;
-  background-color: #416844;
+  background-color: #f5f5f5;
   transition: width 0.3s ease;
 }
 
@@ -123,7 +123,7 @@
 }
 
 .navbar-about.scrolled {
-  background-color: #ede8e1;
+  background-color: #416844;
 }
 
 .navbar-about.scrolled .nav-logo-about {
@@ -153,7 +153,7 @@
   display: block;
   width: 24px;
   height: 2px;
-  background-color: #416844;
+  background-color: #f5f5f5;
   border-radius: 2px;
   transition: all 0.3s ease;
 }
@@ -220,7 +220,7 @@
     min-height: 35vh;
     width: 100%;
 
-    background-color: #ede8e1; /* Cambiado de #e8eaf3 a morado */
+    background-color: #416844; /* Cambiado de #e8eaf3 a morado */
 
     flex-direction: column;
     align-items: flex-start;
@@ -245,7 +245,7 @@
   .navbar .nav-links.nav-open a {
     font-size: 1.3rem;
     font-weight: 600;
-    color: #416844;
+    color: #f5f5f5;
     padding: 0.5rem 0;
   }
 
@@ -302,7 +302,7 @@
 
 /* Hero con fondo fijo (parallax) */
 .hero--fixed-parallax {
-  background-color: #ede8e1;
+  background-color: #416844;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -347,7 +347,7 @@
   font-weight: 700;
   font-size: 10rem;
   line-height: 0.9;
-  color: #416844;
+  color: #f5f5f5;
 }
 
 .hero-job {
@@ -355,7 +355,7 @@
   font-family: "Unbounded", sans-serif;
   font-weight: 300;
   font-size: 2.3rem;
-  color: #416844;
+  color: #f5f5f5;
   line-height: 0.7;
 }
 
@@ -363,7 +363,7 @@
   margin-top: 1.5rem;
   font-family: "Petit Formal Script", cursive;
   font-size: 2.3rem;
-  color: #416844;
+  color: #f5f5f5;
 }
 
 .hero-title {
@@ -383,7 +383,7 @@
 .section-title {
   font-family: "Unbounded", sans-serif;
   font-weight: 600; /* semibold */
-  color: #416844; /* tu rosa */
+  color: #f5f5f5; /* tu rosa */
   text-align: left;
   font-size: 2rem;
   margin-bottom: 1.5rem;
@@ -401,7 +401,7 @@
 }
 
 .color {
-  color: #416844;
+  color: #f5f5f5;
   text-decoration: underline;
 }
 
@@ -410,7 +410,7 @@
 .intro-section {
   padding-top: 2rem;
   padding-bottom: var(--spacing-section);
-  background-color: #f5f5f5;
+  background-color: #ede8e1;
 }
 
 .carousel-double {
@@ -427,14 +427,14 @@
 .main-content {
   position: relative;
   z-index: 3; /* por encima del texto fijo */
-  background-color: #f5f5f5;
+  background-color: #ede8e1;
 }
 
 /* Sección featured */
 .intro-section {
   padding-top: 3.5rem;
   padding-bottom: var(--spacing-section);
-  background-color: #f5f5f5;
+  background-color: #ede8e1;
 }
 
 /* -------------------------------ABOUT SECTION (PARALLAX)----------------------------------- */
@@ -449,12 +449,12 @@
   justify-content: center;
   text-align: center;
 
-  background-color: #ede8e1;
-  background-attachment: fixed;
+  background-color: #1a3320;
+  background-attachment: scroll;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  color: #1a1a1a;
+  color: #ede8e1;
   overflow: visible; /* Permitir que el blob se vea */
 }
 
@@ -469,7 +469,7 @@
 }
 
 .about-title {
-  color: #416844;
+  color: #ede8e1;
   text-align: center;
   margin-bottom: 0.5rem;
 }
@@ -482,7 +482,7 @@
   font-weight: 300;
   font-size: 1rem;
   line-height: 1.6;
-  color: #1a1a1a;
+  color: #ede8e1;
   margin-bottom: 2rem;
 }
 
@@ -515,13 +515,13 @@
 .site-footer {
   padding: 4rem 0;
   text-align: center;
-  background-color: #f5f5f5;
+  background-color: #ede8e1;
 }
 
 .site-footer p {
   font-family: "Unbounded", sans-serif;
   font-weight: 300;
-  color: #1a1a1a;
+  color: #f5f5f5;
   font-size: 0.8rem;
   opacity: 0.85;
   margin: 0;
@@ -538,7 +538,7 @@
   font-family: "Unbounded", sans-serif;
   font-weight: 300;
   font-size: 0.8rem;
-  color: #1a1a1a;
+  color: #f5f5f5;
   opacity: 0.85;
   background: none;
   border: none;
@@ -555,7 +555,7 @@
   left: 0;
   width: 0;
   height: 1px;
-  background-color: #1a1a1a;
+  background-color: #f5f5f5;
   transition: width 0.3s ease;
 }
 
@@ -598,7 +598,7 @@
   font-weight: 600;
   font-size: 4rem;
   line-height: 1;
-  color: #416844;
+  color: #f5f5f5;
   margin-bottom: 1rem;
 }
 
@@ -607,7 +607,7 @@
   font-weight: 300;
   font-size: 1.1rem;
   line-height: 1.5;
-  color: #416844;
+  color: #f5f5f5;
   max-width: 700px;
   margin: 0 auto;
   opacity: 0.9;
@@ -623,7 +623,7 @@ body.projects-page {
   height: 40vh;
   margin-top: 0;
   position: relative;
-  background-color: #ede8e1;
+  background-color: #416844;
   background-size: cover;
   background-position: center;
   z-index: 1;
@@ -634,7 +634,7 @@ body.projects-page {
 
 /* Banda de fondo entre carrusel y want-to-know-more */
 .experience-area {
-  background-color: #ede8e1;
+  background-color: #416844;
   padding-top: 3rem;
   padding-bottom: 5rem;
 }
@@ -723,9 +723,9 @@ body.projects-page {
   font-family: "Unbounded", sans-serif;
   font-weight: 600;
   font-size: 0.85rem;
-  color: #416844;
+  color: #f5f5f5;
   background: none;
-  border: 1.5px solid #416844;
+  border: 1.5px solid #f5f5f5;
   border-radius: 20px;
   padding: 0.3rem 0.85rem;
   cursor: pointer;
@@ -763,7 +763,7 @@ body.projects-page {
   left: 0;
   right: 0;
   background: none;
-  border: 1.5px solid #416844;
+  border: 1.5px solid #f5f5f5;
   border-top: none;
   border-radius: 0 0 20px 20px;
   list-style: none;
@@ -788,7 +788,7 @@ body.projects-page {
   font-family: "Unbounded", sans-serif;
   font-weight: 600;
   font-size: 0.85rem;
-  color: #416844;
+  color: #f5f5f5;
   background: none;
   border: none;
   cursor: pointer;
@@ -799,7 +799,7 @@ body.projects-page {
 }
 
 .lang-option:hover {
-  color: #2e4a30;
+  color: #ede8e1;
 }
 
 /* Móvil */
@@ -813,4 +813,74 @@ body.projects-page {
     gap: 1rem;
     padding: 0.5rem 0;
   }
+}
+
+/* ==============================
+   THEME TOGGLE (claro / oscuro)
+   ============================== */
+
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 0.5rem;
+}
+
+/* En navbar-home los controles van a la derecha junto con los links */
+.navbar-home .nav-controls {
+  margin-left: 1.5rem;
+}
+
+/* En navbar-projects y navbar-about, quitar margin-left: auto de nav-links
+   porque ahora lo lleva nav-controls */
+.navbar-projects .nav-controls,
+.navbar-about .nav-controls {
+  margin-left: 0;
+}
+
+/* Quitar el margin-left: auto individual ya que lo gestiona el nav-links */
+.nav-controls .lang-dropdown {
+  margin-left: 0;
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+  opacity: 0.8;
+}
+
+.theme-icon {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  transition: opacity 0.2s ease;
+}
+
+/* Modo oscuro (por defecto): muestra sol (claro1) */
+.theme-icon--light {
+  opacity: 0;
+}
+.theme-icon--dark {
+  opacity: 1;
+}
+
+/* Modo claro: muestra luna (oscuro1) */
+html:not(.dark-mode) .theme-icon--light {
+  opacity: 1;
+}
+html:not(.dark-mode) .theme-icon--dark {
+  opacity: 0;
 }
