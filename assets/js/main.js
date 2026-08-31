@@ -269,6 +269,44 @@ document.addEventListener("DOMContentLoaded", () => {
           showLightboxImage(lightboxIndex + 1);
         if (e.key === "Escape") lightbox.classList.remove("is-open");
       });
+
+      // Deslizar con el dedo (móvil/táctil) para pasar de una imagen a
+      // otra, sin necesidad de tocar las flechas
+      let touchStartX = 0;
+      let touchStartY = 0;
+
+      lightboxImg.addEventListener(
+        "touchstart",
+        (e) => {
+          touchStartX = e.changedTouches[0].clientX;
+          touchStartY = e.changedTouches[0].clientY;
+        },
+        { passive: true },
+      );
+
+      lightboxImg.addEventListener(
+        "touchend",
+        (e) => {
+          const touchEndX = e.changedTouches[0].clientX;
+          const touchEndY = e.changedTouches[0].clientY;
+          const deltaX = touchEndX - touchStartX;
+          const deltaY = touchEndY - touchStartY;
+
+          // Umbral mínimo y que el gesto sea mayormente horizontal (para
+          // no confundirlo con un scroll vertical accidental)
+          if (Math.abs(deltaX) < 40 || Math.abs(deltaX) < Math.abs(deltaY))
+            return;
+
+          if (deltaX < 0 && lightboxIndex < lightboxImages.length - 1) {
+            // Deslizar hacia la izquierda → siguiente imagen
+            showLightboxImage(lightboxIndex + 1);
+          } else if (deltaX > 0 && lightboxIndex > 0) {
+            // Deslizar hacia la derecha → imagen anterior
+            showLightboxImage(lightboxIndex - 1);
+          }
+        },
+        { passive: true },
+      );
     }
   }
 
@@ -288,10 +326,17 @@ document.addEventListener("DOMContentLoaded", () => {
   // ==============================
   // THEME TOGGLE (claro / oscuro)
   // ==============================
-  const themeToggle = document.getElementById("theme-toggle");
+  // Hay dos botones (el fijo de escritorio junto al selector de idioma,
+  // y el que vive dentro del menú desplegable en móvil/tablet): ambos
+  // deben alternar el tema igual, así que los recorremos todos.
+  const themeToggles = document.querySelectorAll(".theme-toggle");
 
-  // Aplicar tema guardado (por defecto oscuro)
-  const savedTheme = localStorage.getItem("theme") || "dark";
+  // Aplicar tema: si la persona ya eligió uno manualmente en esta web,
+  // se respeta ese; si no ha elegido nunca, se sigue la preferencia de
+  // su sistema operativo/navegador (claro u oscuro).
+  const storedTheme = localStorage.getItem("theme");
+  const prefersDarkQuery = window.matchMedia("(prefers-color-scheme: dark)");
+  const savedTheme = storedTheme || (prefersDarkQuery.matches ? "dark" : "light");
   document.documentElement.classList.toggle("dark-mode", savedTheme === "dark");
 
   // Activar el fundido de colores SOLO a partir de aquí (dos frames
@@ -304,12 +349,21 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  if (themeToggle) {
-    themeToggle.addEventListener("click", () => {
+  themeToggles.forEach((toggle) => {
+    toggle.addEventListener("click", () => {
       const isDark = document.documentElement.classList.toggle("dark-mode");
       localStorage.setItem("theme", isDark ? "dark" : "light");
     });
-  }
+  });
+
+  // Si el sistema cambia de tema mientras la página está abierta y la
+  // persona todavía no ha elegido nunca manualmente en esta web,
+  // seguimos ese cambio en directo. En cuanto elige manualmente (click
+  // de arriba), esto deja de aplicar y se respeta siempre su elección.
+  prefersDarkQuery.addEventListener("change", (e) => {
+    if (localStorage.getItem("theme")) return;
+    document.documentElement.classList.toggle("dark-mode", e.matches);
+  });
 
   // ==============================
   // LANG DROPDOWN EN NAVBAR
@@ -434,19 +488,31 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ==============================
-  // NAVBAR ABOUT: APARICIÓN DE LOGO AL SCROLL
+  // NAVBAR ABOUT / PROJECTS: APARICIÓN DE LOGO AL SALIR DEL HERO
   // ==============================
-  const aboutNavbar = document.querySelector(".navbar-about");
-  const introSection = document.querySelector(".intro-section");
-  if (aboutNavbar && introSection) {
-    window.addEventListener("scroll", () => {
-      if (introSection.getBoundingClientRect().top <= 0) {
-        aboutNavbar.classList.add("scrolled");
-      } else {
-        aboutNavbar.classList.remove("scrolled");
-      }
-    });
-  }
+  // El logo (que repite nombre + "Portfolio") se queda oculto en la
+  // navbar mientras el hero de la página sigue siendo visible, y solo
+  // aparece una vez ese hero ha desaparecido detrás de la propia navbar
+  // al hacer scroll. Con IntersectionObserver en vez de comparar
+  // posiciones de scroll a mano: más fiable en móvil, donde la altura
+  // visible de la ventana cambia mientras se hace scroll (la barra de
+  // direcciones aparece/desaparece).
+  const setupLogoOnHeroScroll = (navbarSelector, heroSelector) => {
+    const navbar = document.querySelector(navbarSelector);
+    const hero = document.querySelector(heroSelector);
+    if (!navbar || !hero || !("IntersectionObserver" in window)) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        navbar.classList.toggle("scrolled", !entry.isIntersecting);
+      },
+      { threshold: 0, rootMargin: "-80px 0px 0px 0px" }, // -80px = alto de la navbar fija
+    );
+    observer.observe(hero);
+  };
+
+  setupLogoOnHeroScroll(".navbar-about", ".hero");
+  setupLogoOnHeroScroll(".navbar-projects", ".top-parallax");
 
   window.onbeforeunload = function () {
     window.scrollTo(0, 0);

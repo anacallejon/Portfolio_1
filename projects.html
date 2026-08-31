@@ -135,6 +135,28 @@
         <li>
           <a href="#contact" data-es="Contacto" data-en="Contact">Contacto</a>
         </li>
+        <li class="nav-mobile-theme">
+          <button
+            class="theme-toggle theme-toggle--mobile"
+            aria-label="Cambiar tema"
+          >
+            <span data-es="Cambiar tema" data-en="Change theme"
+              >Cambiar tema</span
+            >
+            <span class="theme-icon-wrap">
+              <img
+                class="theme-icon theme-icon--light"
+                src="https://ik.imagekit.io/anacallejon/portfolio_img/sol_verde1.png"
+                alt=""
+              />
+              <img
+                class="theme-icon theme-icon--dark"
+                src="https://ik.imagekit.io/anacallejon/portfolio_img/luna_crema1.png"
+                alt=""
+              />
+            </span>
+          </button>
+        </li>
       </ul>
       <div class="nav-controls">
         <button
@@ -771,29 +793,31 @@
         id="lightbox-close"
         aria-label="Cerrar"
       ></button>
-      <button
-        class="lightbox-arrow lightbox-arrow--prev"
-        id="lightbox-prev"
-        aria-label="Anterior"
-      >
-        <img
-          src="https://ik.imagekit.io/anacallejon/portfolio_img/felcha_previous_crema1.png"
-          alt=""
-          aria-hidden="true"
-        />
-      </button>
       <img class="lightbox-img" id="lightbox-img" src="" alt="" />
-      <button
-        class="lightbox-arrow lightbox-arrow--next"
-        id="lightbox-next"
-        aria-label="Siguiente"
-      >
-        <img
-          src="https://ik.imagekit.io/anacallejon/portfolio_img/felcha_next_crema1.png"
-          alt=""
-          aria-hidden="true"
-        />
-      </button>
+      <div class="lightbox-nav">
+        <button
+          class="lightbox-arrow lightbox-arrow--prev"
+          id="lightbox-prev"
+          aria-label="Anterior"
+        >
+          <img
+            src="https://ik.imagekit.io/anacallejon/portfolio_img/felcha_previous_crema1.png"
+            alt=""
+            aria-hidden="true"
+          />
+        </button>
+        <button
+          class="lightbox-arrow lightbox-arrow--next"
+          id="lightbox-next"
+          aria-label="Siguiente"
+        >
+          <img
+            src="https://ik.imagekit.io/anacallejon/portfolio_img/felcha_next_crema1.png"
+            alt=""
+            aria-hidden="true"
+          />
+        </button>
+      </div>
       <span class="lightbox-counter" id="lightbox-counter"></span>
     </div>
   </body>

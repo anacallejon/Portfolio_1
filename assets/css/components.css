@@ -875,6 +875,7 @@ html:not(.dark-mode) .icon-swap.icon-swap--inverted > .icon-swap--verde {
   border-radius: 8px;
   display: block;
   transition: opacity 0.2s ease;
+  touch-action: pan-y;
 }
 
 .lightbox-img.is-transitioning {
@@ -917,6 +918,16 @@ html:not(.dark-mode) .icon-swap.icon-swap--inverted > .icon-swap--verde {
   background-color: #416844;
 }
 
+/* Envoltorio de las dos flechas: en escritorio es un overlay invisible
+   del tamaño de toda la lightbox (para que las flechas se sigan
+   posicionando a los lados, exactamente como antes); en móvil/tablet
+   pasa a ser una fila centrada debajo de la imagen (ver media query) */
+.lightbox-nav {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
 .lightbox-arrow {
   position: absolute;
   top: 50%;
@@ -929,6 +940,7 @@ html:not(.dark-mode) .icon-swap.icon-swap--inverted > .icon-swap--verde {
   align-items: center;
   justify-content: center;
   opacity: 0.85;
+  pointer-events: auto;
   transition:
     opacity 0.2s ease,
     transform 0.2s ease;
@@ -978,14 +990,30 @@ body.projects-page.modal-open .navbar {
   -webkit-backdrop-filter: blur(8px);
 }
 
+/* Con la modal de proyecto abierta, bloquear el scroll de la página de
+   detrás (mismo mecanismo que ya se usa con el menú móvil, body.nav-open) */
+body.modal-open {
+  overflow: hidden;
+}
+
 @media (max-width: 768px) {
+  /* La modal ocupa (casi) todo el hueco disponible entre la navbar y el
+     borde inferior de la pantalla, dejando un margen pequeño (12px) a
+     cada lado en vez de tocar ambos límites o quedar centrada con un
+     hueco gris grande arriba y abajo */
+  .project-modal-backdrop {
+    align-items: flex-start;
+    padding-top: calc(80px + 12px); /* alto de la navbar + margen */
+  }
+
   .project-modal {
     width: 90vw;
     max-width: 90vw;
-    max-height: 80vh;
+    height: calc(100vh - 80px - 24px);
+    max-height: calc(100vh - 80px - 24px);
     border-radius: 20px;
     aspect-ratio: unset;
-    padding: 3rem 1.5rem 2rem;
+    padding: 2rem 1.5rem 1.5rem;
     overflow-y: auto;
   }
 
@@ -998,11 +1026,18 @@ body.projects-page.modal-open .navbar {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
     gap: 1.5rem;
-    min-height: auto;
+    /* En vez de recortar el contenido a la altura disponible, que deje
+       crecer texto + imágenes y sea la propia modal (overflow-y: auto,
+       arriba) la que haga scroll hasta el final */
+    overflow: visible;
+    flex: 1 1 auto;
   }
 
   .project-modal-text {
     overflow: visible;
+    /* Este padding-right venía pensado para escritorio; en móvil dejaba
+       el texto sin llegar ni de lejos al margen derecho de la tarjeta */
+    padding-right: 0;
   }
 
   .project-modal-text .card-title {
@@ -1018,10 +1053,43 @@ body.projects-page.modal-open .navbar {
 
   .project-modal-images {
     gap: 0.8rem;
+    margin-top: 1rem;
   }
 
   .project-modal-images img {
     border-radius: 12px;
+  }
+
+  /* Visor de imágenes (lightbox): en móvil/tablet las flechas pasan a ir
+     centradas en una fila debajo de la imagen, en vez de a los lados
+     (en escritorio se queda exactamente como estaba) */
+  .lightbox-backdrop {
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .lightbox-img {
+    max-height: 70vh;
+  }
+
+  .lightbox-nav {
+    position: static;
+    inset: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    pointer-events: auto;
+  }
+
+  .lightbox-arrow {
+    position: static;
+    transform: none;
+  }
+
+  .lightbox-counter {
+    position: static;
+    transform: none;
   }
 }
 
@@ -1186,6 +1254,16 @@ body.projects-page.modal-open .navbar {
 
   .content-box {
     padding: 32px 24px 24px;
+  }
+
+  /* En escritorio el gap de 3rem separa dos columnas una al lado de
+     la otra; en móvil las columnas se apilan y ese mismo valor se ve
+     como un salto de línea exagerado entre "Habilidades interpersonales"
+     y "Habilidades técnicas y artísticas". Con las columnas en vertical
+     el hueco debe acercarse al ritmo interno de cada columna (margin-top
+     de los h4, 1.2rem), no al gutter horizontal de escritorio. */
+  .box-columns {
+    gap: 1.5rem;
   }
 }
 

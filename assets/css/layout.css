@@ -97,6 +97,23 @@
   margin-left: auto;
 }
 
+/* El logo se queda oculto mientras el hero ("Mi trabajo...") sigue
+   siendo visible, y solo aparece una vez se ha hecho scroll más allá
+   (ver .navbar-projects.scrolled, controlado desde main.js). Se oculta
+   el enlace completo (.nav-logo-link), no la imagen directamente: así
+   no compite en especificidad con las reglas de modo claro/oscuro del
+   sistema icon-swap, que van sobre la propia imagen. */
+.navbar-projects .nav-logo-link {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.navbar-projects.scrolled .nav-logo-link {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 /* ------------------------------NAVBAR — ABOUT PAGE (about.html)--------------------------------- */
 
 .navbar-about {
@@ -115,7 +132,12 @@
   transition: background-color 0.35s ease;
 }
 
-.navbar-about .nav-logo-about {
+/* Igual que en navbar-projects: se oculta el enlace completo, no la
+   imagen, para no chocar con las reglas de modo claro/oscuro del
+   sistema icon-swap (que tienen más especificidad al ir sobre la
+   propia imagen y ganaban siempre, dejando el logo visible aunque
+   esta regla dijera lo contrario) */
+.navbar-about .nav-logo-link {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
@@ -129,7 +151,7 @@
   background-color: #416844;
 }
 
-.navbar-about.scrolled .nav-logo-about {
+.navbar-about.scrolled .nav-logo-link {
   opacity: 1;
   pointer-events: auto;
 }
@@ -219,9 +241,16 @@
     left: 0;
     right: 0;
 
+    /* Anula cualquier margin heredado de las reglas de escritorio
+       (.nav-links, .navbar-about .nav-links, .navbar-projects .nav-links),
+       que si no descuadran el panel fijo en móvil (se ve más estrecho
+       o desplazado hacia un lado) */
+    margin: 0;
+
     /* Panel que ocupa aproximadamente 1/3 del alto */
     min-height: 35vh;
     width: 100%;
+    box-sizing: border-box;
 
     background-color: #416844; /* Cambiado de #e8eaf3 a morado */
 
@@ -246,6 +275,29 @@
   }
 
   .navbar .nav-links.nav-open a {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #f5f5f5;
+    padding: 0.5rem 0;
+  }
+
+  /* El botón de tema fijo junto a la hamburguesa desaparece en
+     móvil/tablet: el cambio manual pasa a vivir dentro del menú */
+  .nav-controls .theme-toggle {
+    display: none;
+  }
+
+  .nav-mobile-theme {
+    display: block;
+    width: 100%;
+  }
+
+  .theme-toggle.theme-toggle--mobile {
+    width: auto;
+    height: auto;
+    justify-content: flex-start;
+    gap: 0.8rem;
+    font-family: "Unbounded", sans-serif;
     font-size: 1.3rem;
     font-weight: 600;
     color: #f5f5f5;
@@ -286,6 +338,12 @@
     gap: 1.8rem;
     padding: 0;
     display: flex;
+  }
+
+  /* En escritorio/tablet ancho, el botón de tema duplicado del menú
+     móvil no se muestra: se usa el fijo de siempre junto al idioma */
+  .nav-mobile-theme {
+    display: none;
   }
 }
 
@@ -402,6 +460,16 @@
   .hero--fixed-parallax {
     background-attachment: scroll;
   }
+
+  /* Más margen lateral para "Proyectos Destacados" en home: se acepta
+     que pase a dos líneas con tal de que no toque los bordes. Con menos
+     interlineado, para que las dos líneas se lean como un único título
+     y no como dos cosas distintas */
+  .intro-section .section-title {
+    padding: 0 2rem;
+    box-sizing: border-box;
+    line-height: 1.15;
+  }
 }
 
 .color {
@@ -505,7 +573,7 @@
   }
 
   .about-content {
-    padding: 2rem 1.2rem;
+    padding: 2rem 1.6rem;
     max-width: 100%;
   }
 
@@ -710,6 +778,15 @@ body.projects-page {
     transform: translate(-50%, -45%);
     opacity: 1;
   }
+
+  /* Introducción de sección (ej. "Un resumen de mi trayectoria...") en
+     about.html: al no caber su max-width en móvil, el texto quedaba
+     pegado a los bordes de la pantalla. Le damos el mismo margen lateral
+     que el resto del contenido en móvil (20px, como .hero y .navbar). */
+  .experience-subtitle {
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
 }
 
 /* ==============================
@@ -904,3 +981,14 @@ html:not(.dark-mode) .theme-icon--dark {
 }
 
 /* Sin efecto hover en el sol/luna: ya está el efecto del cursor */
+
+/* Envoltorio de los iconos sol/luna: necesario para la versión móvil
+   del botón (ver más abajo), donde el propio botón ya no es el
+   contenedor posicionado porque también lleva una etiqueta de texto */
+.theme-icon-wrap {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+

@@ -286,6 +286,15 @@ html:not(.dark-mode) .nav-toggle span {
   background-color: var(--color-brand) !important;
 }
 
+/* Menú desplegable móvil/tablet: en modo claro pasa a fondo crema con
+   texto en verde (en vez de quedarse siempre en verde oscuro) */
+html:not(.dark-mode) .navbar .nav-links.nav-open {
+  background-color: var(--color-cream) !important;
+}
+html:not(.dark-mode) .theme-toggle--mobile {
+  color: var(--color-brand) !important;
+}
+
 /* Textos generales */
 html:not(.dark-mode) .section-title {
   color: var(--color-brand) !important;
