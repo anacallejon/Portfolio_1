@@ -220,13 +220,97 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  place-items: center;
   overflow: hidden;
   padding: 6px;
 }
 
-.social-icon img {
-  width: 100%;
-  height: 100%;
+.social-icon img,
+.social-icon svg {
+  width: 60%;
+  height: 60%;
+  object-fit: contain;
+}
+
+/* ==============================
+   ICON-SWAP: iconos con variante de color según el modo
+   claro/oscuro, y una tercera variante gris al pasar el ratón.
+   El contenedor lleva la clase "icon-swap"; cada <img> dentro
+   lleva "icon-swap--crema" / "icon-swap--verde" / "icon-swap--grey".
+
+   Las capas se apilan con CSS Grid (misma celda para las tres),
+   así ninguna necesita position:absolute ni depende del tamaño de
+   las demás — evita cualquier desajuste/solape entre ellas.
+   ============================== */
+.icon-swap {
+  display: inline-grid;
+}
+
+.icon-swap--crema,
+.icon-swap--verde,
+.icon-swap--grey {
+  grid-area: 1 / 1;
+  transition: opacity 0.2s ease;
+}
+
+/* Comportamiento estándar (logo, indicador de scroll...):
+   crema en modo oscuro (fondo verde), verde en modo claro (fondo crema) */
+.icon-swap:not(.icon-swap--inverted) > .icon-swap--crema {
+  opacity: 1;
+}
+.icon-swap:not(.icon-swap--inverted) > .icon-swap--verde,
+.icon-swap:not(.icon-swap--inverted) > .icon-swap--grey {
+  opacity: 0;
+}
+html:not(.dark-mode) .icon-swap:not(.icon-swap--inverted) > .icon-swap--crema {
+  opacity: 0;
+}
+html:not(.dark-mode) .icon-swap:not(.icon-swap--inverted) > .icon-swap--verde {
+  opacity: 1;
+}
+
+/* Comportamiento invertido: para iconos sobre una caja cuyo fondo
+   cambia AL COLOR CONTRARIO del modo general (las redes sociales:
+   la caja es verde en modo claro y crema en modo oscuro) */
+.icon-swap.icon-swap--inverted > .icon-swap--crema {
+  opacity: 0;
+}
+.icon-swap.icon-swap--inverted > .icon-swap--verde {
+  opacity: 1;
+}
+.icon-swap.icon-swap--inverted > .icon-swap--grey {
+  opacity: 0;
+}
+html:not(.dark-mode) .icon-swap.icon-swap--inverted > .icon-swap--crema {
+  opacity: 1;
+}
+html:not(.dark-mode) .icon-swap.icon-swap--inverted > .icon-swap--verde {
+  opacity: 0;
+}
+
+/* Hover: siempre la variante gris, sea cual sea el modo (estándar o invertido) */
+.icon-swap:hover > .icon-swap--crema,
+.icon-swap:hover > .icon-swap--verde {
+  opacity: 0;
+}
+.icon-swap:hover > .icon-swap--grey {
+  opacity: 1;
+}
+
+/* Tamaño dentro de una caja fija (iconos de redes sociales / email) */
+.social-icon.icon-swap .icon-swap--crema,
+.social-icon.icon-swap .icon-swap--verde,
+.social-icon.icon-swap .icon-swap--grey {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+}
+
+/* Tamaño cuando lo marca la propia imagen (logo) */
+.nav-logo-link.icon-swap .icon-swap--crema,
+.nav-logo-link.icon-swap .icon-swap--verde {
+  height: 1.5rem;
+  width: auto;
   object-fit: contain;
 }
 
@@ -291,7 +375,10 @@
   font-size: 1rem;
   font-family: "Unbounded", sans-serif;
   font-weight: 300;
-  color: #f5f5f5;
+  /* El campo siempre tiene fondo crema (no cambia con el tema), así que
+     el texto debe ser oscuro siempre: antes era blanco por defecto y
+     solo se corregía en modo claro, quedando casi ilegible en oscuro */
+  color: #1a1a1a;
   transition: 0.2s ease;
   background-color: #ede8e1;
 }
@@ -325,9 +412,9 @@
 }
 
 .contact-btn:hover {
-  background-color: #416844;
+  background-color: var(--color-accent-pink);
   color: #ede8e1;
-  border-color: #416844;
+  border-color: var(--color-accent-pink);
 }
 
 /* ---------------------TWO-COLUMN OFFSET CARDS----------------------- */
@@ -834,22 +921,28 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.1);
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  width: 44px;
-  height: 44px;
+  background: transparent;
+  border: none;
+  padding: 0;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s ease;
-  color: #ffffff;
-  font-size: 1.1rem;
+  opacity: 0.85;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.lightbox-arrow img {
+  width: 28px;
+  height: auto;
+  display: block;
+  object-fit: contain;
 }
 
 .lightbox-arrow:hover {
-  background: rgba(255, 255, 255, 0.2);
+  opacity: 1;
 }
 
 .lightbox-arrow--prev {
@@ -862,6 +955,9 @@
 .lightbox-arrow:disabled {
   opacity: 0.25;
   cursor: default;
+}
+.lightbox-arrow:disabled:hover {
+  opacity: 0.25;
 }
 
 .lightbox-counter {
@@ -931,9 +1027,10 @@ body.projects-page.modal-open .navbar {
 
 .about-btn {
   padding: 0.9rem 1.5rem;
-  background-color: transparent;
+  background-color: #f5f5f5;
   color: #416844;
   border: none;
+  border-radius: 999px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -947,65 +1044,32 @@ body.projects-page.modal-open .navbar {
   margin: 0 auto;
   position: relative;
   z-index: 1;
-  transition: transform 0.3s ease;
-}
-
-.about-btn::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: #f5f5f5;
-  z-index: -1;
-  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-  animation: morphBlob 15s ease-in-out infinite;
-  transition: background 0.3s ease;
-}
-
-.about-btn:hover::before {
-  background: #ede8e1;
-  animation-play-state: paused;
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .about-btn:hover {
+  background-color: var(--color-accent-pink);
+  color: var(--color-offwhite);
   transform: translateY(-3px);
-}
-
-@keyframes morphBlob {
-  0% {
-    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-  }
-  14% {
-    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
-  }
-  28% {
-    border-radius: 70% 30% 50% 50% / 30% 70% 50% 50%;
-  }
-  42% {
-    border-radius: 40% 60% 60% 40% / 60% 40% 40% 60%;
-  }
-  56% {
-    border-radius: 50% 50% 30% 70% / 50% 50% 70% 30%;
-  }
-  70% {
-    border-radius: 60% 40% 70% 30% / 40% 60% 30% 70%;
-  }
-  84% {
-    border-radius: 35% 65% 45% 55% / 65% 35% 55% 45%;
-  }
-  100% {
-    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-  }
 }
 
 .about-btn-icon {
   width: 14px;
   height: 14px;
   object-fit: contain;
-  opacity: 0.85;
+  /* flecha_out_verde1.png ya viene coloreada en verde: sin filtro */
 }
 
-.about-btn:hover .about-btn-icon {
-  opacity: 1;
+/* Botón "Descargar CV": mismo estilo que .about-btn pero en verde con
+   texto crema (en vez de crema con texto verde). El verde en sí sigue
+   el modo: oscuro en modo oscuro, principal/claro en modo claro (ver
+   override en base.css). El texto se queda en crema en los dos modos. */
+.cv-download-btn {
+  background-color: var(--color-brand-dark);
+  color: var(--color-cream);
 }
 
 /* ------------------EXPERIENCE HEADER (H1+GRID)-------------------- */
@@ -1029,7 +1093,7 @@ body.projects-page.modal-open .navbar {
   margin: 0 auto 2.5rem;
   font-family: "Unbounded", sans-serif;
   font-weight: 300;
-  font-size: 0.95rem;
+  font-size: 1.2rem;
   color: #ede8e1;
 }
 
@@ -1232,7 +1296,7 @@ body.projects-page.modal-open .navbar {
 .scroll-hint-img {
   height: 24px;
   width: auto;
-  display: block;
+  object-fit: contain;
 }
 
 @keyframes arrowBounce {

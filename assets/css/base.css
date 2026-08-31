@@ -22,9 +22,9 @@ body {
 
 /* ------------ESTILOS EXCLUSIVOS PÁGINA PROJECTS---------------- */
 
-/* Fondo azul SOLO para esta página */
+/* Fondo verde SOLO para esta página (por defecto / modo oscuro) */
 body.projects-page {
-  background-color: #416844 !important;
+  background-color: var(--color-brand) !important;
   min-height: 100vh;
 }
 
@@ -64,12 +64,27 @@ ul {
   --font-base: system-ui, sans-serif;
   --font-heading: system-ui, sans-serif;
 
-  /* Colores principales (luego rellenamos) */
-  --color-bg: #ede8e1;
-  --color-text: #f5f5f5;
+  /* ===== PALETA DE MARCA — fuente única de verdad para los colores ===== */
+  /* Estos valores NO cambian entre modo claro/oscuro; lo que cambia es
+     QUÉ elemento usa cuál, según las reglas de más abajo. Para recolorear
+     la web entera basta con tocar estas líneas. */
+  --color-brand: #416844; /* verde principal: navbar, botones, acentos */
+  --color-brand-dark: #1a3320; /* verde oscuro: fondo "about", acentos fuertes */
+  --color-brand-hover: #2e4a30; /* verde hover de botones */
+  --color-cream: #ede8e1; /* crema/beige: superficies y texto sobre fondos verdes */
+  --color-offwhite: #f5f5f5; /* blanco roto: texto sobre navbar/hero, fondo claro */
+  --color-text-strong: #1a1a1a; /* texto oscuro sobre fondos claros */
+  --color-text-muted: #4a4a4a; /* texto secundario/atenuado */
+  --color-accent-pink: #df6595; /* acento puntual (degradado de la 404, botón Enviar) */
+  --color-accent-pink-hover: #b2517a; /* rosa de acento, versión hover más oscura */
+
+  /* Nombres antiguos: se mantienen por si algo más los usa, apuntando
+     ahora a la paleta de arriba */
+  --color-bg: var(--color-cream);
+  --color-text: var(--color-offwhite);
   --color-accent: #000000;
-  --color-nav-bg: #416844;
-  --color-hero-text: #f5f5f5;
+  --color-nav-bg: var(--color-brand);
+  --color-hero-text: var(--color-offwhite);
 
   /* Overlays / efectos */
   --color-hero-overlay: rgba(0, 0, 0, 0);
@@ -80,11 +95,37 @@ ul {
   --spacing-max-width: 1200px;
 }
 
+/* ==============================
+   TRANSICIÓN: FUNDIDO CLARO/OSCURO
+   ==============================
+   Al cambiar de modo, los colores (fondo, texto, bordes, sombras) se
+   funden suavemente en vez de cambiar de golpe.
+
+   - Usamos :where() para que este selector tenga especificidad CERO:
+     así nunca pisa una transición más concreta que ya exista en otro
+     sitio (botones, hover, dropdowns...), solo "rellena" los elementos
+     que todavía no tienen su propia transición definida.
+   - La clase "theme-transitions-ready" la añade main.js un instante
+     después de aplicar el tema guardado, para que la carga de la
+     página no se vea como un fundido (solo se funden los cambios que
+     hace el usuario a partir de ahí).
+   - Si el usuario tiene activado "reducir movimiento" en su sistema,
+     prefers-reduced-motion.css ya se encarga de anular la duración. */
+:where(html.theme-transitions-ready) *,
+:where(html.theme-transitions-ready) *::before,
+:where(html.theme-transitions-ready) *::after {
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
 /* -------- ESTILO BASE DEL BODY -------- */
 body {
   font-family: "Unbounded", sans-serif;
   font-weight: 400; /* Regular */
-  color: #f5f5f5; /* Negro suave */
+  color: var(--color-offwhite);
   line-height: 1.6;
 }
 
@@ -104,7 +145,7 @@ html {
 
 /* About section → fondo verde oscuro */
 .about-section {
-  background-color: #1a3320 !important;
+  background-color: var(--color-brand-dark) !important;
 }
 
 /* ==============================
@@ -114,179 +155,225 @@ html {
 /* Fondos */
 html:not(.dark-mode) body,
 html:not(.dark-mode) body.projects-page {
-  background-color: #f5f5f5 !important;
+  background-color: var(--color-offwhite) !important;
 }
 html:not(.dark-mode) .navbar {
-  background-color: #ede8e1 !important;
+  background-color: var(--color-cream) !important;
 }
 html:not(.dark-mode) .navbar-about.scrolled {
-  background-color: #ede8e1 !important;
+  background-color: var(--color-cream) !important;
 }
 html:not(.dark-mode) .hero--fixed-parallax,
 html:not(.dark-mode) .hero {
-  background-color: #ede8e1 !important;
+  background-color: var(--color-cream) !important;
 }
 html:not(.dark-mode) .top-parallax {
-  background-color: #ede8e1 !important;
+  background-color: var(--color-cream) !important;
 }
 html:not(.dark-mode) .cards-section {
-  background-color: #ede8e1 !important;
+  background-color: var(--color-cream) !important;
 }
 html:not(.dark-mode) .filters-section {
   background-color: transparent !important;
 }
 html:not(.dark-mode) .site-footer {
-  background-color: #f5f5f5 !important;
+  background-color: var(--color-offwhite) !important;
 }
 html:not(.dark-mode) .about-page-content,
 html:not(.dark-mode) .intro-section,
 html:not(.dark-mode) .main-content {
-  background-color: #f5f5f5 !important;
+  background-color: var(--color-offwhite) !important;
 }
 html:not(.dark-mode) .about-section {
-  background-color: #ede8e1 !important;
+  background-color: var(--color-cream) !important;
+}
+/* Excepción: la sección "¿Quieres saber más?" de about.html usa esta misma
+   clase, pero ahora va justo debajo de la zona que en modo claro también
+   pasó a crema — para que no se fundan, aquí va en verde claro con texto
+   en crema */
+html:not(.dark-mode) .about-page .about-section {
+  background-color: var(--color-brand) !important;
+}
+html:not(.dark-mode) .about-page .about-title {
+  color: var(--color-cream) !important;
 }
 html:not(.dark-mode) .contact-box {
-  background: #ede8e1 !important;
+  background: var(--color-cream) !important;
 }
 html:not(.dark-mode) .contact-input {
-  background-color: #f5f5f5 !important;
-  color: #1a1a1a !important;
+  background-color: var(--color-offwhite) !important;
+  color: var(--color-text-strong) !important;
 }
 
-/* Content boxes: fondo verde, texto crema, títulos verde oscuro */
+/* A partir de "Un resumen de mi trayectoria..." (about.html) en modo
+   claro: esta zona pasa a fondo crema (antes era siempre verde oscuro,
+   igual que en modo oscuro). Con fondo crema, el texto base pasa a verde
+   claro, los títulos a verde oscuro, y las cajas a blanco crudo con
+   glassmorphism. */
+html:not(.dark-mode) .experience-area {
+  background-color: var(--color-cream) !important;
+}
+html:not(.dark-mode) .experience-header {
+  background-color: var(--color-cream) !important;
+}
+html:not(.dark-mode) .experience-subtitle {
+  color: var(--color-brand) !important;
+}
+html:not(.dark-mode) .cv-download-btn {
+  background-color: var(--color-brand) !important;
+}
+
 html:not(.dark-mode) .content-box {
-  background: rgba(65, 104, 68, 0.85) !important;
-  border-color: rgba(65, 104, 68, 0.3) !important;
+  background: rgba(245, 245, 245, 0.55) !important;
+  border-color: rgba(65, 104, 68, 0.25) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  box-shadow: 0 8px 32px rgba(65, 104, 68, 0.15) !important;
 }
 html:not(.dark-mode) .box-title {
-  color: #1a3320 !important;
+  color: var(--color-brand-dark) !important;
 }
 html:not(.dark-mode) .box-text {
-  color: #ede8e1 !important;
+  color: var(--color-brand) !important;
 }
 html:not(.dark-mode) .content-box ul {
-  color: #ede8e1 !important;
+  color: var(--color-brand) !important;
 }
 html:not(.dark-mode) .box-column h4 {
-  color: #1a3320 !important;
+  color: var(--color-brand-dark) !important;
 }
 html:not(.dark-mode) .dot--full {
-  background-color: #ede8e1 !important;
+  background-color: var(--color-brand) !important;
 }
 html:not(.dark-mode) .dot--empty {
-  border-color: #ede8e1 !important;
+  border-color: var(--color-brand) !important;
   background: transparent !important;
 }
 html:not(.dark-mode) .dot--half {
-  background: linear-gradient(90deg, #ede8e1 50%, transparent 50%) !important;
-  border-color: #ede8e1 !important;
+  background: linear-gradient(
+    90deg,
+    var(--color-brand) 50%,
+    transparent 50%
+  ) !important;
+  border-color: var(--color-brand) !important;
 }
 
 /* Textos hero */
 html:not(.dark-mode) .hero-name {
-  color: #416844 !important;
+  color: var(--color-brand) !important;
 }
 html:not(.dark-mode) .hero-tagline {
-  color: #416844 !important;
+  color: var(--color-brand) !important;
 }
 html:not(.dark-mode) .hero-job {
-  color: #1a1a1a !important;
+  color: var(--color-brand) !important;
 }
 html:not(.dark-mode) .projects-hero-title {
-  color: #416844 !important;
+  color: var(--color-brand) !important;
 }
 html:not(.dark-mode) .projects-hero-description {
-  color: #416844 !important;
+  color: var(--color-brand) !important;
 }
 
 /* Navbar */
 html:not(.dark-mode) .nav-links a {
-  color: #416844 !important;
+  color: var(--color-brand) !important;
 }
 html:not(.dark-mode) .nav-links a::after {
-  background-color: #416844 !important;
+  background-color: var(--color-brand) !important;
 }
 html:not(.dark-mode) .nav-toggle span {
-  background-color: #416844 !important;
+  background-color: var(--color-brand) !important;
 }
 
 /* Textos generales */
 html:not(.dark-mode) .section-title {
-  color: #416844 !important;
+  color: var(--color-brand) !important;
 }
 html:not(.dark-mode) .about-title {
-  color: #416844 !important;
+  color: var(--color-brand) !important;
 }
 html:not(.dark-mode) .about-text {
-  color: #1a1a1a !important;
+  color: var(--color-text-strong) !important;
 }
-html:not(.dark-mode) .site-footer p {
-  color: #1a1a1a !important;
-}
+/* El copyright del footer se queda en el mismo verde en los dos modos
+   (ver .site-footer p en layout.css), así que ya no hace falta forzarlo
+   aquí por tema */
 html:not(.dark-mode) .lang-btn {
-  color: #1a1a1a !important;
+  color: var(--color-text-strong) !important;
+}
+html:not(.dark-mode) .lang-btn::after {
+  /* FIX: antes se quedaba blanco (#f5f5f5), igual que el fondo del
+     footer en modo claro, así que el subrayado del idioma era invisible */
+  background-color: var(--color-text-strong) !important;
 }
 
 /* Contact */
 html:not(.dark-mode) .contact-title {
-  color: #416844 !important;
+  color: var(--color-brand) !important;
 }
 html:not(.dark-mode) .contact-text {
-  color: #1a1a1a !important;
+  color: var(--color-text-strong) !important;
 }
 html:not(.dark-mode) .contact-label {
-  color: #1a1a1a !important;
+  color: var(--color-text-strong) !important;
 }
 html:not(.dark-mode) .contact-text .color {
-  color: #416844 !important;
+  color: var(--color-accent-pink) !important;
 }
 html:not(.dark-mode) .social-name {
-  color: #1a1a1a !important;
+  color: var(--color-text-strong) !important;
 }
 html:not(.dark-mode) .social-handle {
-  color: #4a4a4a !important;
+  color: var(--color-text-muted) !important;
 }
 html:not(.dark-mode) .social-icon {
-  background-color: #416844 !important;
+  background-color: var(--color-brand) !important;
+}
+html:not(.dark-mode) .social-icon .email-icon {
+  color: var(--color-cream) !important;
+}
+html.dark-mode .social-icon .email-icon {
+  color: var(--color-brand-dark) !important;
 }
 html:not(.dark-mode) .contact-btn {
-  background-color: #416844 !important;
-  color: #f5f5f5 !important;
-  border-color: #416844 !important;
+  background-color: var(--color-brand) !important;
+  color: var(--color-offwhite) !important;
+  border-color: var(--color-brand) !important;
 }
 html:not(.dark-mode) .contact-btn:hover {
-  background-color: #2e4a30 !important;
+  background-color: var(--color-accent-pink) !important;
+  border-color: var(--color-accent-pink) !important;
 }
 
 /* Filtros */
 html:not(.dark-mode) .filter-btn {
-  color: #1a1a1a !important;
-  border-color: #4a4a4a !important;
+  color: var(--color-text-strong) !important;
+  border-color: var(--color-text-muted) !important;
   background: transparent !important;
 }
 html:not(.dark-mode) .filter-btn:hover {
-  background-color: #1a3320 !important;
-  color: #ede8e1 !important;
-  border-color: #1a3320 !important;
+  background-color: var(--color-brand-dark) !important;
+  color: var(--color-cream) !important;
+  border-color: var(--color-brand-dark) !important;
 }
 html:not(.dark-mode) .filter-btn.active {
-  background-color: #416844 !important;
-  color: #f5f5f5 !important;
-  border-color: #416844 !important;
+  background-color: var(--color-brand) !important;
+  color: var(--color-offwhite) !important;
+  border-color: var(--color-brand) !important;
 }
 
 /* Dropdown idioma */
 html:not(.dark-mode) .lang-dropdown-btn {
-  color: #416844 !important;
-  border-color: #416844 !important;
+  color: var(--color-brand) !important;
+  border-color: var(--color-brand) !important;
 }
 html:not(.dark-mode) .lang-dropdown-menu {
-  border-color: #416844 !important;
-  background: #ede8e1 !important;
+  border-color: var(--color-brand) !important;
+  background: var(--color-cream) !important;
 }
 html:not(.dark-mode) .lang-option {
-  color: #416844 !important;
+  color: var(--color-brand) !important;
 }
 
 /* Theme toggle: sin borde, solo imagen */
@@ -301,77 +388,100 @@ html.dark-mode .theme-toggle {
 
 /* Cards */
 html:not(.dark-mode) .card {
-  border-color: #ede8e1 !important;
+  border-color: var(--color-cream) !important;
 }
 html:not(.dark-mode) .project-modal {
   background: rgba(237, 232, 225, 0.97) !important;
 }
 html:not(.dark-mode) .project-modal-text .card-title {
-  color: #416844 !important;
+  color: var(--color-brand-dark) !important;
 }
 html:not(.dark-mode) .project-modal-text .card-text {
-  color: #1a1a1a !important;
+  color: var(--color-brand) !important;
+}
+html:not(.dark-mode) .project-modal-close::before,
+html:not(.dark-mode) .project-modal-close::after {
+  background-color: var(--color-brand-dark) !important;
+}
+html:not(.dark-mode) .project-modal-close:hover::before,
+html:not(.dark-mode) .project-modal-close:hover::after {
+  background-color: var(--color-brand) !important;
 }
 
 /* ==============================
    DARK MODE — ajustes específicos
    ============================== */
 
-/* About page: fondo secciones crema, cajas verde, titulo verde oscuro, texto crema */
-html.dark-mode .about-page-content,
-html.dark-mode .experience-header {
-  background-color: #ede8e1 !important;
-}
+/* Nota: experience-header ya es verde por defecto (sin condición de tema) y
+   experience-subtitle ya es crema por defecto, así que en modo oscuro se
+   quedan tal cual: banda verde continua con texto crema, sin franja crema
+   de por medio. */
 
 html.dark-mode .content-box {
-  background: #416844 !important;
-  border-color: rgba(237, 232, 225, 0.2) !important;
+  /* Glassmorphism: verde principal translúcido + más desenfoque, en vez
+     de verde sólido como antes */
+  background: rgba(65, 104, 68, 0.55) !important;
+  border-color: rgba(237, 232, 225, 0.25) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25) !important;
 }
 
 html.dark-mode .box-title {
-  color: #1a3320 !important;
+  color: var(--color-cream) !important;
 }
 
 html.dark-mode .box-text,
 html.dark-mode .content-box ul,
 html.dark-mode .content-box p {
-  color: #ede8e1 !important;
+  color: var(--color-cream) !important;
 }
 
 html.dark-mode .box-column h4 {
-  color: #ede8e1 !important;
+  color: var(--color-cream) !important;
 }
 
 html.dark-mode .dot--full {
-  background-color: #ede8e1 !important;
+  background-color: var(--color-cream) !important;
 }
 
 html.dark-mode .dot--empty {
-  border-color: #ede8e1 !important;
+  border-color: var(--color-cream) !important;
 }
 
 html.dark-mode .dot--half {
-  background: linear-gradient(90deg, #ede8e1 50%, transparent 50%) !important;
-  border-color: #ede8e1 !important;
+  background: linear-gradient(
+    90deg,
+    var(--color-cream) 50%,
+    transparent 50%
+  ) !important;
+  border-color: var(--color-cream) !important;
 }
 
 /* Fondo tarjetas proyectos: crema */
 html.dark-mode .cards-section {
-  background-color: #ede8e1 !important;
+  background-color: var(--color-cream) !important;
+}
+
+/* "Proyectos Destacados" (home): esa sección se queda siempre en fondo
+   crema (no cambia con el tema), pero el título heredaba el blanco por
+   defecto y quedaba invisible sobre el crema en modo oscuro */
+html.dark-mode .intro-section .section-title {
+  color: var(--color-brand) !important;
 }
 
 /* Hero job (Diseño Gráfico) en verde */
 html.dark-mode .hero-job,
 html.dark-mode .experience-subtitle-line2 {
-  color: #f5f5f5 !important;
+  color: var(--color-offwhite) !important;
 }
 
-/* Email en contacto: verde normal */
+/* Email dentro del párrafo de "Contacta conmigo": rosa de acento en los
+   dos modos (antes era claro en oscuro y verde en claro) */
 html.dark-mode .color {
-  color: #f5f5f5 !important;
+  color: var(--color-accent-pink) !important;
 }
 
-/* Correo en modo claro: verde */
 html:not(.dark-mode) .color {
-  color: #416844 !important;
+  color: var(--color-accent-pink) !important;
 }

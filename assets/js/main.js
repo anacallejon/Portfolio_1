@@ -8,6 +8,21 @@ document.addEventListener("DOMContentLoaded", () => {
   if (cursor) {
     const COLOR1 = "rgb(65, 104, 68)"; // #416844
     const COLOR2 = "rgb(46, 74, 48)"; // #2E4A30
+    const COLOR1_RGB = "65, 104, 68";
+    const COLOR2_RGB = "46, 74, 48";
+
+    // Extrae solo el trío r, g, b de un color computado, ignorando el
+    // canal alpha (para que rgba(65, 104, 68, 0.97) siga reconociéndose
+    // como "COLOR1" aunque no coincida el string exacto con el alpha).
+    const getOpaqueRgb = (colorStr) => {
+      const match = colorStr.match(
+        /^rgba?\(\s*(\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\s*\)$/,
+      );
+      if (!match) return null;
+      const alpha = match[4] === undefined ? 1 : parseFloat(match[4]);
+      if (alpha <= 0) return null;
+      return `${match[1]}, ${match[2]}, ${match[3]}`;
+    };
 
     document.addEventListener("mousemove", (e) => {
       cursor.style.opacity = "1";
@@ -22,18 +37,18 @@ document.addEventListener("DOMContentLoaded", () => {
       if (cursor.classList.contains("is-link")) return;
 
       let node = el;
-      let bgColor = "rgba(0, 0, 0, 0)";
+      let bgRgb = null;
       while (node && node !== document.documentElement) {
         const computed = window.getComputedStyle(node);
-        bgColor = computed.backgroundColor;
-        if (bgColor !== "rgba(0, 0, 0, 0)" && bgColor !== "transparent") break;
+        bgRgb = getOpaqueRgb(computed.backgroundColor);
+        if (bgRgb) break;
         node = node.parentElement;
       }
 
-      if (bgColor === COLOR1) {
+      if (bgRgb === COLOR1_RGB) {
         cursor.style.backgroundColor = COLOR2;
         cursor.style.borderColor = COLOR2;
-      } else if (bgColor === COLOR2) {
+      } else if (bgRgb === COLOR2_RGB) {
         cursor.style.backgroundColor = COLOR1;
         cursor.style.borderColor = COLOR1;
       } else {
@@ -121,8 +136,21 @@ document.addEventListener("DOMContentLoaded", () => {
       if (detail) {
         const detailTitle = detail.querySelector("h3");
         const detailText = detail.querySelector("p");
-        if (detailTitle) modalText.appendChild(detailTitle.cloneNode(true));
-        if (detailText) modalText.appendChild(detailText.cloneNode(true));
+        // El h3/p del bloque de detalle no llevan clase propia: se las
+        // añadimos al clonar para que hereden el color de
+        // .project-modal-text .card-title/.card-text (si no, se quedan
+        // sin la regla de color de modo claro y salen en blanco sobre
+        // fondo crema, ilegibles).
+        if (detailTitle) {
+          const clonedTitle = detailTitle.cloneNode(true);
+          clonedTitle.classList.add("card-title");
+          modalText.appendChild(clonedTitle);
+        }
+        if (detailText) {
+          const clonedText = detailText.cloneNode(true);
+          clonedText.classList.add("card-text");
+          modalText.appendChild(clonedText);
+        }
       } else {
         const titleEl = card.querySelector(".card-title");
         const textEl = card.querySelector(".card-text");
@@ -266,6 +294,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const savedTheme = localStorage.getItem("theme") || "dark";
   document.documentElement.classList.toggle("dark-mode", savedTheme === "dark");
 
+  // Activar el fundido de colores SOLO a partir de aquí (dos frames
+  // después de pintar el tema guardado), para que la carga de la
+  // página no se vea como una transición y solo se note al pulsar
+  // el botón de claro/oscuro.
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      document.documentElement.classList.add("theme-transitions-ready");
+    });
+  });
+
   if (themeToggle) {
     themeToggle.addEventListener("click", () => {
       const isDark = document.documentElement.classList.toggle("dark-mode");
@@ -282,6 +320,62 @@ document.addEventListener("DOMContentLoaded", () => {
   // Estado inicial: español
   let currentLang = localStorage.getItem("lang") || "es";
 
+  // Respeta "reducir movimiento" del sistema: si está activado, los
+  // textos cambian de golpe, sin animación de ningún tipo.
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  // No animamos la primera vez que se aplica el idioma (justo al cargar
+  // la página), solo cuando el usuario cambia de idioma a partir de ahí.
+  let langTransitionsReady = false;
+
+  // ------------------------------
+  // Fundido: al cambiar de idioma, el texto actual se desvanece y el
+  // nuevo aparece igual de suave. Se usa para todos los textos (cortos
+  // y párrafos largos con negritas/saltos de línea incluidos).
+  // ------------------------------
+  function fadeSwap(el, newHTML) {
+    if (prefersReducedMotion || !langTransitionsReady) {
+      el.innerHTML = newHTML;
+      return;
+    }
+
+    if (el.innerHTML === newHTML) return;
+
+    if (el._fadeTimer) {
+      clearTimeout(el._fadeTimer);
+      el._fadeTimer = null;
+    }
+
+    const prevTransition = el.style.transition;
+    el.style.transition = "opacity 0.18s ease";
+    el.style.opacity = "0";
+    el._fadeTimer = setTimeout(() => {
+      el.innerHTML = newHTML;
+      void el.offsetWidth; // fuerza reflow para que el opacity:0 se aplique antes de animar
+      el.style.opacity = "1";
+      el._fadeTimer = setTimeout(() => {
+        el.style.transition = prevTransition;
+        el._fadeTimer = null;
+      }, 200);
+    }, 180);
+  }
+
+  // Envolver el código de idioma del botón (ES/EN) en su propio <span>
+  // para poder actualizarlo sin tocar la flecha.
+  let langCodeEl = null;
+  if (langBtn) {
+    const arrow = langBtn.querySelector(".lang-arrow");
+    langCodeEl = document.createElement("span");
+    langCodeEl.className = "lang-code";
+    langCodeEl.textContent = langBtn.textContent.trim();
+    langBtn.innerHTML = "";
+    langBtn.appendChild(langCodeEl);
+    langBtn.appendChild(document.createTextNode(" "));
+    if (arrow) langBtn.appendChild(arrow);
+  }
+
   const applyLang = (lang) => {
     currentLang = lang;
     localStorage.setItem("lang", lang);
@@ -289,10 +383,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Traducir todos los elementos con data-es / data-en
     document.querySelectorAll("[data-es], [data-en]").forEach((el) => {
       const text = el.getAttribute(`data-${lang}`);
-      if (text !== null) {
-        // Usar innerHTML para respetar <br> y otras etiquetas
-        el.innerHTML = text;
-      }
+      if (text === null) return;
+      fadeSwap(el, text);
     });
 
     // Traducir cards hover overlay (data-title-es / data-title-en)
@@ -301,23 +393,23 @@ document.addEventListener("DOMContentLoaded", () => {
       const desc = card.getAttribute(`data-desc-${lang}`);
       const overlayTitle = card.querySelector(".card-hover-title");
       const overlayDesc = card.querySelector(".card-hover-desc");
-      if (overlayTitle && title) overlayTitle.textContent = title;
-      if (overlayDesc && desc) overlayDesc.textContent = desc;
+      if (overlayTitle && title) fadeSwap(overlayTitle, title);
+      if (overlayDesc && desc) fadeSwap(overlayDesc, desc);
     });
 
     // Actualizar botón del dropdown
     const otherLang = lang === "es" ? "en" : "es";
-    if (langBtn)
-      langBtn.innerHTML = `${lang.toUpperCase()} <span class="lang-arrow">▾</span>`;
+    if (langCodeEl) fadeSwap(langCodeEl, lang.toUpperCase());
     const langOption = langMenu ? langMenu.querySelector(".lang-option") : null;
     if (langOption) {
-      langOption.textContent = otherLang.toUpperCase();
+      fadeSwap(langOption, otherLang.toUpperCase());
       langOption.setAttribute("data-lang", otherLang);
     }
   };
 
-  // Aplicar idioma guardado al cargar
+  // Aplicar idioma guardado al cargar (sin animación la primera vez)
   applyLang(currentLang);
+  langTransitionsReady = true;
 
   if (langBtn && langMenu) {
     langBtn.addEventListener("click", (e) => {
@@ -500,8 +592,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!hero) return;
 
     const hint = document.createElement("div");
-    hint.className = "scroll-hint";
-    hint.innerHTML = `<img src="https://ik.imagekit.io/anacallejon/img_portfolio/scroll_down1.png?updatedAt=1776855881079" alt="scroll" class="scroll-hint-img" />`;
+    hint.className = "scroll-hint icon-swap";
+    hint.innerHTML = `<img src="https://ik.imagekit.io/anacallejon/portfolio_img/scroll_down_crema1.png" alt="scroll" class="scroll-hint-img icon-swap--crema" /><img src="https://ik.imagekit.io/anacallejon/portfolio_img/scroll_down_verde1.png" alt="" aria-hidden="true" class="scroll-hint-img icon-swap--verde" />`;
     hero.appendChild(hint);
 
     window.addEventListener("scroll", () => {

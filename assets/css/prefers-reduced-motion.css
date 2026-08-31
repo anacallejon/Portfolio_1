@@ -18,11 +18,6 @@
     animation: none !important;
   }
 
-  /* Stop blob morphing */
-  .about-btn::before {
-    animation: none !important;
-  }
-
   /* Stop 404 color change */
   .error-number {
     animation: fadeInUp 0.01ms forwards !important;
