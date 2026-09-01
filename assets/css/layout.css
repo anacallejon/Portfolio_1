@@ -304,6 +304,64 @@
     padding: 0.5rem 0;
   }
 
+  /* Selector de idioma dentro del menú desplegable móvil, justo debajo
+     de "Cambiar tema": mismo comportamiento de desplegable que en
+     escritorio (botón con el idioma actual + flecha, que al abrirse
+     muestra el otro idioma como opción), pero integrado en el flujo
+     del menú en vez de flotar en una esquina. */
+  .nav-mobile-lang {
+    display: block;
+    width: 100%;
+  }
+
+  .navbar .nav-links.nav-open .lang-dropdown--mobile {
+    position: relative;
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .lang-dropdown--mobile .lang-dropdown-btn {
+    width: auto;
+    justify-content: flex-start;
+    gap: 0.8rem;
+    font-family: "Unbounded", sans-serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #f5f5f5;
+    background: none;
+    border: none;
+    padding: 0.5rem 0;
+  }
+
+  .lang-dropdown--mobile .lang-dropdown-btn[aria-expanded="true"] {
+    padding-bottom: 0.5rem;
+  }
+
+  .lang-dropdown--mobile .lang-dropdown-menu {
+    position: static;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    transform: none;
+    max-height: 0;
+    overflow: hidden;
+    transition:
+      max-height 0.25s ease,
+      opacity 0.2s ease;
+  }
+
+  .lang-dropdown--mobile .lang-dropdown-menu.is-open {
+    max-height: 6rem;
+  }
+
+  .lang-dropdown--mobile .lang-option {
+    font-family: "Unbounded", sans-serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-align: left;
+    padding: 0.4rem 0;
+  }
+
   /* Bloquear scroll cuando el menú está abierto */
   body.nav-open {
     overflow: hidden;
@@ -340,9 +398,11 @@
     display: flex;
   }
 
-  /* En escritorio/tablet ancho, el botón de tema duplicado del menú
-     móvil no se muestra: se usa el fijo de siempre junto al idioma */
-  .nav-mobile-theme {
+  /* En escritorio/tablet ancho, el botón de tema y el selector de
+     idioma duplicados del menú móvil no se muestran: se usan los fijos
+     de siempre junto a la hamburguesa */
+  .nav-mobile-theme,
+  .nav-mobile-lang {
     display: none;
   }
 }
@@ -895,16 +955,12 @@ body.projects-page {
   color: #ede8e1;
 }
 
-/* Móvil */
+/* Móvil: el desplegable de idioma fijo de escritorio se oculta (su
+   equivalente vive ahora dentro del menú, ver .lang-dropdown--mobile
+   más arriba) */
 @media (max-width: 768px) {
-  .lang-dropdown {
+  .nav-controls .lang-dropdown {
     display: none;
-  }
-
-  .navbar .nav-links.nav-open .lang-dropdown-mobile {
-    display: flex;
-    gap: 1rem;
-    padding: 0.5rem 0;
   }
 }
 

@@ -368,8 +368,17 @@ document.addEventListener("DOMContentLoaded", () => {
   // ==============================
   // LANG DROPDOWN EN NAVBAR
   // ==============================
-  const langBtn = document.querySelector(".lang-dropdown-btn");
-  const langMenu = document.querySelector(".lang-dropdown-menu");
+  // Igual que con el theme-toggle: puede haber dos dropdowns de idioma
+  // en la página (el fijo de escritorio, y el que vive dentro del menú
+  // desplegable en móvil/tablet), así que los recorremos todos en vez
+  // de asumir que solo existe uno.
+  const langDropdowns = Array.from(document.querySelectorAll(".lang-dropdown")).map(
+    (dropdown) => ({
+      dropdown,
+      btn: dropdown.querySelector(".lang-dropdown-btn"),
+      menu: dropdown.querySelector(".lang-dropdown-menu"),
+    }),
+  );
 
   // Estado inicial: español
   let currentLang = localStorage.getItem("lang") || "es";
@@ -416,19 +425,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 180);
   }
 
-  // Envolver el código de idioma del botón (ES/EN) en su propio <span>
-  // para poder actualizarlo sin tocar la flecha.
-  let langCodeEl = null;
-  if (langBtn) {
-    const arrow = langBtn.querySelector(".lang-arrow");
-    langCodeEl = document.createElement("span");
+  // Envolver el código de idioma de cada botón (ES/EN) en su propio
+  // <span> para poder actualizarlo sin tocar la flecha.
+  langDropdowns.forEach((entry) => {
+    if (!entry.btn) return;
+    const arrow = entry.btn.querySelector(".lang-arrow");
+    const langCodeEl = document.createElement("span");
     langCodeEl.className = "lang-code";
-    langCodeEl.textContent = langBtn.textContent.trim();
-    langBtn.innerHTML = "";
-    langBtn.appendChild(langCodeEl);
-    langBtn.appendChild(document.createTextNode(" "));
-    if (arrow) langBtn.appendChild(arrow);
-  }
+    langCodeEl.textContent = entry.btn.textContent.trim();
+    entry.btn.innerHTML = "";
+    entry.btn.appendChild(langCodeEl);
+    entry.btn.appendChild(document.createTextNode(" "));
+    if (arrow) entry.btn.appendChild(arrow);
+    entry.langCodeEl = langCodeEl;
+  });
 
   const applyLang = (lang) => {
     currentLang = lang;
@@ -451,41 +461,52 @@ document.addEventListener("DOMContentLoaded", () => {
       if (overlayDesc && desc) fadeSwap(overlayDesc, desc);
     });
 
-    // Actualizar botón del dropdown
+    // Actualizar todos los botones del dropdown (escritorio y móvil)
     const otherLang = lang === "es" ? "en" : "es";
-    if (langCodeEl) fadeSwap(langCodeEl, lang.toUpperCase());
-    const langOption = langMenu ? langMenu.querySelector(".lang-option") : null;
-    if (langOption) {
-      fadeSwap(langOption, otherLang.toUpperCase());
-      langOption.setAttribute("data-lang", otherLang);
-    }
+    langDropdowns.forEach(({ menu, langCodeEl }) => {
+      if (langCodeEl) fadeSwap(langCodeEl, lang.toUpperCase());
+      const langOption = menu ? menu.querySelector(".lang-option") : null;
+      if (langOption) {
+        fadeSwap(langOption, otherLang.toUpperCase());
+        langOption.setAttribute("data-lang", otherLang);
+      }
+    });
   };
 
   // Aplicar idioma guardado al cargar (sin animación la primera vez)
   applyLang(currentLang);
   langTransitionsReady = true;
 
-  if (langBtn && langMenu) {
-    langBtn.addEventListener("click", (e) => {
+  langDropdowns.forEach(({ btn, menu }) => {
+    if (!btn || !menu) return;
+
+    btn.addEventListener("click", (e) => {
       e.stopPropagation();
-      const isOpen = langMenu.classList.toggle("is-open");
-      langBtn.setAttribute("aria-expanded", isOpen);
+      // Al abrir uno, cerramos cualquier otro dropdown de idioma que
+      // pudiera estar abierto (por si hubiera más de uno visible a la vez).
+      langDropdowns.forEach(({ btn: otherBtn, menu: otherMenu }) => {
+        if (otherMenu === menu) return;
+        if (otherMenu) otherMenu.classList.remove("is-open");
+        if (otherBtn) otherBtn.setAttribute("aria-expanded", "false");
+      });
+      const isOpen = menu.classList.toggle("is-open");
+      btn.setAttribute("aria-expanded", isOpen);
     });
 
     document.addEventListener("click", () => {
-      langMenu.classList.remove("is-open");
-      langBtn.setAttribute("aria-expanded", "false");
+      menu.classList.remove("is-open");
+      btn.setAttribute("aria-expanded", "false");
     });
 
-    langMenu.querySelectorAll(".lang-option").forEach((opt) => {
+    menu.querySelectorAll(".lang-option").forEach((opt) => {
       opt.addEventListener("click", (e) => {
         e.stopPropagation();
         applyLang(opt.getAttribute("data-lang"));
-        langMenu.classList.remove("is-open");
-        langBtn.setAttribute("aria-expanded", "false");
+        menu.classList.remove("is-open");
+        btn.setAttribute("aria-expanded", "false");
       });
     });
-  }
+  });
 
   // ==============================
   // NAVBAR ABOUT / PROJECTS: APARICIÓN DE LOGO AL SALIR DEL HERO
