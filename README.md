@@ -2,7 +2,7 @@
 
 This is my personal portfolio, built with vanilla HTML, CSS, and JavaScript, showcasing my work as a Graphic and Multimedia Design student. It started as a course project and has since grown into the portfolio I'm using to look for professional internships.
 
-**Live Site:** [https://anacallejon.github.io/Portfolio_1/index.html](https://anacallejon.github.io/Portfolio_1/index.html)
+**Live Site:** [https://anacallejon.github.io/Portfolio_1/](https://anacallejon.github.io/Portfolio_1/)
 
 ## Project Description
 
