@@ -24,7 +24,11 @@
   flex-wrap: nowrap;
   gap: 1.5rem;
   width: max-content;
-  will-change: transform;
+  /* translate3d en vez de translateX en los keyframes (más abajo) ya
+     fuerza su propia capa de GPU; backface-visibility evita el típico
+     parpadeo/desaparición de capas animadas en Safari de iOS */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .carousel-item {
@@ -51,21 +55,32 @@
   animation: scroll-right 40s linear infinite;
 }
 
+/* La distancia se calcula a mano (6 tarjetas + 6 huecos de una sola
+   tanda, ver "SEGUNDA TANDA: EXACTAMENTE IGUAL" en el HTML) en vez de
+   usar translateX(-50%) del ancho total. -50% depende de que el
+   navegador tenga ya calculado el ancho real (max-content) del track
+   en el momento exacto de arrancar la animación; en Safari de iOS, con
+   las imágenes cargando desde la red real (a diferencia del emulador
+   de escritorio, donde cargan casi al instante), ese cálculo puede
+   quedar mal y provocar justo estos síntomas: velocidad rara, el
+   salto de vuelta al principio no es invisible ("dejar de ser
+   infinito"), etc. Con una distancia fija en px no hay ambigüedad
+   posible. Escritorio: 6 × 360px + 6 × 24px (gap) = 2304px */
 @keyframes scroll-left {
   0% {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translate3d(-2304px, 0, 0);
   }
 }
 
 @keyframes scroll-right {
   0% {
-    transform: translateX(-50%);
+    transform: translate3d(-2304px, 0, 0);
   }
   100% {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
@@ -92,11 +107,31 @@
   }
 
   .carousel-row--top .carousel-track {
-    animation: scroll-left 60s linear infinite;
+    animation: scroll-left-mobile 60s linear infinite;
   }
 
   .carousel-row--bottom .carousel-track {
-    animation: scroll-right 60s linear infinite;
+    animation: scroll-right-mobile 60s linear infinite;
+  }
+}
+
+/* Misma idea que scroll-left/scroll-right pero con la medida móvil:
+   6 × 70vw + 6 × 16px (gap) */
+@keyframes scroll-left-mobile {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(calc(-420vw - 96px), 0, 0);
+  }
+}
+
+@keyframes scroll-right-mobile {
+  0% {
+    transform: translate3d(calc(-420vw - 96px), 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
   }
 }
 /* ===== OCULTAR CURSOR ORIGINAL - SOLO DESKTOP ===== */
