@@ -24,11 +24,7 @@
   flex-wrap: nowrap;
   gap: 1.5rem;
   width: max-content;
-  /* translate3d en vez de translateX en los keyframes (más abajo) ya
-     fuerza su propia capa de GPU; backface-visibility evita el típico
-     parpadeo/desaparición de capas animadas en Safari de iOS */
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+  will-change: transform;
 }
 
 .carousel-item {
@@ -55,36 +51,26 @@
   animation: scroll-right 40s linear infinite;
 }
 
-/* La distancia se calcula a mano (6 tarjetas + 6 huecos de una sola
-   tanda, ver "SEGUNDA TANDA: EXACTAMENTE IGUAL" en el HTML) en vez de
-   usar translateX(-50%) del ancho total. -50% depende de que el
-   navegador tenga ya calculado el ancho real (max-content) del track
-   en el momento exacto de arrancar la animación; en Safari de iOS, con
-   las imágenes cargando desde la red real (a diferencia del emulador
-   de escritorio, donde cargan casi al instante), ese cálculo puede
-   quedar mal y provocar justo estos síntomas: velocidad rara, el
-   salto de vuelta al principio no es invisible ("dejar de ser
-   infinito"), etc. Con una distancia fija en px no hay ambigüedad
-   posible. Escritorio: 6 × 360px + 6 × 24px (gap) = 2304px */
 @keyframes scroll-left {
   0% {
-    transform: translate3d(0, 0, 0);
+    transform: translateX(0);
   }
   100% {
-    transform: translate3d(-2304px, 0, 0);
+    transform: translateX(-50%);
   }
 }
 
 @keyframes scroll-right {
   0% {
-    transform: translate3d(-2304px, 0, 0);
+    transform: translateX(-50%);
   }
   100% {
-    transform: translate3d(0, 0, 0);
+    transform: translateX(0);
   }
 }
 
-/* MÓVIL (≤ 768px) */
+/* MÓVIL (≤ 768px) — a partir de aquí, todo scope a móvil/tablet;
+   escritorio se queda exactamente como estaba arriba, sin tocar */
 @media (max-width: 768px) {
   .carousel-double {
     gap: 1.5rem;
@@ -98,6 +84,11 @@
 
   .carousel-track {
     gap: 1rem;
+    /* translate3d en los keyframes de abajo ya fuerza su propia capa
+       de GPU; backface-visibility evita el típico parpadeo/desaparición
+       de capas animadas en Safari de iOS */
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
   }
 
   .carousel-item {
@@ -106,6 +97,16 @@
     flex-shrink: 0;
   }
 
+  /* Distancia calculada a mano (6 tarjetas + 6 huecos de una sola
+     tanda, ver "SEGUNDA TANDA: EXACTAMENTE IGUAL" en el HTML) en vez
+     de depender de translateX(-50%) del ancho total. -50% necesita que
+     el navegador ya tenga calculado el ancho real (max-content) del
+     track en el momento justo de arrancar la animación; en Safari de
+     iOS, con las imágenes cargando desde la red real (a diferencia del
+     emulador de escritorio, donde cargan casi al instante), ese
+     cálculo puede quedar mal y provocar justo estos síntomas:
+     velocidad rara y que el salto de vuelta al principio del bucle no
+     sea invisible. Con una distancia fija no hay ambigüedad posible. */
   .carousel-row--top .carousel-track {
     animation: scroll-left-mobile 60s linear infinite;
   }
@@ -115,8 +116,7 @@
   }
 }
 
-/* Misma idea que scroll-left/scroll-right pero con la medida móvil:
-   6 × 70vw + 6 × 16px (gap) */
+/* 6 × 70vw + 6 × 16px (gap) — solo se usan en móvil (ver media query) */
 @keyframes scroll-left-mobile {
   0% {
     transform: translate3d(0, 0, 0);
