@@ -2,7 +2,7 @@
 
 This is my personal portfolio, built with vanilla HTML, CSS, and JavaScript, showcasing my work as a Graphic and Multimedia Design student. It started as a course project and has since grown into the portfolio I'm using to look for professional internships.
 
-**Live Site:** [https://anacallejon.github.io/creative-portfolio-web/](https://anacallejon.github.io/creative-portfolio-web/)
+**Live Site:** [https://anacallejon.github.io/Portfolio_1/index.html](https://anacallejon.github.io/Portfolio_1/index.html)
 
 ## Project Description
 
@@ -23,21 +23,20 @@ A fully responsive portfolio featuring my design projects across branding, edito
 
 The whole site runs on light and dark mode, which follows the visitor's system preference by default (with a manual override that's remembered on return visits). Every color comes from one set of CSS custom properties in `assets/css/base.css`, so the whole palette can be adjusted from a single place.
 
-| Color | Hex | Usage |
-| --- | --- | --- |
-| **Brand Green** | `#416844` | Navbar, buttons, accents |
-| **Brand Green (dark)** | `#1a3320` | About background, strong accents |
-| **Brand Green (hover)** | `#2e4a30` | Button hover state |
-| **Cream** | `#ede8e1` | Surfaces and text over green backgrounds |
-| **Off-white** | `#f5f5f5` | Text over navbar/hero, light backgrounds |
-| **Strong Text** | `#1a1a1a` | Text over light backgrounds |
-| **Muted Text** | `#4a4a4a` | Secondary/muted text |
-| **Accent Pink** | `#df6595` | One-off accent (404 page, submit button) |
+| Color                   | Hex       | Usage                                    |
+| ----------------------- | --------- | ---------------------------------------- |
+| **Brand Green**         | `#416844` | Navbar, buttons, accents                 |
+| **Brand Green (dark)**  | `#1a3320` | About background, strong accents         |
+| **Brand Green (hover)** | `#2e4a30` | Button hover state                       |
+| **Cream**               | `#ede8e1` | Surfaces and text over green backgrounds |
+| **Off-white**           | `#f5f5f5` | Text over navbar/hero, light backgrounds |
+| **Strong Text**         | `#1a1a1a` | Text over light backgrounds              |
+| **Muted Text**          | `#4a4a4a` | Secondary/muted text                     |
+| **Accent Pink**         | `#df6595` | One-off accent (404 page, submit button) |
 
 ### Typography
 
 - **Primary Font:** [Unbounded](https://fonts.google.com/specimen/Unbounded)
-
   - Weights: Light (200), Regular (400), Medium (500), SemiBold (600), Bold (700)
   - Usage: Body text, headings, UI elements
 
