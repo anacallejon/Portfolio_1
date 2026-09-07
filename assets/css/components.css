@@ -661,6 +661,22 @@ html:not(.dark-mode) .icon-swap.icon-swap--inverted > .icon-swap--verde {
   }
 }
 
+/* En escritorio la tarjeta tenía una altura fija (400px) pero un ancho
+   fluido (calc(100vw - 160px) repartido en 2 columnas), así que la
+   proporción visible de cada foto cambiaba según el ancho exacto de la
+   ventana: en ventanas muy anchas el recorte se volvía demasiado
+   panorámico y "cortaba" mal algunas fotos (se veía sobre todo el
+   fondo/espacio vacío en vez del producto). Con una proporción fija
+   (aspect-ratio) en vez de una altura fija, el recorte de cada foto es
+   siempre el mismo sin importar el ancho de la ventana. Solo en
+   escritorio: en móvil la tarjeta sigue igual que antes. */
+@media (min-width: 769px) {
+  .card {
+    height: auto;
+    aspect-ratio: 3 / 2;
+  }
+}
+
 .projects-page .card::before {
   display: none;
 }
