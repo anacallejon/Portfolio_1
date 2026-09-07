@@ -199,9 +199,15 @@ document.addEventListener("DOMContentLoaded", () => {
       window.history.replaceState({}, "", window.location.pathname);
     }
 
-    // Click en cards → abrir modal
+    // Click en cards → ir a la página dedicada del proyecto si la tiene
+    // (data-project-url), o si no, abrir la modal de siempre
     cards.forEach((card) => {
       card.addEventListener("click", () => {
+        const projectUrl = card.getAttribute("data-project-url");
+        if (projectUrl) {
+          window.location.href = projectUrl;
+          return;
+        }
         openModalById(card.getAttribute("data-project"));
       });
     });
@@ -213,9 +219,17 @@ document.addEventListener("DOMContentLoaded", () => {
     if (modalCloseBtn) {
       modalCloseBtn.addEventListener("click", closeModal);
     }
+  }
 
-    // ===== LIGHTBOX =====
-    const lightbox = document.getElementById("lightbox");
+  // ==============================
+  // LIGHTBOX (galería de imágenes a pantalla completa)
+  // ==============================
+  // Vive fuera del bloque de projects.html porque también lo usan las
+  // páginas dedicadas de cada proyecto (su propia galería grande de
+  // imágenes, ver más abajo).
+  const lightbox = document.getElementById("lightbox");
+
+  if (lightbox) {
     const lightboxImg = document.getElementById("lightbox-img");
     const lightboxClose = document.getElementById("lightbox-close");
     const lightboxPrev = document.getElementById("lightbox-prev");
@@ -225,7 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let lightboxImages = [];
     let lightboxIndex = 0;
 
-    const showLightboxImage = (index, animate = true) => {
+    var showLightboxImage = (index, animate = true) => {
       lightboxIndex = index;
       if (animate) {
         lightboxImg.classList.add("is-transitioning");
@@ -241,85 +255,106 @@ document.addEventListener("DOMContentLoaded", () => {
       lightboxNext.disabled = index === lightboxImages.length - 1;
     };
 
-    const openLightbox = (images, startIndex) => {
+    var openLightbox = (images, startIndex) => {
       lightboxImages = images;
       showLightboxImage(startIndex, false);
       lightbox.classList.add("is-open");
     };
 
-    if (lightbox) {
-      lightboxClose.addEventListener("click", () =>
-        lightbox.classList.remove("is-open"),
-      );
-      lightbox.addEventListener("click", (e) => {
-        if (e.target === lightbox) lightbox.classList.remove("is-open");
-      });
-      lightboxPrev.addEventListener("click", () => {
-        if (lightboxIndex > 0) showLightboxImage(lightboxIndex - 1);
-      });
-      lightboxNext.addEventListener("click", () => {
-        if (lightboxIndex < lightboxImages.length - 1)
+    lightboxClose.addEventListener("click", () =>
+      lightbox.classList.remove("is-open"),
+    );
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox) lightbox.classList.remove("is-open");
+    });
+    lightboxPrev.addEventListener("click", () => {
+      if (lightboxIndex > 0) showLightboxImage(lightboxIndex - 1);
+    });
+    lightboxNext.addEventListener("click", () => {
+      if (lightboxIndex < lightboxImages.length - 1)
+        showLightboxImage(lightboxIndex + 1);
+    });
+    document.addEventListener("keydown", (e) => {
+      if (!lightbox.classList.contains("is-open")) return;
+      if (e.key === "ArrowLeft" && lightboxIndex > 0)
+        showLightboxImage(lightboxIndex - 1);
+      if (e.key === "ArrowRight" && lightboxIndex < lightboxImages.length - 1)
+        showLightboxImage(lightboxIndex + 1);
+      if (e.key === "Escape") lightbox.classList.remove("is-open");
+    });
+
+    // Deslizar con el dedo (móvil/táctil) para pasar de una imagen a
+    // otra, sin necesidad de tocar las flechas
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    lightboxImg.addEventListener(
+      "touchstart",
+      (e) => {
+        touchStartX = e.changedTouches[0].clientX;
+        touchStartY = e.changedTouches[0].clientY;
+      },
+      { passive: true },
+    );
+
+    lightboxImg.addEventListener(
+      "touchend",
+      (e) => {
+        const touchEndX = e.changedTouches[0].clientX;
+        const touchEndY = e.changedTouches[0].clientY;
+        const deltaX = touchEndX - touchStartX;
+        const deltaY = touchEndY - touchStartY;
+
+        // Umbral mínimo y que el gesto sea mayormente horizontal (para
+        // no confundirlo con un scroll vertical accidental)
+        if (Math.abs(deltaX) < 40 || Math.abs(deltaX) < Math.abs(deltaY))
+          return;
+
+        if (deltaX < 0 && lightboxIndex < lightboxImages.length - 1) {
+          // Deslizar hacia la izquierda → siguiente imagen
           showLightboxImage(lightboxIndex + 1);
-      });
-      document.addEventListener("keydown", (e) => {
-        if (!lightbox.classList.contains("is-open")) return;
-        if (e.key === "ArrowLeft" && lightboxIndex > 0)
+        } else if (deltaX > 0 && lightboxIndex > 0) {
+          // Deslizar hacia la derecha → imagen anterior
           showLightboxImage(lightboxIndex - 1);
-        if (e.key === "ArrowRight" && lightboxIndex < lightboxImages.length - 1)
-          showLightboxImage(lightboxIndex + 1);
-        if (e.key === "Escape") lightbox.classList.remove("is-open");
-      });
-
-      // Deslizar con el dedo (móvil/táctil) para pasar de una imagen a
-      // otra, sin necesidad de tocar las flechas
-      let touchStartX = 0;
-      let touchStartY = 0;
-
-      lightboxImg.addEventListener(
-        "touchstart",
-        (e) => {
-          touchStartX = e.changedTouches[0].clientX;
-          touchStartY = e.changedTouches[0].clientY;
-        },
-        { passive: true },
-      );
-
-      lightboxImg.addEventListener(
-        "touchend",
-        (e) => {
-          const touchEndX = e.changedTouches[0].clientX;
-          const touchEndY = e.changedTouches[0].clientY;
-          const deltaX = touchEndX - touchStartX;
-          const deltaY = touchEndY - touchStartY;
-
-          // Umbral mínimo y que el gesto sea mayormente horizontal (para
-          // no confundirlo con un scroll vertical accidental)
-          if (Math.abs(deltaX) < 40 || Math.abs(deltaX) < Math.abs(deltaY))
-            return;
-
-          if (deltaX < 0 && lightboxIndex < lightboxImages.length - 1) {
-            // Deslizar hacia la izquierda → siguiente imagen
-            showLightboxImage(lightboxIndex + 1);
-          } else if (deltaX > 0 && lightboxIndex > 0) {
-            // Deslizar hacia la derecha → imagen anterior
-            showLightboxImage(lightboxIndex - 1);
-          }
-        },
-        { passive: true },
-      );
-    }
+        }
+      },
+      { passive: true },
+    );
   }
+
+  // ==============================
+  // GALERÍA DE IMÁGENES — PÁGINA DEDICADA DE PROYECTO
+  // ==============================
+  // Cada página de proyecto individual (proyecto-loewe.html, etc.) tiene
+  // su propia galería grande de imágenes (.project-gallery img), que usa
+  // el mismo lightbox de arriba para verse a pantalla completa.
+  const projectGalleryImgs = document.querySelectorAll(".project-gallery img");
+  if (projectGalleryImgs.length && typeof openLightbox === "function") {
+    const gallerySources = Array.from(projectGalleryImgs).map((img) => img.src);
+    projectGalleryImgs.forEach((img, i) => {
+      img.style.cursor = "zoom-in";
+      img.addEventListener("click", () => openLightbox(gallerySources, i));
+    });
+  }
+
+  // ==============================
+  // "SIGUIENTE PROYECTO" — PÁGINA DEDICADA DE PROYECTO
+  // ==============================
+  // El enlace de "siguiente proyecto" al final de cada página ya lleva
+  // su propio href en el HTML; aquí solo se necesitaría JS si en algún
+  // momento se calculara dinámicamente, así que por ahora no hace falta.
 
   // ==============================
   // CARRUSEL CLICABLE (index.html)
   // ==============================
+  // El carrusel se desplaza solo (marquee), así que asociar cada imagen
+  // concreta a su proyecto exacto no es fiable como interacción: al
+  // hacer click, en vez de abrir el modal de ese proyecto en particular,
+  // simplemente se lleva a la página de proyectos en general.
   const carouselLinks = document.querySelectorAll(".carousel-item--link");
   carouselLinks.forEach((item) => {
     item.addEventListener("click", () => {
-      const projectId = item.getAttribute("data-project");
-      if (projectId) {
-        window.location.href = `./projects.html?project=${projectId}`;
-      }
+      window.location.href = "./projects.html";
     });
   });
 
@@ -527,6 +562,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // direcciones aparece/desaparece).
   const setupLogoOnHeroScroll = (navbarSelector, heroSelector) => {
     const navbar = document.querySelector(navbarSelector);
+    // heroSelector puede ser una lista separada por comas (varias páginas
+    // comparten navbar pero no la misma cabecera): se usa la primera que
+    // exista en la página actual.
     const hero = document.querySelector(heroSelector);
     if (!navbar || !hero || !("IntersectionObserver" in window)) return;
 
@@ -540,7 +578,15 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   setupLogoOnHeroScroll(".navbar-about", ".hero");
-  setupLogoOnHeroScroll(".navbar-projects", ".top-parallax");
+  // ".top-parallax" es la cabecera de projects.html; ".project-detail-header"
+  // es la de las páginas de proyecto individuales (p.ej. proyecto-loewe.html).
+  // Ambas usan la misma navbar-projects, así que se comprueban las dos: en
+  // proyecto-loewe.html no existía ".top-parallax", así que el logo se
+  // quedaba invisible y sin click para siempre en esas páginas.
+  setupLogoOnHeroScroll(
+    ".navbar-projects",
+    ".top-parallax, .project-detail-header",
+  );
 
   window.onbeforeunload = function () {
     window.scrollTo(0, 0);

@@ -200,6 +200,13 @@ html:not(.dark-mode) .about-page .about-title {
 html:not(.dark-mode) .contact-box {
   background: var(--color-cream) !important;
 }
+/* Página de proyecto individual: bloque "siguiente proyecto" en verde
+   bosque (el verde principal del sitio) en vez de verde oscuro, solo en
+   modo claro; en modo oscuro se queda en verde oscuro (ver
+   .project-next en components.css) */
+html:not(.dark-mode) .project-next {
+  background-color: var(--color-brand) !important;
+}
 html:not(.dark-mode) .contact-input {
   background-color: var(--color-offwhite) !important;
   color: var(--color-text-strong) !important;
@@ -213,8 +220,12 @@ html:not(.dark-mode) .contact-input {
 html:not(.dark-mode) .experience-area {
   background-color: var(--color-cream) !important;
 }
+/* La mini-sección "Un resumen de mi trayectoria..." (experience-header)
+   va en blanco roto en vez de crema: así queda visualmente unida al hero
+   (que también es blanco roto) y se separa mejor del bloque crema con la
+   información personal que viene justo debajo. */
 html:not(.dark-mode) .experience-header {
-  background-color: var(--color-cream) !important;
+  background-color: var(--color-offwhite) !important;
 }
 html:not(.dark-mode) .experience-subtitle {
   color: var(--color-brand) !important;
@@ -421,10 +432,13 @@ html:not(.dark-mode) .project-modal-close:hover::after {
    DARK MODE — ajustes específicos
    ============================== */
 
-/* Nota: experience-header ya es verde por defecto (sin condición de tema) y
-   experience-subtitle ya es crema por defecto, así que en modo oscuro se
-   quedan tal cual: banda verde continua con texto crema, sin franja crema
-   de por medio. */
+/* La mini-sección "Un resumen de mi trayectoria..." (experience-header) en
+   verde OSCURO en modo oscuro (en vez del verde bosque por defecto), para
+   que marque separación frente al verde bosque de experience-area justo
+   debajo, igual que en modo claro pasa a blanco roto frente al crema. */
+html.dark-mode .experience-header {
+  background-color: var(--color-brand-dark) !important;
+}
 
 html.dark-mode .content-box {
   /* Glassmorphism: verde principal translúcido + más desenfoque, en vez

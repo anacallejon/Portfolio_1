@@ -1453,6 +1453,34 @@ body.modal-open {
   transform: translateY(0);
 }
 
+/* .intro-section (carrusel de "Proyectos Destacados", en home y en about) tenía
+   el mismo problema que ya se corrigió en experience-header y en las content-box:
+   al usar la regla genérica de arriba, la sección ENTERA (título + carrusel)
+   animaba su propia opacidad de 0 a 1 al aparecer. Durante esa fracción de
+   segundo la sección queda translúcida, y si eso coincide con la franja en la
+   que el nombre fijo del hero todavía se está terminando de tapar al hacer
+   scroll, se ve la mezcla/lavado raro por encima del carrusel (la "banda").
+   En la home pasa exactamente igual pero no se nota porque los colores
+   coinciden con los del hero. Arreglo: la sección en sí se queda siempre
+   sólida; el fade-in anima solo su contenido (el título y el carrusel). */
+.intro-section.fade-in-scroll {
+  opacity: 1;
+  transform: none;
+}
+
+.intro-section.fade-in-scroll > * {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+
+.intro-section.fade-in-scroll.fade-in-visible > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .slide-in-left {
   opacity: 0;
   transform: translateX(-50px);
@@ -1505,7 +1533,23 @@ body.modal-open {
   transform: scale(1);
 }
 
+/* El propio recuadro (fondo translúcido + blur) tiene que verse sólido
+   SIEMPRE, incluso a mitad de la animación de aparición — igual que se
+   hizo con experience-header (ver comentario más abajo). Si el recuadro
+   entero pasa por opacity:0 mientras entra en pantalla, durante esa
+   fracción de segundo se vuelve transparente del todo justo cuando
+   coincide con la franja donde el nombre fijo del hero ("Ana Callejón")
+   todavía se está terminando de tapar al hacer scroll — y se ve un
+   "fogonazo" verde del nombre a través de la caja (la banda misteriosa).
+   Por eso el fade-in ya no anima la opacidad/transform de la caja en sí:
+   anima solo su contenido (los hijos directos), que es lo único que debe
+   aparecer con fade. */
 .content-box.fade-in-scroll {
+  opacity: 1;
+  transform: none;
+}
+
+.content-box.fade-in-scroll > * {
   opacity: 0;
   transform: translateY(40px) scale(0.98);
   transition:
@@ -1513,28 +1557,39 @@ body.modal-open {
     transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.content-box.fade-in-scroll.fade-in-visible {
+.content-box.fade-in-scroll.fade-in-visible > * {
   opacity: 1;
   transform: translateY(0) scale(1);
 }
 
-.content-box.fade-in-scroll:nth-child(2) {
+.content-box.fade-in-scroll:nth-child(2) > * {
   transition-delay: 0.1s;
 }
 
-.content-box.fade-in-scroll:nth-child(3) {
+.content-box.fade-in-scroll:nth-child(3) > * {
   transition-delay: 0.2s;
 }
 
-.content-box.fade-in-scroll:nth-child(4) {
+.content-box.fade-in-scroll:nth-child(4) > * {
   transition-delay: 0.3s;
 }
 
-.content-box.fade-in-scroll:nth-child(5) {
+.content-box.fade-in-scroll:nth-child(5) > * {
   transition-delay: 0.4s;
 }
 
+/* El fondo de experience-header (blanco roto en claro / verde oscuro en
+   oscuro) tiene que verse sólido SIEMPRE, incluso a mitad de la animación
+   de scroll. Por eso el fade-in ya NO anima la opacidad/transform de la
+   sección en sí (eso dejaba transparentar el color de experience-area por
+   detrás mientras se desvanecía) — anima solo el texto interior
+   (.experience-subtitle), que es lo único que debe aparecer con fade. */
 .experience-header.fade-in-scroll {
+  opacity: 1;
+  transform: none;
+}
+
+.experience-header.fade-in-scroll .experience-subtitle {
   opacity: 0;
   transform: translateY(20px);
   transition:
@@ -1542,7 +1597,7 @@ body.modal-open {
     transform 0.6s ease;
 }
 
-.experience-header.fade-in-scroll.fade-in-visible {
+.experience-header.fade-in-scroll.fade-in-visible .experience-subtitle {
   opacity: 1;
   transform: translateY(0);
 }
@@ -1578,7 +1633,7 @@ body.modal-open {
     transition-duration: 0.4s;
   }
 
-  .content-box.fade-in-scroll:nth-child(n) {
+  .content-box.fade-in-scroll:nth-child(n) > * {
     transition-delay: 0s;
   }
 
@@ -2006,4 +2061,339 @@ button:focus-visible,
 .color {
   color: #f5f5f5;
   text-decoration: underline;
+}
+
+/* ==================================================================
+   PÁGINA DE PROYECTO INDIVIDUAL (proyecto-xxx.html)
+   ==================================================================
+   Página dedicada por proyecto, a la que se llega desde una card de
+   projects.html en vez de abrir la modal. Primera versión de la
+   estructura: barra de "volver", cabecera (tags + título + intro),
+   cuerpo de texto, galería grande de imágenes y enlace al siguiente
+   proyecto. Reutiliza componentes ya existentes en el resto del sitio
+   (navbar verde, chip de .filter-btn, botón de .about-btn) para no
+   crear un lenguaje visual nuevo.
+   ================================================================== */
+
+body.project-page {
+  padding-top: 80px;
+  background-color: var(--color-cream);
+}
+
+/* "O" + botón "Volver a proyectos": el botón usa .about-btn pero con
+   colores propios (fondo verde oscuro, texto e icono verde bosque) para
+   que quede deliberadamente discreto y no compita con el enlace real de
+   "siguiente proyecto", en los dos modos. El icono (flecha_out_verde1.png)
+   ya viene coloreado en verde bosque, por eso el fondo tiene que ser el
+   verde MÁS oscuro (brand-dark): así la flecha se distingue del fondo en
+   vez de fundirse con él como pasaba con fondo verde bosque + icono verde
+   bosque. */
+.project-next .about-btn {
+  background-color: var(--color-brand-dark) !important;
+  color: var(--color-brand) !important;
+}
+
+/* Ancho de contenido: el mismo tope que ya usa el resto del sitio
+   (--spacing-max-width, 1200px) en vez de un valor propio más estrecho,
+   para que el texto y las imágenes aprovechen más el ancho disponible. */
+.project-detail-container {
+  max-width: var(--spacing-max-width);
+  margin: 0 auto;
+  padding: 0 5rem;
+}
+
+/* ---- Barra "volver a proyectos" + cabecera ----
+   Visualmente son un único bloque continuo en blanco roto, con el
+   texto en verde bosque (antes: bloque verde con texto crema). */
+.project-detail-topbar {
+  background-color: var(--color-offwhite);
+  padding: 1.6rem 0;
+}
+
+.project-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: var(--spacing-max-width);
+  margin: 0 auto;
+  padding: 0 5rem;
+  font-family: "Unbounded", sans-serif;
+  font-weight: 400;
+  font-size: 0.85rem;
+  color: var(--color-brand);
+  opacity: 0.9;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.project-back-link:hover {
+  opacity: 1;
+  transform: translateX(-3px);
+}
+
+.project-back-icon {
+  width: 13px;
+  height: 13px;
+  object-fit: contain;
+}
+
+/* ---- Cabecera: título + intro + tags ---- */
+.project-detail-header {
+  background-color: var(--color-offwhite);
+  padding: 2rem 0 4rem;
+}
+
+/* Antes iba primero (por eso tenía el margen inferior); ahora va el
+   último, así que el espacio se pone arriba, respecto a la intro. */
+.project-detail-tags {
+  max-width: var(--spacing-max-width);
+  margin: 1.2rem auto 0;
+  padding: 0 5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+/* Etiquetas de área de diseño (no son los filtros de projects.html:
+   son descriptivas del proyecto, puede haber varias por página) */
+.tag-chip {
+  padding: 0.45rem 1.1rem;
+  border: 1.5px solid var(--color-brand);
+  border-radius: 25px;
+  font-family: "Unbounded", sans-serif;
+  font-weight: 400;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  color: var(--color-brand);
+}
+
+.project-detail-title {
+  max-width: var(--spacing-max-width);
+  margin: 0 auto;
+  padding: 0 5rem;
+  font-family: "Unbounded", sans-serif;
+  font-weight: 600;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1.1;
+  color: var(--color-brand);
+}
+
+.project-detail-intro {
+  max-width: var(--spacing-max-width);
+  margin: 1.2rem auto 0;
+  padding: 0 5rem;
+  font-family: "Unbounded", sans-serif;
+  font-weight: 300;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: var(--color-brand);
+  opacity: 0.85;
+}
+
+/* ---- Cuerpo de texto ---- */
+.project-detail-body {
+  background-color: var(--color-cream);
+  padding: 3rem 0;
+}
+
+.project-detail-body p {
+  font-family: "Unbounded", sans-serif;
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--color-text-strong);
+  margin-bottom: 1.4rem;
+}
+
+.project-detail-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---- Galería grande de imágenes ---- */
+.project-gallery {
+  max-width: var(--spacing-max-width);
+  margin: 0 auto;
+  padding: 0 5rem 4rem;
+  background-color: var(--color-cream);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Alto fijo con object-fit: cover, para que las imágenes de la galería
+   se vean más pequeñas y con una altura uniforme, sean verticales u
+   horizontales (antes, con height: auto, las verticales salían muy
+   altas). No se recortan ni se deforman: se limita el alto máximo y el
+   ancho se ajusta solo, respetando la proporción real de cada foto. */
+.project-gallery img {
+  max-height: 680px;
+  width: auto;
+  max-width: 100%;
+  border-radius: 16px;
+  cursor: zoom-in;
+  display: block;
+}
+
+/* Fila de dos imágenes en línea (para pares de imágenes verticales, o
+   para el "hueco" intermedio del ritmo grande/fila-de-dos/grande de las
+   horizontales). Se agrupan a mano según cómo sean las fotos reales de
+   cada proyecto: envolver dos <img> en un div.gallery-row. */
+.gallery-row {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+/* Ya no se fuerza flex-grow: cada imagen mantiene su ancho natural
+   (según su alto máximo y su proporción real), en vez de estirarse
+   para rellenar la fila. */
+.gallery-row img {
+  flex: 0 0 auto;
+}
+
+/* ---- Enlace al siguiente proyecto ----
+   Fondo verde oscuro por defecto (modo oscuro); en modo claro pasa a
+   verde bosque (ver override más abajo, junto al resto de reglas de
+   modo claro/oscuro del sitio). */
+.project-next {
+  background-color: var(--color-brand-dark);
+  padding: 3.5rem 5rem;
+  text-align: center;
+}
+
+.project-next-label {
+  display: block;
+  font-family: "Unbounded", sans-serif;
+  font-weight: 300;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #ede8e1;
+  opacity: 0.7;
+  margin-bottom: 0.8rem;
+}
+
+.project-next-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-family: "Unbounded", sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  color: #f5f5f5;
+  transition: transform 0.3s ease;
+}
+
+.project-next-link:hover {
+  transform: translateX(4px);
+}
+
+.project-next-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+/* "O" + botón "Volver a proyectos", debajo del enlace al siguiente
+   proyecto: mismo formato de etiqueta pequeña que "Siguiente proyecto",
+   y el botón reutiliza el estilo de .about-btn (el de "Experiencia"). */
+.project-next-or {
+  margin-top: 1.6rem;
+  margin-bottom: 0.8rem;
+}
+
+.project-next .about-btn {
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .project-detail-header {
+    padding: 1.6rem 0 2.5rem;
+  }
+
+  .project-detail-body,
+  .project-gallery {
+    padding-left: 1.4rem;
+    padding-right: 1.4rem;
+  }
+
+  .project-detail-topbar {
+    padding: 1.2rem 0;
+  }
+
+  .project-back-link {
+    padding: 0 1.4rem;
+  }
+
+  .project-detail-tags,
+  .project-detail-title,
+  .project-detail-intro {
+    padding: 0 1.4rem;
+  }
+
+  .project-gallery {
+    gap: 1rem;
+  }
+
+  .gallery-row {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .project-next {
+    padding: 2.5rem 1.4rem;
+  }
+}
+
+/* ==================================================================
+   PÁGINA DE PROYECTO — MODO OSCURO
+   ==================================================================
+   Las reglas de arriba son para modo claro (blanco roto en la
+   cabecera, crema en el cuerpo). En modo oscuro: la cabecera pasa a
+   verde oscuro, y el cuerpo (texto + galería) a verde bosque — el
+   bloque de "siguiente proyecto" y la navbar no cambian, ya se
+   comportan igual que en el resto del sitio. */
+
+html.dark-mode body.project-page {
+  background-color: var(--color-brand) !important;
+}
+
+html.dark-mode .project-detail-topbar,
+html.dark-mode .project-detail-header {
+  background-color: var(--color-brand-dark) !important;
+}
+
+html.dark-mode .project-back-link {
+  color: var(--color-cream) !important;
+}
+
+html.dark-mode .tag-chip {
+  border-color: var(--color-cream) !important;
+  color: var(--color-cream) !important;
+}
+
+html.dark-mode .project-detail-title {
+  color: var(--color-offwhite) !important;
+}
+
+html.dark-mode .project-detail-intro {
+  color: var(--color-cream) !important;
+}
+
+html.dark-mode .project-detail-body,
+html.dark-mode .project-gallery {
+  background-color: var(--color-brand) !important;
+}
+
+html.dark-mode .project-detail-body p {
+  color: var(--color-cream) !important;
+}
+
+/* Forzar el mismo color de fondo del body también en modo claro (si no,
+   la regla genérica "html:not(.dark-mode) body {...}" del resto del
+   sitio gana por !important y deja una franja en blanco roto a los
+   lados en vez de crema) */
+html:not(.dark-mode) body.project-page {
+  background-color: var(--color-cream) !important;
 }

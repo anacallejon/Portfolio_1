@@ -764,10 +764,15 @@ body.projects-page {
   justify-content: center;
 }
 
-/* Banda de fondo entre carrusel y want-to-know-more */
+/* Fondo entre carrusel y want-to-know-more.
+   padding-top eliminado a propósito: sin él, el bloque .experience-header
+   (verde oscuro en modo oscuro / blanco roto en modo claro) empieza justo
+   after el carrusel, sin dejar ver una franja de este verde bosque
+   (o crema, en modo claro) por encima. padding-bottom se mantiene: da
+   espacio antes de la siguiente sección y no es parte de este problema. */
 .experience-area {
   background-color: #416844;
-  padding-top: 3rem;
+  padding-top: 0;
   padding-bottom: 5rem;
 }
 
