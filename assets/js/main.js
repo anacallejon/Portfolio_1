@@ -451,6 +451,13 @@ document.addEventListener("DOMContentLoaded", () => {
       fadeSwap(el, text);
     });
 
+    // Enlaces con un destino distinto según el idioma (p. ej. el botón
+    // de descargar CV, que apunta al PDF en español o en inglés)
+    document.querySelectorAll("[data-href-es], [data-href-en]").forEach((el) => {
+      const href = el.getAttribute(`data-href-${lang}`);
+      if (href !== null) el.setAttribute("href", href);
+    });
+
     // Traducir cards hover overlay (data-title-es / data-title-en)
     document.querySelectorAll(".card[data-title-es]").forEach((card) => {
       const title = card.getAttribute(`data-title-${lang}`);

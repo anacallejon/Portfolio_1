@@ -657,10 +657,14 @@
 
         <!-- DESCARGAR CV -->
         <div class="cv-download-wrap">
-          <!-- TODO: actualizar la ruta cuando Ana suba el PDF a
-               assets/pdfs/ y confirme el nombre del archivo -->
+          <!-- El enlace apunta por defecto a la versión en español; el
+               JS lo actualiza a la versión correcta (data-href-es /
+               data-href-en) según el idioma activo, tanto al cargar la
+               página como al cambiar de idioma. -->
           <a
-            href="assets/pdfs/ana-callejon-cv.pdf"
+            href="assets/pdf/CV_Callejon.Ana_ES.pdf"
+            data-href-es="assets/pdf/CV_Callejon.Ana_ES.pdf"
+            data-href-en="assets/pdf/CV_Callejon.Ana_EN.pdf"
             download
             class="about-btn cv-download-btn"
           >
