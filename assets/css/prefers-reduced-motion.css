@@ -18,11 +18,18 @@
     animation: none !important;
   }
 
-  /* Stop 404 color change */
+  /* Stop 404 color change: se queda fijo en el color base de cada modo
+     (el mismo con el que arranca la animación) en vez de intentar
+     mostrar a medio camino un degradado que ya no se mueve */
   .error-number {
     animation: fadeInUp 0.01ms forwards !important;
-    background: #f5f5f5 !important;
-    -webkit-text-fill-color: #f5f5f5 !important;
+    background: var(--color-cream) !important;
+    -webkit-text-fill-color: var(--color-cream) !important;
+  }
+
+  html:not(.dark-mode) .error-number {
+    background: var(--color-brand) !important;
+    -webkit-text-fill-color: var(--color-brand) !important;
   }
 
   /* Stop floating blobs */

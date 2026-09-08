@@ -1684,10 +1684,18 @@ body.modal-open {
 /* ---------------------------404 ERROR PAGE--------------------------------- */
 
 .error-page {
-  background-color: #ede8e1;
+  background-color: var(--color-brand-dark);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+html:not(.dark-mode) .error-page {
+  /* !important necesario: "html:not(.dark-mode) body" en base.css ya
+     fuerza blanco roto en el body con !important, y sin este !important
+     aquí esa regla genérica ganaba y dejaba esta página en blanco roto
+     en vez de crema */
+  background-color: var(--color-cream) !important;
 }
 
 .error-section {
@@ -1717,18 +1725,29 @@ body.modal-open {
   animation:
     fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards,
     colorChange 12s ease-in-out infinite;
-  background: linear-gradient(
+  background-image: linear-gradient(
     90deg,
-    #f5f5f5 0%,
-    #f5f5f5 35%,
-    #df6595 50%,
-    #416844 65%,
-    #416844 100%
+    var(--color-cream) 0%,
+    var(--color-cream) 35%,
+    var(--color-offwhite) 50%,
+    var(--color-cream) 65%,
+    var(--color-cream) 100%
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   background-size: 300% 100%;
+}
+
+html:not(.dark-mode) .error-number {
+  background-image: linear-gradient(
+    90deg,
+    var(--color-brand) 0%,
+    var(--color-brand) 35%,
+    var(--color-brand-dark) 50%,
+    var(--color-brand) 65%,
+    var(--color-brand) 100%
+  );
 }
 
 @keyframes colorChange {
@@ -1756,21 +1775,29 @@ body.modal-open {
   font-family: "Unbounded", sans-serif;
   font-weight: 600;
   font-size: clamp(1.8rem, 4vw, 2.8rem);
-  color: #ffffff;
+  color: var(--color-cream);
   margin: 1.5rem 0 1rem;
   opacity: 0;
   animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+}
+
+html:not(.dark-mode) .error-title {
+  color: var(--color-brand);
 }
 
 .error-text {
   font-family: "Unbounded", sans-serif;
   font-weight: 300;
   font-size: clamp(0.9rem, 2vw, 1.1rem);
-  color: #ede8e1;
+  color: var(--color-offwhite);
   line-height: 1.6;
   margin-bottom: 2.5rem;
   opacity: 0;
   animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+}
+
+html:not(.dark-mode) .error-text {
+  color: var(--color-accent-pink);
 }
 
 .error-buttons {
@@ -1798,24 +1825,40 @@ body.modal-open {
 }
 
 .error-btn-primary {
-  background-color: #f5f5f5;
-  color: #fff;
+  background-color: var(--color-cream);
+  color: var(--color-brand);
 }
 
-.error-btn-primary:hover {
-  background-color: #ede8e1;
+html:not(.dark-mode) .error-btn-primary {
+  background-color: var(--color-brand);
+  color: var(--color-cream);
+}
+
+/* Prefijo "html" a propósito: el hover es el mismo rosa en los dos modos,
+   pero sin este empate de especificidad con "html:not(.dark-mode)
+   .error-btn-primary" de arriba, en modo claro el hover no llegaba a
+   aplicarse (la regla de modo claro pesaba más que un simple :hover). */
+html .error-btn-primary:hover {
+  background-color: var(--color-accent-pink);
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(245, 245, 245, 0.25);
+  box-shadow: 0 8px 20px rgba(223, 101, 149, 0.35);
 }
 
 .error-btn-secondary {
   background-color: transparent;
-  color: #fff;
-  border: 2px solid #fff;
+  color: var(--color-cream);
+  border: 2px solid var(--color-cream);
 }
 
-.error-btn-secondary:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+html:not(.dark-mode) .error-btn-secondary {
+  color: var(--color-brand);
+  border-color: var(--color-brand);
+}
+
+html .error-btn-secondary:hover {
+  background-color: rgba(223, 101, 149, 0.12);
+  color: var(--color-accent-pink);
+  border-color: var(--color-accent-pink);
   transform: translateY(-3px);
 }
 
@@ -1823,6 +1866,16 @@ body.modal-open {
   width: 14px;
   height: 14px;
   object-fit: contain;
+}
+
+/* flecha_out_verde1.png ya viene coloreada fija en verde bosque: en modo
+   oscuro encaja perfecto (aquí el botón pide "texto y flecha en verde
+   bosque"), pero en modo claro el propio botón pasa a fondo verde
+   bosque, así que el icono necesita aclararse para leerse encima —
+   aproximación por filtro (gris + brillo), no un verde-a-crema exacto,
+   porque no existe un icono ya coloreado en crema. */
+html:not(.dark-mode) .error-btn-icon {
+  filter: grayscale(1) brightness(2.6);
 }
 
 .error-decoration {
