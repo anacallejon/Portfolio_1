@@ -271,6 +271,7 @@
           <article
             class="card fade-in-scroll"
             data-project="project-e"
+            data-project-url="proyecto-postales.html"
             data-title="Postcards from the Past"
             data-title-en="Postcards from the Past"
             data-title-es="Postales del pasado"
@@ -291,6 +292,7 @@
           <article
             class="card fade-in-scroll"
             data-project="project-c"
+            data-project-url="proyecto-satellite-stompers.html"
             data-title="Satellite Stompers"
             data-title-en="Satellite Stompers"
             data-title-es="Satellite Stompers"
@@ -304,6 +306,7 @@
               src="https://ik.imagekit.io/anacallejon/portfolio_img/proyectos1/Proyecto5.2.png"
               alt="Satellite Stompers"
               class="card-img"
+              style="object-position: center 22%"
             />
           </article>
 
@@ -311,6 +314,7 @@
           <article
             class="card fade-in-scroll"
             data-project="project-huertopia"
+            data-project-url="proyecto-desorden.html"
             data-title="Disorder: Visual Exploration"
             data-title-en="Disorder: Visual Exploration"
             data-title-es="Desorden: Exploración Visual"
@@ -334,6 +338,7 @@
           <article
             class="card fade-in-scroll"
             data-project="project-d"
+            data-project-url="proyecto-poe.html"
             data-title="Poe's Tales: Special Edition"
             data-title-en="Poe's Tales: Special Edition"
             data-title-es="Los Cuentos de Poe: Edición Especial"
@@ -354,6 +359,7 @@
           <article
             class="card fade-in-scroll"
             data-project="project-b"
+            data-project-url="proyecto-gaia.html"
             data-title="Gaia: The Essential Is Natural"
             data-title-en="Gaia: The Essential Is Natural"
             data-title-es="Gaia: Lo esencial es natural"
@@ -374,6 +380,7 @@
           <article
             class="card fade-in-scroll"
             data-project="project-f"
+            data-project-url="proyecto-cristina.html"
             data-title="Like Cristina García Rodero"
             data-title-en="Like Cristina García Rodero"
             data-title-es="Como Cristina García Rodero"
@@ -394,6 +401,7 @@
           <article
             class="card fade-in-scroll"
             data-project="project-seasonal-calendar"
+            data-project-url="proyecto-tinto-de-verano.html"
             data-title="Tinto de Verano: Packaging"
             data-title-en="Tinto de Verano: Packaging"
             data-title-es="Tinto de Verano: Packaging"
@@ -817,7 +825,30 @@
               >
             </p>
 
-            <form class="contact-form">
+            <form
+              class="contact-form"
+              action="https://api.web3forms.com/submit"
+              method="POST"
+            >
+              <input
+                type="hidden"
+                name="access_key"
+                value="90fb1827-be99-4bc9-a780-6c5016df4897"
+              />
+              <input
+                type="hidden"
+                name="subject"
+                value="Nuevo contacto desde el portfolio"
+              />
+              <input
+                type="checkbox"
+                name="botcheck"
+                class="contact-botcheck"
+                style="display: none"
+                tabindex="-1"
+                autocomplete="off"
+              />
+
               <label
                 for="email"
                 class="contact-label"

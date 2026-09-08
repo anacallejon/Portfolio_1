@@ -61,7 +61,9 @@ document.addEventListener("DOMContentLoaded", () => {
       cursor.style.opacity = "0";
     });
 
-    const interactive = document.querySelectorAll("a, button");
+    const interactive = document.querySelectorAll(
+      "a, button, .project-gallery img",
+    );
     interactive.forEach((el) => {
       el.addEventListener("mouseenter", () => cursor.classList.add("is-link"));
       el.addEventListener("mouseleave", () =>
@@ -754,4 +756,79 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   createScrollHint();
+
+  // ==============================
+  // FORMULARIO DE CONTACTO (WEB3FORMS)
+  // ==============================
+  // Envío por fetch (sin recargar ni salir del sitio) hacia Web3Forms.
+  // El botón se desactiva mientras se envía y debajo del formulario
+  // aparece un mensaje discreto de éxito o error, en el idioma actual.
+  document.querySelectorAll(".contact-form").forEach((form) => {
+    const submitBtn = form.querySelector(".contact-btn");
+
+    const feedback = document.createElement("p");
+    feedback.className = "contact-feedback";
+    feedback.setAttribute("role", "status");
+    feedback.setAttribute("aria-live", "polite");
+    form.insertAdjacentElement("afterend", feedback);
+
+    const messages = {
+      sending: {
+        es: "Enviando…",
+        en: "Sending…",
+      },
+      success: {
+        es: "¡Gracias! Tu mensaje se ha enviado correctamente.",
+        en: "Thank you! Your message has been sent.",
+      },
+      error: {
+        es: "Ha ocurrido un error. Inténtalo de nuevo o escríbeme directamente por email.",
+        en: "Something went wrong. Please try again, or email me directly.",
+      },
+    };
+
+    const showFeedback = (type) => {
+      feedback.setAttribute("data-es", messages[type].es);
+      feedback.setAttribute("data-en", messages[type].en);
+      feedback.textContent = messages[type][currentLang] || messages[type].es;
+      feedback.classList.toggle("is-error", type === "error");
+      feedback.classList.add("is-visible");
+    };
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      feedback.classList.remove("is-visible", "is-error");
+
+      const originalLabel = submitBtn ? submitBtn.textContent : null;
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent =
+          messages.sending[currentLang] || messages.sending.es;
+      }
+
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),
+          headers: { Accept: "application/json" },
+        });
+        const result = await response.json().catch(() => null);
+
+        if (response.ok && result && result.success) {
+          showFeedback("success");
+          form.reset();
+        } else {
+          showFeedback("error");
+        }
+      } catch (err) {
+        showFeedback("error");
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalLabel;
+        }
+      }
+    });
+  });
 });

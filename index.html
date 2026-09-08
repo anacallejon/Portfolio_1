@@ -620,7 +620,30 @@
                 >
               </p>
 
-              <form class="contact-form">
+              <form
+                class="contact-form"
+                action="https://api.web3forms.com/submit"
+                method="POST"
+              >
+                <input
+                  type="hidden"
+                  name="access_key"
+                  value="90fb1827-be99-4bc9-a780-6c5016df4897"
+                />
+                <input
+                  type="hidden"
+                  name="subject"
+                  value="Nuevo contacto desde el portfolio"
+                />
+                <input
+                  type="checkbox"
+                  name="botcheck"
+                  class="contact-botcheck"
+                  style="display: none"
+                  tabindex="-1"
+                  autocomplete="off"
+                />
+
                 <label
                   for="email"
                   class="contact-label"

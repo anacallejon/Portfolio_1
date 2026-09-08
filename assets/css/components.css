@@ -452,6 +452,34 @@ html:not(.dark-mode) .icon-swap.icon-swap--inverted > .icon-swap--verde {
   border-color: var(--color-accent-pink);
 }
 
+.contact-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Mensaje de confirmación/error tras enviar el formulario (Web3Forms):
+   pequeño y discreto, mismo estilo que el resto de textos auxiliares de
+   la sección. Verde/crema para éxito, rosa de acento para error. */
+.contact-feedback {
+  font-family: "Unbounded", sans-serif;
+  font-weight: 300;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  margin-top: 0.6rem;
+  min-height: 1em;
+  color: #ede8e1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.contact-feedback.is-visible {
+  opacity: 0.85;
+}
+
+.contact-feedback.is-error {
+  color: var(--color-accent-pink);
+}
+
 /* ---------------------TWO-COLUMN OFFSET CARDS----------------------- */
 
 /* -----------FILTROS DE PROYECTOS------------- */
@@ -2093,6 +2121,21 @@ body.project-page {
   color: var(--color-brand) !important;
 }
 
+/* En modo claro, sin embargo, Ana prefiere el efecto contrario: fondo
+   verde bosque y texto/flecha en verde oscuro, para que el botón quede
+   más integrado con el fondo claro de la página y llame menos la
+   atención. El icono (flecha_out_verde1.png) viene fijo en verde bosque
+   y no admite recolorear vía `color`, así que se oscurece con un filtro
+   `brightness` que aproxima el verde oscuro de la marca. */
+html:not(.dark-mode) .project-next .about-btn {
+  background-color: var(--color-brand) !important;
+  color: var(--color-brand-dark) !important;
+}
+
+html:not(.dark-mode) .project-next .about-btn-icon {
+  filter: brightness(0.45);
+}
+
 /* Ancho de contenido: el mismo tope que ya usa el resto del sitio
    (--spacing-max-width, 1200px) en vez de un valor propio más estrecho,
    para que el texto y las imágenes aprovechen más el ancho disponible. */
@@ -2210,46 +2253,84 @@ body.project-page {
   margin-bottom: 0;
 }
 
-/* ---- Galería grande de imágenes ---- */
+/* ---- Galería grande de imágenes: "galería justificada" ----
+   En vez de un marco de proporción fija para todas las fotos (que dejaba
+   huecos grandes en las que más se alejaban de esa proporción), cada
+   fila de dos imágenes usa la proporción REAL de cada foto (fijada por
+   Ana, ver el atributo style="aspect-ratio: …" de cada <img> en el
+   HTML) y una técnica de flexbox ("galería justificada", como en
+   Flickr/Google Fotos) que hace que ambas imágenes de la fila terminen
+   con la MISMA altura y que, entre las dos, rellenen exactamente el
+   ancho de la fila — sin recortar nada y sin dejar espacio vacío.
+
+   Cómo funciona: cada <img> lleva flex-grow y aspect-ratio puestos al
+   mismo valor (su proporción real, ancho/alto). Con flex-basis: 0, el
+   ancho de cada imagen queda repartido en proporción a su flex-grow;
+   como la altura de cada una es ese ancho dividido entre su propio
+   aspect-ratio (que es el mismo número), el resultado matemático es que
+   las dos imágenes de la fila SIEMPRE acaban con la misma altura,
+   cualquiera que sea el ancho disponible (así sigue funcionando al
+   cambiar el tamaño de ventana, sin recalcular nada a mano). */
 .project-gallery {
   max-width: var(--spacing-max-width);
   margin: 0 auto;
   padding: 0 5rem 4rem;
   background-color: var(--color-cream);
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: 1.5rem;
 }
 
-/* Alto fijo con object-fit: cover, para que las imágenes de la galería
-   se vean más pequeñas y con una altura uniforme, sean verticales u
-   horizontales (antes, con height: auto, las verticales salían muy
-   altas). No se recortan ni se deforman: se limita el alto máximo y el
-   ancho se ajusta solo, respetando la proporción real de cada foto. */
-.project-gallery img {
-  max-height: 680px;
-  width: auto;
-  max-width: 100%;
+.gallery-row {
+  display: flex;
+  align-items: stretch;
+  gap: 1.5rem;
+}
+
+/* flex-grow y aspect-ratio reales de cada foto van en el HTML (atributo
+   style, valor distinto por imagen); aquí solo lo común a todas. */
+.gallery-row img {
+  flex-shrink: 1;
+  flex-basis: 0%;
+  min-width: 0;
+  width: 100%;
+  height: auto;
   border-radius: 16px;
   cursor: zoom-in;
   display: block;
 }
 
-/* Fila de dos imágenes en línea (para pares de imágenes verticales, o
-   para el "hueco" intermedio del ritmo grande/fila-de-dos/grande de las
-   horizontales). Se agrupan a mano según cómo sean las fotos reales de
-   cada proyecto: envolver dos <img> en un div.gallery-row. */
-.gallery-row {
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem;
+/* Imagen suelta (fuera de un .gallery-row): la que queda sin pareja de
+   su misma orientación tras agrupar el resto. Por defecto ocupa todo
+   el ancho principal (igual que el texto de la descripción del
+   proyecto), con su propia proporción real (aspect-ratio puesto en
+   el HTML) — así se queda para las horizontales, sin excepción.
+   Las verticales, en cambio, llevan además un "width" fijado en el
+   HTML (junto al aspect-ratio, con la fórmula width: min(100%, 70vh
+   × su proporción)) que sobreescribe este 100% y la encoge en ancho
+   lo justo para que nunca sea más alta que el 70% de la ventana —
+   manteniendo su proporción real, sin recortar ni deformar nada, y
+   centrada. */
+.project-gallery > img {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  cursor: zoom-in;
+  display: block;
+  margin: 0 auto;
 }
 
-/* Ya no se fuerza flex-grow: cada imagen mantiene su ancho natural
-   (según su alto máximo y su proporción real), en vez de estirarse
-   para rellenar la fila. */
-.gallery-row img {
-  flex: 0 0 auto;
+/* Aviso pequeño y discreto debajo de toda la galería, recordando que
+   las imágenes se pueden ampliar (abren el lightbox al hacer clic).
+   Al ser otro hijo directo de .project-gallery (que es display:grid),
+   hereda automáticamente el mismo espaciado (gap: 1.5rem) que separa
+   las filas entre sí, sin necesidad de margin propio. */
+.gallery-hint {
+  text-align: center;
+  font-family: "Unbounded", sans-serif;
+  font-weight: 300;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  opacity: 0.6;
 }
 
 /* ---- Enlace al siguiente proyecto ----
@@ -2336,9 +2417,17 @@ body.project-page {
     gap: 1rem;
   }
 
+  /* En móvil la fila pasa a columna (una imagen debajo de otra): se
+     desactiva el reparto de ancho por flex-grow y cada imagen ocupa
+     todo el ancho principal con su propia proporción real, igual que
+     una imagen suelta. */
   .gallery-row {
     flex-direction: column;
     gap: 1rem;
+  }
+
+  .gallery-row img {
+    flex: none;
   }
 
   .project-next {
@@ -2388,6 +2477,11 @@ html.dark-mode .project-gallery {
 
 html.dark-mode .project-detail-body p {
   color: var(--color-cream) !important;
+}
+
+html.dark-mode .gallery-hint {
+  color: var(--color-cream) !important;
+  opacity: 0.55;
 }
 
 /* Forzar el mismo color de fondo del body también en modo claro (si no,
