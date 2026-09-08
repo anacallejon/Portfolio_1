@@ -40,6 +40,21 @@ html {
   background-color: transparent !important;
 }
 
+/* Excepción, solo en modo oscuro: la sección de contacto Y el footer
+   (compartidos con about.html/index.html, donde siempre van sobre fondo
+   crema porque viven dentro de .main-content, que es crema fijo — el
+   footer además tiene el texto del copyright fijo en verde marca, ver
+   .site-footer p en layout.css) aquí no tienen ese contenedor y dejan ver
+   el verde del body de más arriba. En la sección de contacto la caja
+   (también verde) quedaba casi fundida con el fondo; en el footer el
+   problema era peor, porque el texto (verde) quedaba prácticamente
+   invisible sobre ese mismo verde. Se igualan los dos al resto de páginas
+   dándoles fondo crema también aquí en oscuro. */
+html.dark-mode .projects-page .contact-section,
+html.dark-mode .projects-page .site-footer {
+  background-color: var(--color-cream) !important;
+}
+
 /* Links sin estilos decorativos */
 a {
   text-decoration: none;

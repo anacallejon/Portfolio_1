@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     const interactive = document.querySelectorAll(
-      "a, button, .project-gallery img",
+      "a, button, .project-gallery img, .card",
     );
     interactive.forEach((el) => {
       el.addEventListener("mouseenter", () => cursor.classList.add("is-link"));
@@ -368,6 +368,29 @@ document.addEventListener("DOMContentLoaded", () => {
   // deben alternar el tema igual, así que los recorremos todos.
   const themeToggles = document.querySelectorAll(".theme-toggle");
 
+  // Etiqueta de texto del botón de tema SOLO en el menú desplegable de
+  // móvil/tablet (el de escritorio no lleva texto, solo icono): en vez de
+  // un rótulo fijo ("Cambiar tema"), indica el modo AL QUE SE PASARÍA al
+  // pulsar — si ahora está en claro, pone "Modo oscuro" (y viceversa) —
+  // usando el mismo mecanismo data-es/data-en que traduce el resto del
+  // sitio, para que un cambio de idioma posterior también lo traduzca.
+  const themeToggleMobileLabels = document.querySelectorAll(
+    ".theme-toggle--mobile [data-theme-label]",
+  );
+  const updateThemeToggleLabels = () => {
+    const isDark = document.documentElement.classList.contains("dark-mode");
+    const lang = localStorage.getItem("lang") || "es";
+    const labels = {
+      es: isDark ? "Modo claro" : "Modo oscuro",
+      en: isDark ? "Light mode" : "Dark mode",
+    };
+    themeToggleMobileLabels.forEach((el) => {
+      el.setAttribute("data-es", labels.es);
+      el.setAttribute("data-en", labels.en);
+      el.textContent = labels[lang] || labels.es;
+    });
+  };
+
   // Aplicar tema: si la persona ya eligió uno manualmente en esta web,
   // se respeta ese; si no ha elegido nunca, se sigue la preferencia de
   // su sistema operativo/navegador (claro u oscuro).
@@ -375,6 +398,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const prefersDarkQuery = window.matchMedia("(prefers-color-scheme: dark)");
   const savedTheme = storedTheme || (prefersDarkQuery.matches ? "dark" : "light");
   document.documentElement.classList.toggle("dark-mode", savedTheme === "dark");
+  updateThemeToggleLabels();
 
   // Activar el fundido de colores SOLO a partir de aquí (dos frames
   // después de pintar el tema guardado), para que la carga de la
@@ -390,6 +414,7 @@ document.addEventListener("DOMContentLoaded", () => {
     toggle.addEventListener("click", () => {
       const isDark = document.documentElement.classList.toggle("dark-mode");
       localStorage.setItem("theme", isDark ? "dark" : "light");
+      updateThemeToggleLabels();
     });
   });
 
@@ -400,6 +425,7 @@ document.addEventListener("DOMContentLoaded", () => {
   prefersDarkQuery.addEventListener("change", (e) => {
     if (localStorage.getItem("theme")) return;
     document.documentElement.classList.toggle("dark-mode", e.matches);
+    updateThemeToggleLabels();
   });
 
   // ==============================
