@@ -1,144 +1,37 @@
 <!doctype html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>404 - Page Not Found</title>
-
-    <!-- SEO Meta Tags -->
-    <meta
-      name="description"
-      content="Page not found - Ana Callejón Portfolio"
-    />
-    <meta
-      name="keywords"
-      content="graphic design, portfolio, multimedia design, editorial design, branding, Ana Callejón"
-    />
-    <meta name="author" content="Ana Callejón Alén" />
-    <meta name="theme-color" content="#8b93bc" />
-
-    <!-- Open Graph / Facebook / LinkedIn -->
-    <meta property="og:type" content="website" />
-    <meta
-      property="og:url"
-      content="https://anacallejon.github.io/creative-portfolio-web/404.html"
-    />
-    <meta property="og:title" content="404 - Page Not Found" />
-    <meta property="og:description" content="Page not found" />
-    <meta
-      property="og:image"
-      content="https://anacallejon.github.io/creative-portfolio-web/assets/img/social-preview.png"
-    />
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:url"
-      content="https://anacallejon.github.io/creative-portfolio-web/404.html"
-    />
-    <meta name="twitter:title" content="404 - Page Not Found" />
-    <meta name="twitter:description" content="Page not found" />
-    <meta
-      name="twitter:image"
-      content="https://anacallejon.github.io/creative-portfolio-web/assets/img/social-preview.png"
-    />
-
-    <!--------------------------- Favicons ------------------------------>
-    <!-- Favicons - Modo claro (por defecto) -->
-    <link
-      rel="icon"
-      type="image/x-icon"
-      href="https://ik.imagekit.io/anacallejon/portfolio_img/favicon_green1/favicon.ico"
-      media="(prefers-color-scheme: light)"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="96x96"
-      href="https://ik.imagekit.io/anacallejon/portfolio_img/favicon_green1/favicon-96x96.png"
-      media="(prefers-color-scheme: light)"
-    />
-
-    <!-- Favicon - Modo oscuro -->
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href="https://ik.imagekit.io/anacallejon/portfolio_img/favicon_green1/favicon.svg"
-      media="(prefers-color-scheme: dark)"
-    />
-
-    <!-- Fallback sin preferencia de color -->
-    <link
-      rel="icon"
-      type="image/x-icon"
-      href="https://ik.imagekit.io/anacallejon/portfolio_img/favicon_green1/favicon.ico"
-    />
-
-    <!-- Apple Touch Icon y Manifest -->
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="https://ik.imagekit.io/anacallejon/portfolio_img/favicon_green1/apple-touch-icon.png"
-    />
-    <link
-      rel="manifest"
-      href="https://ik.imagekit.io/anacallejon/portfolio_img/favicon_green1/site.webmanifest"
-    />
-
-    <link
-      href="https://fonts.googleapis.com/css2?family=Petit+Formal+Script&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200;300;400;600;700&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- CSS general -->
-    <link rel="stylesheet" href="assets/css/index.css" />
-  </head>
-
-  <body class="error-page">
-    <div class="custom-cursor"></div>
-
-    <!-- ERROR SECTION -->
-    <section class="error-section">
-      <div class="error-content">
-        <h1 class="error-number">404</h1>
-        <h2 class="error-title">Oops! Page not found</h2>
-        <p class="error-text">
-          The page you're looking for doesn't exist or has been moved.
-          <br />
-          Let's get you back on track.
-        </p>
-
-        <div class="error-buttons">
-          <a href="./index.html" class="error-btn error-btn-primary">
-            Back to Home
-            <img
-              src="https://ik.imagekit.io/anacallejon/portfolio_img/flecha_out_verde1.png"
-              alt="Go Back Icon"
-              class="error-btn-icon"
-            />
-          </a>
-          <a href="./projects.html" class="error-btn error-btn-secondary">
-            View Projects
-          </a>
-        </div>
-      </div>
-
-      <!-- Decoración con formas orgánicas -->
-      <div class="error-decoration">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div class="blob blob-3"></div>
-      </div>
-    </section>
-
-    <footer class="site-footer">
-      <p>© 2025 Ana Callejón Alén</p>
-    </footer>
-
-    <script src="assets/js/main.js"></script>
-  </body>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Página no encontrada — Ana Callejón</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --paper: #f2efe9; --ink: #141413; --muted: #6d6962; --accent: #4a68b5; }
+  @media (prefers-color-scheme: dark) { :root { --paper: #121211; --ink: #ece8e0; --muted: #8e8a82; } }
+  body { margin: 0; min-height: 100svh; display: flex; flex-direction: column; justify-content: center;
+         padding: 0 clamp(16px, 3.6vw, 48px); background: var(--paper); color: var(--ink);
+         font-family: "Inter Tight", "Helvetica Neue", Arial, sans-serif; }
+  .lbl { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+  h1 { margin: 16px 0 24px; font-family: "Instrument Serif", Georgia, serif; font-weight: 400;
+       font-size: clamp(56px, 12vw, 200px); line-height: 0.9; letter-spacing: -0.03em; }
+  h1 em { color: var(--accent); }
+  a { color: inherit; font-size: 16px; }
+  a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+  <span class="lbl">Error 404</span>
+  <h1>Página no <em>encontrada</em></h1>
+  <a id="home" href="/">← Volver al inicio</a>
+  <script>
+    // En GitHub Pages el sitio vive en /nombre-del-repo/: el enlace apunta ahí.
+    if (location.hostname.endsWith("github.io")) {
+      var seg = location.pathname.split("/")[1];
+      if (seg) document.getElementById("home").href = "/" + seg + "/";
+    }
+  </script>
+</body>
 </html>
