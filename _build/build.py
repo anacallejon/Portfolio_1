@@ -15,6 +15,8 @@ YEAR = "2026"
 EMAIL = "ana.callejonalen@gmail.com"
 INSTAGRAM = "https://www.instagram.com/calen.archive/"
 LINKEDIN = "https://www.linkedin.com/in/ana-callej%C3%B3n-al%C3%A9n-6879a02a6/"
+# Favicon (alojado en ImageKit)
+FAV = "https://ik.imagekit.io/anacallejon/portfolio_img/favicon_editorial_2"
 W3F_KEY = "90fb1827-be99-4bc9-a780-6c5016df4897"
 
 def e(s): return html.escape(s, quote=True)
@@ -50,7 +52,11 @@ def head(title, desc, pre, title_en=None):
 <title data-es="{e(title)}" data-en="{e(title_en or title)}">{e(title)}</title>
 <meta name="description" content="{e(desc)}">
 <meta name="author" content="Ana Callejón Alén">
-<link rel="icon" type="image/svg+xml" href="{pre}assets/img/favicon.svg">
+<link rel="icon" href="{FAV}/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="{FAV}/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="{FAV}/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="{FAV}/apple-touch-icon.png">
+<link rel="manifest" href="{pre}site.webmanifest">
 <script>document.documentElement.classList.add("js");try{{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t;}}catch(e){{}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
